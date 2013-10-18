@@ -1,0 +1,9 @@
+# yii framework
+#assets/
+#protected/runtime/
+#themes/classic/views/
+
+# elipse
+.buildpath
+.project
+.settings/
