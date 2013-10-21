@@ -11,7 +11,9 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Collaborative Labeling and Semantic Search',
+	'name'=>'ICLASS',
+	'timeZone' => 'America/Indianapolis',
+	'theme'=> 'booster',
 
 	'preload'=>array(
 		'bootstrap',    //preload yiibooster
@@ -46,7 +48,7 @@ return array(
 		// enable bootstrap
 		'bootstrap' => array(
 			'class' => 'bootstrap.components.Bootstrap',
-			'responsiveCss' => true,
+			'responsiveCss' => false,
 		),
 		// uncomment the following to enable URLs in path-format
 		/*

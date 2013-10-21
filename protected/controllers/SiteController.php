@@ -27,9 +27,29 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+		if (Yii::app()->user->isGuest) 
+		{
+			$model = new User("register");
+			
+			if(isset($_POST['User']))
+			{
+				$model->attributes=$_POST['User'];
+				$pwd = $model->password;
+				if($model->save()) {
+					$identity = new UserIdentity($model->username, $pwd);
+					$identity ->authenticate();
+					Yii::app()->user->login($identity);
+					$this->redirect(Yii::app()->createUrl("user/view&id=$model->uid"));
+				}
+			}
+			// renders the view file 'protected/views/site/index.php'
+			// using the default layout 'protected/views/layouts/main.php'
+			$this->render('index', array('model'=>$model));
+		} 
+		else 
+		{
+			$this->redirect(Yii::app()->createUrl('site/page&view=about'));
+		}
 	}
 
 	/**

@@ -34,10 +34,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
+			array('username, email', 'required', 'on'=>'change_profile, register'),
+			array('password, password_repeat', 'required', 'on'=>'change_password, register'),
 			array('username, email', 'unique'),
 			array('email', 'email'),
-			array('password', 'compare'),
+			array('password', 'compare', 'on'=>'change_password, register'),
 			array('password_repeat', 'safe'),
 			array('username, password', 'length', 'max'=>64),
 			array('email, name', 'length', 'max'=>128),
@@ -122,6 +123,12 @@ class User extends CActiveRecord
 		return parent::model($className);
 	}
 	
+	
+	/**
+	 * Define the behaviors
+	 * so the user can automatically  save the create time and update time
+	 * @see CModel::behaviors()
+	 */
 	public function behaviors()
 	{
 		return array(

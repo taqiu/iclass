@@ -1,4 +1,4 @@
-Image Datebase System
+Image Collaborative Labeling and Semantic Search (ICLASS)
 ===============
 ![alt text](http://vision.soic.indiana.edu/wp/wp-content/themes/responsive/core/images/default-logo.png "IU computer vision lab")
 
