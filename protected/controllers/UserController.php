@@ -28,11 +28,11 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('register', 'index','view'),
+				'actions'=>array('register', 'index', 'view', 'password'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','profile', 'update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -56,6 +56,75 @@ class UserController extends Controller
 		));
 	}
 	
+	/**
+	 * Change Profile
+	 * @param unknown $id
+	 */
+	public function actionProfile($id)
+	{
+		$model=$this->loadModel($id);
+		$model->scenario = 'change_profile';
+		
+		if(isset($_POST['User']))
+		{
+			$model->attributes=$_POST['User'];
+			// only update username, email and name
+			if($model->save(true, array('username', 'email', 'name')))
+				$this->redirect(array('view','id'=>$model->uid));
+		}
+		
+		$this->render('profile',array(
+				'model'=>$model,
+		));
+	}
+	
+	/**
+	 * Change Password
+	 * @param unknown $id
+	 */
+	public function actionPassword($id)
+	{
+		$model=$this->loadModel($id);
+		$model->scenario = 'change_password';
+
+		if(isset($_POST['User']))
+		{
+			$model->attributes=$_POST['User'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->uid));
+		}
+
+		$this->render('password',array(
+			'model'=>$model,
+		));
+		
+		
+	}
+	
+	
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionUpdate($id)
+	{
+		$model=$this->loadModel($id);
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['User']))
+		{
+			$model->attributes=$_POST['User'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->uid));
+		}
+
+		$this->render('update',array(
+			'model'=>$model,
+		));
+	}
 	
 	/**
 	 * Creates a new model.
@@ -80,29 +149,6 @@ class UserController extends Controller
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->uid));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
 
 	/**
 	 * Deletes a particular model.

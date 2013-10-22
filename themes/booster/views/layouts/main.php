@@ -6,7 +6,6 @@
 	<meta name="language" content="en"/>
 
 	<link rel="icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon"/>
-
 <?php /*
 	<!-- blueprint CSS framework -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css"
@@ -18,104 +17,7 @@
 	      media="screen, projection"/>
 	<![endif]--> */
 ?>
-	<style type="text/css">
-	  #page {
-	  	padding-bottom: 80px;
-	  }
-	
-      #register-div {
-      	margin-top: 10px;
-      }
-      
-      #register-form {
-      	
-      }
-      
-      #nav-login .checkbox {
-      	margin-top: 3px;
-      	margin-bottom: 0px;
-      	color:#CCCCCC;
-      	font-size: 12px;
-      }
-      #nav-login #LoginForm_rememberMe {
-      	margin-top: 3px;
-      }
-      
-      #login-form label {
-      	font-weight:bold;
-      }
-      
-      #user-panel {
-      	color: #DDD;
-      }
-      
-      #user-panel:hover {
-      	color: #FFF;
-      }
-      
-      .navbar .bootsnippbrand {
-		  float: left;
-		  display: block;
-		  padding: 5px 20px 5px;
-		  margin-right: 20px;
-		  margin-left: -10px;
-		  font-size: 18px;
-		  font-weight: 400;
-		  color: #FFF;
-		}
-		.navbar .bootsnippbrand:hover {
-		  text-decoration: none;
-		}
-      
-       /* Sticky footer styles
-      -------------------------------------------------- */
-
-      html,
-      body {
-        height: 100%;
-        /* The html and body elements cannot have any padding or margin. */
-      }
-
-      /* Wrapper for page content to push down footer */
-      #wrap {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        /* Negative indent footer by it's height */
-        margin: 0 auto -60px;
-      }
-
-      /* Set the fixed height of the footer here */
-      #footer {
-        height: 60px;
-        font-size: 12px;
-		background: #111;
-		color: #999;
-		border-top: 1px solid #000;
-		-webkit-box-shadow: inset 0 1px 0 #292929;
-		box-shadow: inset 0 1px 0 #292929;
-      }
-
-      #footer a {
-		color: #DDD;
-		}
-	   #footer a:hover {
-		color: #FFF;
-		text-decoration: underline;
-	   }
-
-      #footer-terms {
-      	margin-top: 10px;
-		float:left;
-	  }
-	  
-	  #footer-copyright {
-	  	margin-top: 15px;
-		float:right;
-	  }
-
-    </style>
-
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/style.css" />
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
@@ -148,8 +50,8 @@
 						 <li class="dropdown">
 							<a id="user-panel" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> <?php echo Yii::app()->user->name ?><b class="caret"></b></a>
 							<ul class="dropdown-menu">
-          						<li><a href="#"><i class="icon-cog"></i> Profile</a></li>
-          						<li><a href="#"><i class="icon-lock"></i> Change Password</a></li>
+          						<li><a href="<?php echo $this->createUrl('user/view&id='.Yii::app()->user->id)?>"><i class="icon-cog"></i> Profile</a></li>
+          						<li><a href="<?php echo $this->createUrl('user/password&id='.Yii::app()->user->id)?>"><i class="icon-lock"></i> Change Password</a></li>
           						<li><a href="#"><i class="icon-info-sign"></i> Help</a></li>
         					</ul>
       					</li>

@@ -17,6 +17,9 @@
 class User extends CActiveRecord
 {
 	public $password_repeat;
+	public $old_password;
+	public $new_password;
+	public $new_password_repeat;
 	
 	/**
 	 * @return string the associated database table name
@@ -33,14 +36,17 @@ class User extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
+		// Scenarios: register, change_profile, change_password
 		return array(
 			array('username, email', 'required', 'on'=>'change_profile, register'),
-			array('password, password_repeat', 'required', 'on'=>'change_password, register'),
+			array('password, password_repeat', 'required', 'on'=>'register'),
+			array('password', 'compare', 'on'=>'register'),
+			array('old_password, new_password, new_password_repeat', 'required', 'on'=>'change_password'),
+			array('new_password', 'compare', 'on'=>'change_password'),
+			array('password_repeat, old_password, new_password_repeat', 'safe'),	
 			array('username, email', 'unique'),
 			array('email', 'email'),
-			array('password', 'compare', 'on'=>'change_password, register'),
-			array('password_repeat', 'safe'),
-			array('username, password', 'length', 'max'=>64),
+			array('username, password, new_password', 'length', 'min'=>3, 'max'=>64),
 			array('email, name', 'length', 'max'=>128),
 			array('role', 'length', 'max'=>16),
 			// array('create_time, update_time, last_login_time', 'safe'),
@@ -152,13 +158,32 @@ class User extends CActiveRecord
 	}
 	
 	/**
+	 * Check the olde password if 'change_password'
+	 * @see CModel::beforeValidate()
+	 */
+	public function beforeValidate()
+	{
+		if ($this->scenario === 'change_password')
+			if ($this->password !== $this->hashPassword($this->old_password)) 
+				$this->addError(null, 'Old password is not correct');
+		
+		return parent::beforeValidate();
+	}
+	
+	/**
 	 * apply a hash on the password before we store it in the database
 	 */
 	protected function afterValidate()
 	{
-		parent::afterValidate();
-		if(!$this->hasErrors())
-			$this->password = $this->hashPassword($this->password);
+		parent::afterValidate();	
+		if(!$this->hasErrors()) {		
+			if ($this->scenario === 'change_profile');
+			else if ($this->scenario === 'change_password') {
+				$this->password = $this->hashPassword($this->new_password);
+			} else {
+				$this->password = $this->hashPassword($this->password);
+			}
+		}
 	}
 	
 	/**

@@ -1,0 +1,145 @@
+/**
+ * For ICLASS 
+ * Author: Tanghong Qiu
+ */
+
+#page {
+padding-bottom: 80px;
+}
+
+#register-div {
+margin-top: 10px;
+}
+    
+#nav-login .checkbox {
+margin-top: 3px;
+margin-bottom: 0px;
+color:#CCCCCC;
+font-size: 12px;
+}
+
+#nav-login #LoginForm_rememberMe {
+margin-top: 3px;
+}
+    
+#login-form label {
+font-weight:bold;
+}
+    
+#user-panel {
+color: #DDD;
+}
+    
+#user-panel:hover {
+color: #FFF;
+}
+    
+.navbar .bootsnippbrand {
+float: left;
+display: block;
+padding: 5px 20px 5px;
+margin-right: 20px;
+margin-left: -10px;
+font-size: 18px;
+font-weight: 400;
+color: #FFF;
+}
+
+.navbar .bootsnippbrand:hover {
+  text-decoration: none;
+}
+    
+ /* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+height: 100%;
+/* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+height: 60px;
+font-size: 12px;
+background: #111;
+color: #999;
+border-top: 1px solid #000;
+-webkit-box-shadow: inset 0 1px 0 #292929;
+box-shadow: inset 0 1px 0 #292929;
+}
+
+#footer a {
+color: #DDD;
+}
+#footer a:hover {
+color: #FFF;
+text-decoration: underline;
+}
+
+#footer-terms {
+margin-top: 10px;
+float:left;
+}
+ 
+#footer-copyright {
+margin-top: 15px;
+float:right;
+}
+
+	  
+div.portlet-decoration {
+color: #fff;
+background-color: #000;
+padding: 10px 15px;
+border-bottom: 1px solid transparent;
+border-top-right-radius: 3px;
+border-top-left-radius: 3px;
+
+}
+
+div.portlet {
+box-shadow: 0 0 10px rgba(189, 189, 189, 0.4);
+-webkit-box-shadow: 0 0 10px rgba(189, 189, 189, 0.4);
+-moz-box-shadow: 0 0 10px rgba(189, 189, 189, 0.4);
+}
+
+ul.sidebar {
+margin:0px;
+}
+
+ul.sidebar li{
+position: relative;
+display: block;
+margin-bottom: -1px;
+background-color: #ffffff;
+border: 1px solid #dddddd;
+}
+
+ul.sidebar li:hover {
+background-color: #eeeeee;
+}
+
+ul.sidebar li:focus {
+background-color: #eeeeee;
+}
+
+ul.sidebar li a {
+padding: 10px 15px;
+display:block;
+}
+
+ul.sidebar li a:hover,
+ul.sidebar li a:focus {
+ text-decoration: none;
+}
+

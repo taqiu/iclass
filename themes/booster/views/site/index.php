@@ -42,25 +42,25 @@
 				<legend><span class="label label-important">Required</span></legend>
 				<div class="input-prepend">
 					<span class="add-on"><i class="icon-user"></i></span>
-					<?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>64, 'placeholder'=>'Username')); ?>
+					<?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>64, 'placeholder'=>'Username', 'required'=>'required')); ?>
 				</div>
 				<div class="input-prepend">
 					<span class="add-on"><i class="icon-lock"></i></span>
-					<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>64, 'placeholder'=>'Password')); ?>
+					<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>64, 'placeholder'=>'Password', 'required'=>'required')); ?>
 				</div>
 				<div class="input-prepend">
 					<span class="add-on"><i class="icon-lock"></i></span>
-					<?php echo $form->passwordField($model,'password_repeat',array('size'=>60,'maxlength'=>64, 'placeholder'=>'Cofirm Password')); ?>
+					<?php echo $form->passwordField($model,'password_repeat',array('size'=>60,'maxlength'=>64, 'placeholder'=>'Cofirm Password', 'required'=>'required')); ?>
 				</div>
 				<div class="input-prepend">
 					<span class="add-on"><i class="icon-envelope"></i></span>
-					<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128, 'placeholder'=>'Email')); ?>
+					<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128, 'placeholder'=>'Email', 'required'=>'required')); ?>
 				</div>
 			</fieldset>
 			<fieldset>
 				<legend><span class="label label-info">Optional</span></legend>
 				<div class="input-prepend">
-					<span class="add-on"><i class="icon-lock"></i></span>
+					<span class="add-on"><i class="icon-th-list"></i></span>
 					<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>128, 'placeholder'=>'Name')); ?>
 				</div>
 			</fieldset>

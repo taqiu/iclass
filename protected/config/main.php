@@ -13,7 +13,7 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'ICLASS',
 	'timeZone' => 'America/Indianapolis',
-	'theme'=> 'booster',
+//	'theme'=> 'booster',
 
 	'preload'=>array(
 		'bootstrap',    //preload yiibooster

@@ -27,15 +27,17 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
+		// display register page for guest
 		if (Yii::app()->user->isGuest) 
 		{
-			$model = new User("register");
+			$model = new User('register');
 			
 			if(isset($_POST['User']))
 			{
 				$model->attributes=$_POST['User'];
 				$pwd = $model->password;
 				if($model->save()) {
+					// login after register
 					$identity = new UserIdentity($model->username, $pwd);
 					$identity ->authenticate();
 					Yii::app()->user->login($identity);
@@ -46,9 +48,9 @@ class SiteController extends Controller
 			// using the default layout 'protected/views/layouts/main.php'
 			$this->render('index', array('model'=>$model));
 		} 
-		else 
+		else // display home page for logined user
 		{
-			$this->redirect(Yii::app()->createUrl('site/page&view=about'));
+			$this->redirect(Yii::app()->createUrl('user/view&id='.Yii::app()->user->id));
 		}
 	}
 
