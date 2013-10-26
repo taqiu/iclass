@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'View Profile', 'url'=>array('view', 'id'=>$model->uid)),
 	array('label'=>'Update Profile', 'url'=>array('profile', 'id'=>$model->uid)),
-	array('label'=>'Change Passwrod', 'url'=>array('password', 'id'=>$model->uid)),
+	array('label'=>'Change Passwrod', 'url'=>array('password', 'id'=>$model->uid), 'itemOptions'=>array('class'=>'active')),
 );
 ?>
 
@@ -28,6 +28,12 @@ $this->menu=array(
 	<fieldset>
 	<!-- Form Name -->
 	<legend>Change password</legend>
+	<?php if (isset($showSucceed)):?>
+		<div class="alert alert-success">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			Operation succeed!
+		</div>
+	<?php endif?>
 	<?php echo $form->errorSummary($model, 
 			$header='<button type="button" class="close" data-dismiss="alert">&times;</button><p>Please fix the following input errors:</p>', 
 			'', array('class'=>'alert alert-error',)); ?>

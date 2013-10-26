@@ -9,6 +9,13 @@ return array(
 	// preloading 'log' component
 	'preload'=>array('log'),
 
+	// autoloading model and component classes
+	'import'=>array(
+		'application.models.*',
+		'application.components.*',
+	),
+		
+		
 	// application components
 	'components'=>array(
 		'db'=>array(
@@ -16,6 +23,7 @@ return array(
 		),
 		// uncomment the following to use a MySQL database
 		'db'=>array(
+		//	'connectionString' => 'mysql:silo.cs.indiana.edu;dbname=b561f13_taqiu',
 			'connectionString' => 'mysql:host=localhost;dbname=b561f13_taqiu',
 			'emulatePrepare' => true,
 			'username' => 'b561f13_taqiu',
@@ -32,6 +40,14 @@ return array(
 				),
 			),
 		),
+		'authManager'=>array(
+			'class'=>'CDbAuthManager',
+			'connectionID'=>'db',
+			'itemTable' =>'{{auth_item}}',
+			'itemChildTable' =>'{{auth_item_child}}',
+			'assignmentTable' =>'{{auth_assignment}}',
+			'defaultRoles'=>array('guest', 'labeler', 'labMember', 'admin'),
+		),	
 	),
 	// Command Map
 	'commandMap'=>array(
@@ -40,7 +56,7 @@ return array(
 			'migrationPath'=>'application.migrations',
 			'migrationTable'=>'{{migration_history}}',
 			'connectionID'=>'db',
-			'templateFile'=>'application.migrations.template',
+			//'templateFile'=>'application.migrations.template',
 		),
 	),
 );

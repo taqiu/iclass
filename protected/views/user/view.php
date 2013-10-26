@@ -7,20 +7,20 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'View Profile', 'url'=>array('view', 'id'=>$model->uid)),
+	array('label'=>'View Profile', 'url'=>array('view', 'id'=>$model->uid), 'itemOptions'=>array('class'=>'active')),
 	array('label'=>'Update Profile', 'url'=>array('profile', 'id'=>$model->uid)),
 	array('label'=>'Change Passwrod', 'url'=>array('password', 'id'=>$model->uid)),
 );
 ?>
 
-<h2>Profile</h2>
+<h3>Profile</h3>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php $this->widget('bootstrap.widgets.TbDetailView', array(
 	'data'=>$model,
+	'type' => 'striped bordered',
 	'attributes'=>array(
 		'uid',
 		'username',
-		'password',
 		'email',
 		'name',
 		'role',

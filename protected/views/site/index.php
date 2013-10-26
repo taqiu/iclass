@@ -71,7 +71,7 @@
 </div>
 
 <?php
-/*
+
 $gridDataProvider = new CArrayDataProvider(array(
 	array('id'=>1, 'firstName'=>'Mark', 'lastName'=>'Otto', 'language'=>'CSS'),
 	array('id'=>2, 'firstName'=>'Jacob', 'lastName'=>'Thornton', 'language'=>'JavaScript'),
@@ -96,4 +96,4 @@ $gridDataProvider = new CArrayDataProvider(array(
 			'htmlOptions'=>array('style'=>'width: 50px'),
 		),
 	),
-)); */?>
+)); ?>

@@ -38,11 +38,12 @@
 				<div class="nav-collapse">
 					<?php $this->widget('zii.widgets.CMenu',array(
 						'htmlOptions' => array( 'class' => 'nav' ),
-						'activeCssClass'	=> 'active',
+						'activeCssClass' => 'active',
 						'items'=>array(
 							array('label'=>'Home', 'url'=>array('/site/index')),
 							array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 							array('label'=>'Contact', 'url'=>array('/site/contact')),
+							array('label'=>'Admin', 'url'=>array('user/admin'), 'visible'=>Yii::app()->user->getRole()==='admin'),
 						),
 					)); ?>
 					<?php if (!Yii::app()->user->isGuest): ?>
@@ -50,8 +51,8 @@
 						 <li class="dropdown">
 							<a id="user-panel" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> <?php echo Yii::app()->user->name ?><b class="caret"></b></a>
 							<ul class="dropdown-menu">
-          						<li><a href="<?php echo $this->createUrl('user/view&id='.Yii::app()->user->id)?>"><i class="icon-cog"></i> Profile</a></li>
-          						<li><a href="<?php echo $this->createUrl('user/password&id='.Yii::app()->user->id)?>"><i class="icon-lock"></i> Change Password</a></li>
+          						<li><a href="<?php echo $this->createUrl('user/view', array('id'=>Yii::app()->user->id));?>"><i class="icon-cog"></i> Profile</a></li>
+          						<li><a href="<?php echo $this->createUrl('user/password', array('id'=>Yii::app()->user->id));?>"><i class="icon-lock"></i> Change Password</a></li>
           						<li><a href="#"><i class="icon-info-sign"></i> Help</a></li>
         					</ul>
       					</li>
@@ -73,12 +74,12 @@
 	</div>	<!-- navbar -->
 
 	<div class="container" style="<?php if (Yii::app()->user->isGuest && Yii::app()->controller->getAction()->getId() !== "login") {echo 'margin-top:77px';} ?>
-								  <?php if (!Yii::app()->user->isGuest || Yii::app()->controller->getAction()->getId() === "login") {echo 'margin-top:60px';} ?>">
+								  <?php if (!Yii::app()->user->isGuest || Yii::app()->controller->getAction()->getId() === "login") {echo 'margin-top:60px';} ?>">							  
 		<?php if (isset($this->breadcrumbs)): ?>
 			<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
 			'links' => $this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
-		<?php endif?>
+		<?php endif?>	
 
 		<?php echo $content; ?>
 	</div>

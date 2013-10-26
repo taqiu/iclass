@@ -42,6 +42,7 @@ return array(
 	// application components
 	'components'=>array(
 		'user'=>array(
+			'class' => 'WebUser',
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
@@ -66,6 +67,7 @@ return array(
 		),
 		// uncomment the following to use a MySQL database
 		'db'=>array(
+		//	'connectionString' => 'mysql:silo.cs.indiana.edu;dbname=b561f13_taqiu',
 			'connectionString' => 'mysql:host=localhost;dbname=b561f13_taqiu',
 			'emulatePrepare' => true,
 			'username' => 'b561f13_taqiu',
@@ -92,12 +94,20 @@ return array(
 				*/
 			),
 		),
+		'authManager'=>array(
+			'class'=>'CDbAuthManager',
+			'connectionID'=>'db',
+			'itemTable' =>'{{auth_item}}',
+			'itemChildTable' =>'{{auth_item_child}}',
+			'assignmentTable' =>'{{auth_assignment}}',
+			'defaultRoles'=>array('guest', 'labeler', 'labMember', 'admin'),
+		),
 	),
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'qiutanghong@gmai.com',
 	),
 );

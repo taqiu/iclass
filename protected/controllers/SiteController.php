@@ -35,6 +35,7 @@ class SiteController extends Controller
 			if(isset($_POST['User']))
 			{
 				$model->attributes=$_POST['User'];
+				$model->role = 'guest';
 				$pwd = $model->password;
 				if($model->save()) {
 					// login after register

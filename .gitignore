@@ -1,7 +1,7 @@
 # yii framework
 #assets/
 #protected/runtime/
-#themes/classic/views/
+themes/blackboot/
 
 # elipse
 .buildpath

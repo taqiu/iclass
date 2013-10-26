@@ -16,10 +16,39 @@
  */
 class User extends CActiveRecord
 {
+	const ROLE_GUEST ='guest';
+	const ROLE_LABELER ='labeler';
+	const ROLE_LAB_MEMBER = 'labMember';
+	const ROLE_ADMIN = 'admin';
+	
 	public $password_repeat;
 	public $old_password;
 	public $new_password;
 	public $new_password_repeat;
+	
+	/**
+	 * Retrieves a list of roles
+	 * @return array an array of available role types.
+	 */
+	public function getRoleOptions()
+	{
+		return array(
+			self::ROLE_GUEST => 'Guest',
+			self::ROLE_LABELER => 'Labeler',
+			self::ROLE_LAB_MEMBER => 'Lab member',
+			self::ROLE_ADMIN => 'admin'
+		);
+	}
+	
+	public static function getAllowedRoleRange()
+	{
+		return array(
+				self::ROLE_GUEST,
+				self::ROLE_LABELER,
+				self::ROLE_LAB_MEMBER,
+				self::ROLE_ADMIN,
+		);
+	}
 	
 	/**
 	 * @return string the associated database table name
@@ -38,11 +67,12 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		// Scenarios: register, change_profile, change_password
 		return array(
-			array('username, email', 'required', 'on'=>'change_profile, register'),
+			array('role','in','range'=>$this->getAllowedRoleRange(),'allowEmpty'=>false),
+			array('username, email', 'required', 'on'=>'changeProfile, register'),
 			array('password, password_repeat', 'required', 'on'=>'register'),
 			array('password', 'compare', 'on'=>'register'),
-			array('old_password, new_password, new_password_repeat', 'required', 'on'=>'change_password'),
-			array('new_password', 'compare', 'on'=>'change_password'),
+			array('old_password, new_password, new_password_repeat', 'required', 'on'=>'changePassword'),
+			array('new_password', 'compare', 'on'=>'changePassword'),
 			array('password_repeat, old_password, new_password_repeat', 'safe'),	
 			array('username, email', 'unique'),
 			array('email', 'email'),
@@ -163,7 +193,7 @@ class User extends CActiveRecord
 	 */
 	public function beforeValidate()
 	{
-		if ($this->scenario === 'change_password')
+		if ($this->scenario === 'changePassword')
 			if ($this->password !== $this->hashPassword($this->old_password)) 
 				$this->addError(null, 'Old password is not correct');
 		
@@ -177,11 +207,11 @@ class User extends CActiveRecord
 	{
 		parent::afterValidate();	
 		if(!$this->hasErrors()) {		
-			if ($this->scenario === 'change_profile');
-			else if ($this->scenario === 'change_password') {
-				$this->password = $this->hashPassword($this->new_password);
-			} else {
+			if ($this->scenario === 'register') {
 				$this->password = $this->hashPassword($this->password);
+			}
+			else if ($this->scenario === 'changePassword') {
+				$this->password = $this->hashPassword($this->new_password);
 			}
 		}
 	}

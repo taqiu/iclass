@@ -27,17 +27,17 @@ class UserController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('register', 'index', 'view', 'password'),
+			array('allow',  
+				'actions'=>array('index'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','profile', 'update'),
-				'users'=>array('@'),
+			array('allow',
+				'actions'=>array('view', 'profile', 'password'),
+				'roles'=>array('guest',),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'actions'=>array('admin','delete', 'update'),
+				'roles'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -51,9 +51,18 @@ class UserController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		$model = $this->loadModel($id);
+		$params=array('user' => $model);
+		if (Yii::app()->user->checkAccess('viewSelfProfile', $params))
+		{
+			$this->render('view',array(
+				'model'=>$model,
+			));
+		} 
+		else 
+		{
+			throw new CHttpException(403,'You are not authorized to see this user profile.');
+		}
 	}
 	
 	/**
@@ -63,19 +72,30 @@ class UserController extends Controller
 	public function actionProfile($id)
 	{
 		$model=$this->loadModel($id);
-		$model->scenario = 'change_profile';
+		$model->scenario = 'changeProfile';
 		
-		if(isset($_POST['User']))
+		$params=array('user' => $model);
+		if (Yii::app()->user->checkAccess('updateSelfProfile', $params))
 		{
-			$model->attributes=$_POST['User'];
-			// only update username, email and name
-			if($model->save(true, array('username', 'email', 'name')))
-				$this->redirect(array('view','id'=>$model->uid));
+			if(isset($_POST['User']))
+			{
+				// Uncomment the following line if AJAX validation is needed
+				// $this->performAjaxValidation($model);
+				
+				$model->attributes=$_POST['User'];
+				// only update username, email and name
+				if($model->save(true, array('username', 'email', 'name')))
+					$this->redirect(array('view','id'=>$model->uid));
+			}
+			
+			$this->render('profile',array(
+					'model'=>$model,
+			));
 		}
-		
-		$this->render('profile',array(
-				'model'=>$model,
-		));
+		else
+		{
+			throw new CHttpException(403,'You are not authorized to update this user profile.');
+		}
 	}
 	
 	/**
@@ -85,20 +105,35 @@ class UserController extends Controller
 	public function actionPassword($id)
 	{
 		$model=$this->loadModel($id);
-		$model->scenario = 'change_password';
-
-		if(isset($_POST['User']))
+		$model->scenario = 'changePassword';
+		
+		$params=array('user' => $model);
+		if (Yii::app()->user->checkAccess('updateSelfProfile', $params))
 		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->uid));
-		}
 
-		$this->render('password',array(
-			'model'=>$model,
-		));
-		
-		
+			if(isset($_POST['User']))
+			{
+				$model->attributes=$_POST['User'];
+				if($model->save()) {
+					// clear input after operation succeed
+					$model->old_password = '';
+					$model->new_password = '';
+					$model->new_password_repeat = '';
+					$this->render('password',array(
+						'model'=>$model,
+						'showSucceed' => true,
+					));
+				}
+			}
+	
+			$this->render('password',array(
+				'model'=>$model,
+			));
+		}
+		else
+		{
+			throw new CHttpException(403,'You are not authorized to update this profile.');
+		}		
 	}
 	
 	
@@ -113,42 +148,23 @@ class UserController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+		
+		// set layout
+		$this->layout = '//layouts/column1';
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->uid));
+				$this->render('update',array(
+						'model'=>$model,
+						'showSucceed' => true,
+				));
 		}
-
 		$this->render('update',array(
 			'model'=>$model,
 		));
 	}
 	
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
-	{
-		$model=new User;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->uid));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-
 
 	/**
 	 * Deletes a particular model.
@@ -170,6 +186,7 @@ class UserController extends Controller
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('User');
+		$this->layout = '//layouts/column1';
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -185,9 +202,11 @@ class UserController extends Controller
 		if(isset($_GET['User']))
 			$model->attributes=$_GET['User'];
 
+		$this->layout = '//layouts/column1';
 		$this->render('admin',array(
-			'model'=>$model,
+			'model'=>$model, 
 		));
+		//$this->layout = '//layouts/column2';
 	}
 
 	/**
