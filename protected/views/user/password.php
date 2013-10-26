@@ -3,7 +3,7 @@
 /* @var $model User */
 
 $this->breadcrumbs=array(
-	$model->name=>array('view','id'=>$model->uid),
+	$model->username=>array('view','id'=>$model->uid),
 	'Password',
 );
 
@@ -28,12 +28,12 @@ $this->menu=array(
 	<fieldset>
 	<!-- Form Name -->
 	<legend>Change password</legend>
-	<?php if (isset($showSucceed)):?>
-		<div class="alert alert-success">
+	<?php if(Yii::app()->user->hasFlash('success')):?>
+    	<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			Operation succeed!
+			<?php echo Yii::app()->user->getFlash('success');?>
 		</div>
-	<?php endif?>
+	<?php endif; ?>
 	<?php echo $form->errorSummary($model, 
 			$header='<button type="button" class="close" data-dismiss="alert">&times;</button><p>Please fix the following input errors:</p>', 
 			'', array('class'=>'alert alert-error',)); ?>

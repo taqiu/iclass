@@ -42,7 +42,10 @@ class SiteController extends Controller
 					$identity = new UserIdentity($model->username, $pwd);
 					$identity ->authenticate();
 					Yii::app()->user->login($identity);
-					$this->redirect(Yii::app()->createUrl("user/view&id=$model->uid"));
+					if (Yii::app()->user->getRole() === 'guest')
+						$this->redirect(Yii::app()->createUrl('site/page', array('view'=>'guest')));
+					else
+						$this->redirect(Yii::app()->createUrl('site/page', array('view'=>'construction')));
 				}
 			}
 			// renders the view file 'protected/views/site/index.php'
@@ -51,7 +54,10 @@ class SiteController extends Controller
 		} 
 		else // display home page for logined user
 		{
-			$this->redirect(Yii::app()->createUrl('user/view&id='.Yii::app()->user->id));
+			if (Yii::app()->user->getRole() === 'guest')
+				$this->redirect(Yii::app()->createUrl('site/page', array('view'=>'guest')));
+			else
+				$this->redirect(Yii::app()->createUrl('site/page', array('view'=>'construction')));
 		}
 	}
 

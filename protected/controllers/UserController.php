@@ -33,11 +33,11 @@ class UserController extends Controller
 			),
 			array('allow',
 				'actions'=>array('view', 'profile', 'password'),
-				'roles'=>array('guest',),
+				'roles'=>array('guest'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+			array('allow', 
 				'actions'=>array('admin','delete', 'update'),
-				'roles'=>array('admin'),
+				'roles'=>array('manageUser'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -85,7 +85,8 @@ class UserController extends Controller
 				$model->attributes=$_POST['User'];
 				// only update username, email and name
 				if($model->save(true, array('username', 'email', 'name')))
-					$this->redirect(array('view','id'=>$model->uid));
+					Yii::app()->user->setFlash('success', "Profile saved!");
+					$this->refresh();
 			}
 			
 			$this->render('profile',array(
@@ -115,14 +116,8 @@ class UserController extends Controller
 			{
 				$model->attributes=$_POST['User'];
 				if($model->save()) {
-					// clear input after operation succeed
-					$model->old_password = '';
-					$model->new_password = '';
-					$model->new_password_repeat = '';
-					$this->render('password',array(
-						'model'=>$model,
-						'showSucceed' => true,
-					));
+					Yii::app()->user->setFlash('success', "Password changed!");
+					$this->refresh();
 				}
 			}
 	
@@ -155,10 +150,8 @@ class UserController extends Controller
 		{
 			$model->attributes=$_POST['User'];
 			if($model->save())
-				$this->render('update',array(
-						'model'=>$model,
-						'showSucceed' => true,
-				));
+				Yii::app()->user->setFlash('success', "Role changed!");
+				$this->refresh();
 		}
 		$this->render('update',array(
 			'model'=>$model,

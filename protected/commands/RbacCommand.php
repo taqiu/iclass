@@ -40,9 +40,6 @@ class RbacCommand extends CConsoleCommand
 			$this->_authManager->createOperation(
 					"manageUser",
 					"mansge users in-formation");
-			$this->_authManager->createOperation(
-					"changeRole",
-					"change the role of a user");
 
 			// view self profile
 			$bizRule='return Yii::app()->user->id===$params["user"]->uid;';
@@ -120,7 +117,6 @@ class RbacCommand extends CConsoleCommand
 			$role=$this->_authManager->createRole("admin", "admin user", $bizRule);
 			$role->addChild("labMember");
 			$role->addChild("manageUser");
-			$role->addChild("changeRole");
 			
 			
 			//provide a message indicating success

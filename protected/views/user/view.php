@@ -3,7 +3,7 @@
 /* @var $model User */
 
 $this->breadcrumbs=array(
-	$model->name,
+	$model->username,
 );
 
 $this->menu=array(

@@ -41,9 +41,14 @@
 						'activeCssClass' => 'active',
 						'items'=>array(
 							array('label'=>'Home', 'url'=>array('/site/index')),
+							array('label'=>'Search', 'url'=>'#', 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
+							array('label'=>'ImageDate', 'url'=>'#', 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
+							array('label'=>'ImageSet', 'url'=>'#', 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
+							array('label'=>'Label', 'url'=>'#', 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
+							array('label'=>'Task', 'url'=>'#', 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
 							array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-							array('label'=>'Contact', 'url'=>array('/site/contact')),
-							array('label'=>'Admin', 'url'=>array('user/admin'), 'visible'=>Yii::app()->user->getRole()==='admin'),
+						/*	array('label'=>'Contact', 'url'=>array('/site/contact')), */
+							array('label'=>'Admin', 'url'=>array('/user/admin'), 'visible'=>Yii::app()->user->getRole()==='admin', 'active'=>Yii::app()->controller->id === 'user' && (Yii::app()->controller->getAction()->getId() === 'update' || Yii::app()->controller->getAction()->getId() === 'admin')),
 						),
 					)); ?>
 					<?php if (!Yii::app()->user->isGuest): ?>

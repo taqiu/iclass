@@ -1,13 +1,22 @@
 <?php $this->pageTitle=Yii::app()->name; ?>
 
 <div id='logo'>
-       <a href="http://vision.soic.indiana.edu/"><img src="http://vision.soic.indiana.edu/wp/wp-content/themes/responsive/core/images/default-logo.png" width="960" height="129" /></a>
+       <a href="http://vision.soic.indiana.edu/"><img src="<?php echo Yii::app()->request->baseUrl; ?>/img/default-logo.png" width="960" height="129" /></a>
 </div><!-- end of #logo -->
 
 <div class="row">
 	<div class="span8">
-		<h2>Getting started - <?php echo CHtml::encode(Yii::app()->name); ?></h2>
-		
+		<h2>Getting started</h2>
+		<hr/>
+		<h4>I. About ICLASS</h4>
+		<p>Nam vitae luctus ante. Pellentesque nec urna in urna elementum gravida. Donec tempus erat a ultricies placerat. Cras malesuada ac nunc vitae rutrum. Quisque metus nunc, vulputate vitae enim quis, tincidunt sollicitudin turpis. Donec feugiat diam nec orci varius sagittis. Praesent ac dignissim turpis, id luctus turpis. Integer ultrices quam in urna tempus consectetur. Aenean fermentum dui sed sem lacinia, in facilisis mi commodo. Donec facilisis neque sit amet erat ultricies interdum. Ut placerat sagittis erat. Vestibulum vitae est suscipit, fermentum nisi et, facilisis libero. Mauris non urna et augue ultrices scelerisque sit amet nec nulla. Fusce eget mauris sem. Donec quis tellus erat. Pellentesque quis sapien blandit, pulvinar felis eget, viverra turpis.</p>
+		<h4>II. How to use</h4>
+		<div style="text-align:center; margin:30px">
+			<img alt="workflow" src="<?php echo Yii::app()->request->baseUrl; ?>/img/workflow.png" width="420"  />
+		</div>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec augue accumsan, accumsan metus id, viverra urna. Vivamus imperdiet lobortis erat. Nulla eget velit ac erat pretium sagittis in eu nibh. Sed ipsum est, molestie vel justo et, porta tempus tortor. Aenean nec fringilla neque. Nulla venenatis, velit non sagittis venenatis, turpis neque placerat ligula, a rhoncus ligula elit sit amet sem.</p>
+		<p>Cras vestibulum ac mi ut pharetra. Integer magna dolor, rhoncus a euismod varius, faucibus vel metus. Phasellus purus mi, pharetra ut cursus auctor, blandit suscipit mi. Sed vitae placerat libero. Duis ac lacinia dolor, vel facilisis augue. Curabitur in sollicitudin metus. Vivamus non elit varius, semper urna molestie, euismod ligula.</p>
+<?php /*		
 		<?php Yii::app()->user->setFlash('success', '<strong>Well done!</strong> You have successfully created your Yii application.');?>
 		<?php $this->widget('bootstrap.widgets.TbAlert'); ?>
 		
@@ -21,6 +30,8 @@
 		the <a href="http://www.yiiframework.com/doc/">documentation</a>.
 		Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
 		should you have any questions.</p>
+*/ ?>
+		
 	</div>
 	<div class="span4 pull-right" id="register-div">
 		<h4>Create a Guest Account</h4>	
@@ -70,7 +81,7 @@
 	</div>
 </div>
 
-<?php
+<?php /*
 
 $gridDataProvider = new CArrayDataProvider(array(
 	array('id'=>1, 'firstName'=>'Mark', 'lastName'=>'Otto', 'language'=>'CSS'),
@@ -96,4 +107,4 @@ $gridDataProvider = new CArrayDataProvider(array(
 			'htmlOptions'=>array('style'=>'width: 50px'),
 		),
 	),
-)); ?>
+)); */?>
