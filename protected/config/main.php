@@ -67,7 +67,7 @@ return array(
 		),
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-		//	'connectionString' => 'mysql:silo.cs.indiana.edu;dbname=b561f13_taqiu',
+		//	'connectionString' => 'mysql:host=silo.cs.indiana.edu;dbname=b561f13_taqiu',
 			'connectionString' => 'mysql:host=localhost;dbname=b561f13_taqiu',
 			'emulatePrepare' => true,
 			'username' => 'b561f13_taqiu',
