@@ -24,4 +24,3 @@ class WebUser extends CWebUser {
 	}
 
 }
-?>
