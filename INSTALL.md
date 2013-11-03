@@ -40,13 +40,20 @@ The database schema is in the './protected/migrations' directory.
 
 ## 4. Initialize RBAC and Add admin user
 * Build RBAC hierarachy
+
 ```
+
 ./protected/yiic rbac
+
 ```
+
 * Register new user on the home page
 * Set admin user 
+
 ```
+
 ./protected/yiic rbac admin --username='admin_username'
+
 ```
 
 ## References
