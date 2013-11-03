@@ -11,13 +11,13 @@ See the [reference](#references) for more information about enviroment.
 
 ## 1. Check Environment
 After the environment deployment, you can open this link in your brower to check. 
-The warning items can be ignored if you don't use those tool in yii. 
+The warning items can be ignored if you don't use those tool in this project. 
 But there might still exist environment problems even everything is passed in the checking list.
 
 	http://localhost/requirements/ (change 'localhost' to your hostname if necessary)
 
 ## 2. Configure Database
-Configure db the './protected/config/main.php' and './protected/config/console.php'
+Configure db the ```./protected/config/main.php``` and ```./protected/config/console.php```
 
 ```php
 	'db'=>array(
@@ -36,7 +36,7 @@ Configure db the './protected/config/main.php' and './protected/config/console.p
 	
 ## 3. Migrate Database 
 The step requires you to create tables in the database. You can use the yiic migrate command to initialize the datebase.
-The database schema is in the './protected/migrations' directory.
+The database schema is in the ```./protected/migrations``` directory.
 
 ```shell
 	./protected/yiic migrate
@@ -57,6 +57,7 @@ The database schema is in the './protected/migrations' directory.
 ```
 
 ## References
+Deploy Apache, MySQL and PHP in different platforms
 * [Window](http://www.wampserver.com/en/)
 * [Mac OS X](http://jason.pureconcepts.net/2012/10/install-apache-php-mysql-mac-os-x/) 
-* [Linux (Centos)](http://www.howtoforge.com/quick-n-easy-lamp-server-centos-rhel)
+* [Linux (Cent OS 6.4)](http://www.howtoforge.com/quick-n-easy-lamp-server-centos-rhel)
