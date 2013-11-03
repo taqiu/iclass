@@ -41,12 +41,12 @@ The database schema is in the './protected/migrations' directory.
 ## 4. Initialize RBAC and Add admin user
 * Build RBAC hierarachy
 
-'''./protected/yiic rbac'''
+````./protected/yiic rbac```
 	
 * Register new user on the home page
 * Set admin user 
 
-'''./protected/yiic rbac admin --username='admin_username''''
+```./protected/yiic rbac admin --username='admin_username'```
 
 ## References
 * [Window](http://www.wampserver.com/en/)
