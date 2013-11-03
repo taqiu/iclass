@@ -17,7 +17,7 @@ But there might still exist environment problems even everything is passed in th
 	http://localhost/requirements/ (change 'localhost' to your hostname if necessary)
 
 ## 2. Configure Database
-Configure db the ```./protected/config/main.php``` and ```./protected/config/console.php```
+Configure db in the ```./protected/config/main.php``` and ```./protected/config/console.php```
 
 ```php
 	'db'=>array(
@@ -35,25 +35,27 @@ Configure db the ```./protected/config/main.php``` and ```./protected/config/con
 * Table prefix is used to avoid conflict when mutiple applications share the same database
 	
 ## 3. Migrate Database 
-The step requires you to create tables in the database. You can use the yiic migrate command to initialize the datebase.
-The database schema is in the ```./protected/migrations``` directory.
+The step requires you to create tables in the database. You can use the [yiic migrate command](http://www.yiiframework.com/doc/guide/1.1/en/database.migration) to initialize the datebase.
+The database schema is in the ```./protected/migrations``` directory. 
 
 ```shell
-	./protected/yiic migrate
+	./protected/yiic migrate [up|down]
 ```
 
+* 'up' is the default argument for this command. 'down' is used to drop all tables in the database.
+
 ## 4. Initialize RBAC and Add admin user
-* Build RBAC hierarachy
+* Build RBAC hierarachy 
 
 ```shell
-./protected/yiic rbac
+	./protected/yiic rbac
 ```
 
 * Register new user on the home page
 * Set admin user 
 
 ```shell
-./protected/yiic rbac admin --username='admin_username'
+	./protected/yiic rbac admin --username='admin_username'
 ```
 
 ## References
