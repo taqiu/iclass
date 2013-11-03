@@ -7,3 +7,6 @@ themes/blackboot/
 .buildpath
 .project
 .settings/
+
+# Mac OS
+.DS_store
