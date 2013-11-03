@@ -1,6 +1,8 @@
 # Installing instructions
 
-This repository has already integrated the yii framework, so you don't need to install yii 
+This repository has already integrated the yii framework, 
+so you don't need to install yii additionally. 
+See the reference for more information about enviroment. 
 
 ## Prerequisites
 * Apache
@@ -22,7 +24,7 @@ Configure db the './protected/config/main.php' and './protected/config/console.p
 			'connectionString' => 'mysql:host=localhost:3306;dbname=b561f13_taqiu',
 			'emulatePrepare' => true,
 			'username' => 'b561f13_taqiu',
-			'password' => 'fountainpark',
+			'password' => 'your_password',
 			'charset' => 'utf8',
 			'tablePrefix' => 'dev_',
 		),
@@ -31,7 +33,7 @@ Configure db the './protected/config/main.php' and './protected/config/console.p
 * Table prefix is used to avoid conflict when mutiple applications share the same database
 	
 ## 3. Migrate Database 
-The step requires you create tables in the database. You can use the yiic migrate command to initialize the datebase.
+The step requires you to create tables in the database. You can use the yiic migrate command to initialize the datebase.
 The database schema is in the './protected/migrations' directory.
 
 	./protected/yiic migrate
@@ -39,12 +41,12 @@ The database schema is in the './protected/migrations' directory.
 ## 4. Initialize RBAC and Add admin user
 * Build RBAC hierarachy
 
-	./protected/yiic rbac 
+'''./protected/yiic rbac'''
 	
 * Register new user on the home page
 * Set admin user 
 
-	./protected/yiic rbac admin --username='admin_username'
+'''./protected/yiic rbac admin --username='admin_username''''
 
 ## References
 * [Window](http://www.wampserver.com/en/)
