@@ -79,10 +79,10 @@ class m131023_170501_create_rbac_tables extends CDbMigration
 	public function down()
 	{
 		$this->truncateTable('{{auth_assignment}}');
-		$this->truncateTable('{{auth_item_child}}');
-		$this->truncateTable('{{auth_item}}');
 		$this->dropTable('{{auth_assignment}}');
+		$this->truncateTable('{{auth_item_child}}');
 		$this->dropTable('{{auth_item_child}}');
+		$this->truncateTable('{{auth_item}}');
 		$this->dropTable('{{auth_item}}');
 	}
 
