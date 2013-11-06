@@ -16,8 +16,17 @@ But there might still exist environment problems even everything is passed in th
 
 	http://localhost/requirements/ (change 'localhost' to your hostname if necessary)
 
-## 2. Configure Database
-Configure db in the ```./protected/config/main.php``` and ```./protected/config/console.php```
+## 2. Create and Configure Database
+* [Create database and set privileges to a user](http://www.debuntu.org/how-to-create-a-mysql-database-and-set-privileges-to-a-user/)
+
+```shell
+	$ mysql -u root -p
+	mysql> create database b561f13_taqiu;
+	mysql> grant usage on *.* to b561f13_taqiu@localhost identified by 'your_password';
+	mysql> grant all privileges on b561f13_taqiu.* to b561f13_taqiu@localhost ;
+```
+
+* Configure db in the ```./protected/config/main.php``` and ```./protected/config/console.php```
 
 ```php
 	'db'=>array(
