@@ -76,7 +76,7 @@
 				</div>
 			</fieldset>
 			<input class="btn btn-primary" type="submit" value="Create" />
-			<input class="btn" id="yw1" type="reset" value="Rest" />
+			<input class="btn" id="yw1" type="reset" value="Reset" />
 		<?php $this->endWidget(); ?>
 	</div>
 </div>
