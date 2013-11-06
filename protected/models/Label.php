@@ -112,4 +112,19 @@ class Label extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+
+	/**
+	 * Prepares create_time, owner, update_time and update_user_id attributes before performing validation.
+	 */
+	protected function beforeValidate()
+	{
+		if($this->isNewRecord)
+		{
+			// set the create date and the user doing the creating
+			$this->create_time = new CDbExpression('NOW()');
+			$this->owner = Yii::app()->user->id;
+		}
+		return parent::beforeValidate();
+	}
 }
