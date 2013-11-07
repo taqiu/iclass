@@ -10,3 +10,6 @@ themes/blackboot/
 
 # Mac OS
 .DS_store
+
+# phpmyadmin
+phpmyadmin
