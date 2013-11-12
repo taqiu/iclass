@@ -12,7 +12,7 @@ $form = $this->beginWidget(
 echo $form->fileField($model, 'imageData');?> 
 <?php 
 echo CHtml::ajaxSubmitButton (
-   'Upload and Processes', 
+   'Upload and Process', 
 	'',
     array('data'=>'js:function(){$(#uploadform).serialize()}',
 		  'context'=>'this',
