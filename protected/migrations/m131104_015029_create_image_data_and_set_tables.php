@@ -17,6 +17,10 @@ class m131104_015029_create_image_data_and_set_tables extends CDbMigration
 			'license' => 'integer',
 			'flickr_photo_id' => 'varchar(64)',
 			'date_uploaded'	=> 'datetime',
+			'farm'	=>	'integer NOT NULL',
+			'server' => 'integer NOT NULL',
+			'secret' => 'char(10) NOT NULL',
+			'UNIQUE KEY `k` (`flickr_user`,`flickr_photo_id`)',
 		), 'ENGINE=InnoDB');
 		// the image_data.uploader is a reference to user.uid
 		$this->addForeignKey(

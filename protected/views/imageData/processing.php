@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Image Data'=>array('index'),
-	'Create',
+	'Upload',
 );
 
 $this->menu=array(
@@ -11,6 +11,9 @@ array('label'=>'Manage Image Data','url'=>array('admin'))
 );
 ?>
 
-<h1>Create ImageData</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<h1>Record Upload Summary</h1>
+<font size=3>
+<p style="text-indent: 5em"><?php echo $model->added_records ?> of <?php echo $model->tot_records ?> records added.</p>
+<p style="text-indent: 5em"><?php echo $model->added_tags ?> tags added. </p>
+</font>

@@ -4,12 +4,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'Create ImageData','url'=>array('create')),
-array('label'=>'Manage ImageData','url'=>array('admin')),
+array('label'=>'Upload Image Data','url'=>array('upload')),
+array('label'=>'Manually Enter Image Data','url'=>array('create')),
+array('label'=>'Manage Image Data','url'=>array('admin'))
 );
 ?>
 
-<h1>Image Datas</h1>
+<h1>Image Data</h1>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
 'dataProvider'=>$dataProvider,

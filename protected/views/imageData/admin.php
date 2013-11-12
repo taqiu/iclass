@@ -5,8 +5,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List ImageData','url'=>array('index')),
-array('label'=>'Create ImageData','url'=>array('create')),
+array('label'=>'Upload Image Data','url'=>array('upload')),
+array('label'=>'Manually Enter Image Data','url'=>array('create')),
+array('label'=>'Manage Image Data','url'=>array('admin'))
 );
 
 Yii::app()->clientScript->registerScript('search', "

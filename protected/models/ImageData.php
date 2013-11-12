@@ -15,6 +15,9 @@
  * @property integer $license
  * @property string $flickr_photo_id
  * @property string $date_uploaded
+ * @property integer $farm
+ * @property integer $server
+ * @property string $secret
  *
  * The followings are the available model relations:
  * @property User $uploader0
@@ -40,15 +43,17 @@ class ImageData extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('uploader', 'required'),
-			array('uploader, license', 'numerical', 'integerOnly'=>true),
+			array('flickr_user', 'ext.UniqueAttributesValidator', 'with'=>'flickr_photo_id'),
+			array('uploader, farm, server, secret', 'required'),
+			array('uploader, license, farm, server', 'numerical', 'integerOnly'=>true),
 			array('latitude, longitude, precision', 'numerical'),
 			array('flickr_user', 'length', 'max'=>128),
 			array('flickr_photo_id', 'length', 'max'=>64),
+			array('secret', 'length', 'max'=>10),
 			array('date_uploaded_flickr, title, date_uploaded', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, uploader, flickr_user, date_uploaded_flickr, latitude, longitude, precision, title, license, flickr_photo_id, date_uploaded', 'safe', 'on'=>'search'),
+			array('id, uploader, flickr_user, date_uploaded_flickr, latitude, longitude, precision, title, license, flickr_photo_id, date_uploaded, farm, server, secret', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,6 +89,9 @@ class ImageData extends CActiveRecord
 			'license' => 'License',
 			'flickr_photo_id' => 'Flickr Photo',
 			'date_uploaded' => 'Date Uploaded',
+			'farm' => 'Farm',
+			'server' => 'Server',
+			'secret' => 'Secret',
 		);
 	}
 
@@ -116,6 +124,9 @@ class ImageData extends CActiveRecord
 		$criteria->compare('license',$this->license);
 		$criteria->compare('flickr_photo_id',$this->flickr_photo_id,true);
 		$criteria->compare('date_uploaded',$this->date_uploaded,true);
+		$criteria->compare('farm',$this->farm);
+		$criteria->compare('server',$this->server);
+		$criteria->compare('secret',$this->secret,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

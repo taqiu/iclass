@@ -19,6 +19,7 @@ class ImageDataController extends Controller
 		);
 	}
 
+	
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -32,7 +33,7 @@ class ImageDataController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','upload'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -102,6 +103,8 @@ class ImageDataController extends Controller
 			'model'=>$model,
 		));
 	}
+	
+	
 
 	/**
 	 * Deletes a particular model.
@@ -143,6 +146,81 @@ class ImageDataController extends Controller
 		));
 	}
 
+	
+	public function actionUpload()
+    {
+	
+		if(isset($_POST['ajax']) && $_POST['ajax']==='uploadform')
+		{
+				echo CActiveForm::validate($model);
+				Yii::app()->end();
+		}
+	
+        $model=new FileUploadForm;
+        if(isset($_POST['FileUploadForm']))
+        {
+            $model->attributes=$_POST['FileUploadForm'];
+            $model->imageData=CUploadedFile::getInstance($model,'imageData');
+            if($model->validate())
+            {
+				set_time_limit(86400);
+				$handle = fopen($model->imageData->tempname,"r");
+				if($handle){
+					$model->tot_records = 0;
+					$model->added_records = 0;
+					$model->added_tags = 0;
+					while(($line = fgets($handle)) != false){
+						
+						$record = new ImageData;
+						$row_data = explode(' ', $line);
+						$temp = explode('@N',$row_data[0]);
+						
+						$record->uploader = Yii::app()->user->getId(); 
+						$record->flickr_user = implode(array($temp[0],$temp[1]));
+						$record->flickr_photo_id = $row_data[1];
+						$record->date_uploaded_flickr = $row_data[7];
+						$record->latitude = $row_data[9];
+						$record->longitude = $row_data[10];
+						$record->precision = $row_data[11];
+						
+						$record->secret = $row_data[12];
+						$record->server = $row_data[13];
+						$record->farm = $row_data[14];
+						
+						$temp = explode('=',$row_data[17]);
+						$record->title = $temp[1];
+						
+						$temp = explode('=',$row_data[18]);
+						$record->license = $temp[1];
+						$record->date_uploaded = date("Y-m-d");
+						
+						$model->tot_records++;
+						if($record->validate()){
+							$record->save();
+							$model->added_records++;
+							$temp = explode(',',$row_data[20]);
+							foreach ($temp as $tag){
+								if($tag != ''){
+									$t = new Tag;
+									$t->image_id = $record->id;
+									$t->tag_text = $tag;
+									$t->save();
+									$model->added_tags++;
+								}
+							}
+						}
+					}
+				}
+				$this->render('processing', array('model'=>$model), false, true);
+            }
+			else{
+				$model->error="Invalid file type. Requires .dump files.";
+			}
+        }
+        $this->render('upload', array('model'=>$model));
+    }
+	
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -157,6 +235,8 @@ class ImageDataController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+	
+		
 
 	/**
 	 * Performs the AJAX validation.
