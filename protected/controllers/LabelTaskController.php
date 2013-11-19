@@ -103,12 +103,19 @@ class LabelTaskController extends Controller
 		if(isset($_POST['LabelTask']))
 		{
 			$model->attributes=$_POST['LabelTask'];
+			$model->set_id=explode(' ',$model->set_id)[0];
+			$model->label_id=explode(' ',$model->label_id)[0];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
+		$criteria = new CDbCriteria();
+		$answersImageSet = ImageSet::model()->findAll($criteria);
+		
+		$criteria = new CDbCriteria();
+		$answersLabel = Label::model()->findAll($criteria);
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model,'ImgSet'=>$answersImageSet,'Label1'=>$answersLabel,
 		));
 	}
 

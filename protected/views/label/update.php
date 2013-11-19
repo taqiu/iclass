@@ -9,6 +9,7 @@ $this->breadcrumbs=array(
 	array('label'=>'Label Home','url'=>array('index')),
 	array('label'=>'Create Labels','url'=>array('create')),
 	array('label'=>'Manage Labels','url'=>array('admin')),
+	array('label'=>'View This Label','url'=>array('view','id'=>$model->id)),
 	);
 	?>
 

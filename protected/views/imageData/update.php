@@ -1,15 +1,15 @@
 <?php
 $this->breadcrumbs=array(
-	'Image Datas'=>array('index'),
+	'Image Data'=>array('index'),
 	$model->title=>array('view','id'=>$model->id),
 	'Update',
 );
-
+	
 	$this->menu=array(
-	array('label'=>'List ImageData','url'=>array('index')),
-	array('label'=>'Create ImageData','url'=>array('create')),
+	array('label'=>'Image Data Home', 'url'=>array('index')),
+	array('label'=>'Upload Image Data','url'=>array('upload')),
+	array('label'=>'Manage Image Data','url'=>array('admin')),
 	array('label'=>'View ImageData','url'=>array('view','id'=>$model->id)),
-	array('label'=>'Manage ImageData','url'=>array('admin')),
 	);
 	?>
 

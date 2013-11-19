@@ -5,11 +5,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List LabelTask','url'=>array('index')),
-array('label'=>'Create LabelTask','url'=>array('create')),
-array('label'=>'Update LabelTask','url'=>array('update','id'=>$model->id)),
-array('label'=>'Delete LabelTask','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-array('label'=>'Manage LabelTask','url'=>array('admin')),
+array('label'=>'Label Task Home','url'=>array('index')),
+array('label'=>'Create Label Task','url'=>array('create')),
+array('label'=>'Manage Label Task','url'=>array('admin')),
+array('label'=>'Update This Label Task','url'=>array('update','id'=>$model->id)),
+array('label'=>'Delete This Label Task','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 );
 ?>
 

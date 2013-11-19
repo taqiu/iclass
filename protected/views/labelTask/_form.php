@@ -41,4 +41,3 @@
 </div>
 
 <?php $this->endWidget(); ?>
-<?php echo $ImgSet[0]->name; ?>

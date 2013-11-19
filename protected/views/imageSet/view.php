@@ -5,11 +5,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List ImageSet','url'=>array('index')),
-array('label'=>'Create ImageSet','url'=>array('create')),
-array('label'=>'Update ImageSet','url'=>array('update','id'=>$model->id)),
-array('label'=>'Delete ImageSet','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-array('label'=>'Manage ImageSet','url'=>array('admin')),
+array('label'=>'Image Set Home','url'=>array('index')),
+array('label'=>'Create Image Set','url'=>array('create')),
+array('label'=>'Manage Image Sets','url'=>array('admin')),
+array('label'=>'Update This Image Set','url'=>array('update','id'=>$model->id)),
+array('label'=>'Delete This Image Set','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
 );
 ?>
 

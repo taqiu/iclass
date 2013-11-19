@@ -1,10 +1,11 @@
 <?php
 $this->breadcrumbs=array(
-	'Image Datas'=>array('index'),
+	'Image Data'=>array('index'),
 	'Manage',
 );
 
 $this->menu=array(
+array('label'=>'Image Data Home', 'url'=>array('index')),
 array('label'=>'Upload Image Data','url'=>array('upload')),
 array('label'=>'Manage Image Data','url'=>array('admin'))
 );

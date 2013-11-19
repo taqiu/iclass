@@ -6,13 +6,13 @@ $this->breadcrumbs=array(
 );
 
 	$this->menu=array(
-	array('label'=>'List LabelTask','url'=>array('index')),
-	array('label'=>'Create LabelTask','url'=>array('create')),
-	array('label'=>'View LabelTask','url'=>array('view','id'=>$model->id)),
-	array('label'=>'Manage LabelTask','url'=>array('admin')),
+	array('label'=>'Label Task Home','url'=>array('index')),
+	array('label'=>'Create Label Task','url'=>array('create')),
+	array('label'=>'Manage Label Task','url'=>array('admin')),
+	array('label'=>'View This Label Task','url'=>array('view','id'=>$model->id)),
 	);
 	?>
 
 	<h1>Update LabelTask <?php echo $model->id; ?></h1>
 
-<?php echo $this->renderPartial('_form',array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,'ImgSet'=>$ImgSet,'Label1'=>$Label1)); ?>

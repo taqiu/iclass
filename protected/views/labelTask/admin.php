@@ -5,8 +5,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List LabelTask','url'=>array('index')),
-array('label'=>'Create LabelTask','url'=>array('create')),
+array('label'=>'Label Task Home','url'=>array('index')),
+array('label'=>'Create Label Task','url'=>array('create')),
+array('label'=>'Manage Label Task','url'=>array('admin')),
 );
 
 Yii::app()->clientScript->registerScript('search', "

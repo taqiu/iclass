@@ -5,6 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
+array('label'=>'Image Data Home', 'url'=>array('index')),
 array('label'=>'Upload Image Data','url'=>array('upload')),
 array('label'=>'Manage Image Data','url'=>array('admin'))
 );

@@ -5,8 +5,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List ImageSet','url'=>array('index')),
-array('label'=>'Manage ImageSet','url'=>array('admin')),
+array('label'=>'Image Set Home','url'=>array('index')),
+array('label'=>'Create Image Set','url'=>array('create')),
+array('label'=>'Manage Image Sets','url'=>array('admin')),
 );
 ?>
 
