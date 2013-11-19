@@ -7,16 +7,29 @@
 
 <?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->textFieldRow($model,'owner',array('class'=>'span5')); ?>
-
+	
 	<?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>64)); ?>
 
-	<?php echo $form->textFieldRow($model,'set_id',array('class'=>'span5')); ?>
+	<?php 
+	       $ImgSetvals = array();
+          foreach($ImgSet as $i){
+//           array_push($ImgSetvals, implode(array($i->id," ", $i->name)));
+		 // array_push($ImgSetvals, $i->id =>implode($i->id," ", $i->name));
+		 $ImgSetvals[$i->id] = implode(array($i->id," ", $i->name));
+		  }
+  	
+	         echo $form->dropDownListRow($model,'set_id',$ImgSetvals); 
+			 
+			 $Labelvals = array();
+          foreach($Label1 as $i){
+//           array_push($Labelvals, implode(array($i->id," ", $i->name)));
+	//array_push($ImgSetvals, $i->id =>implode($i->id," ", $i->name));
+	$Labelvals[$i->id] = implode(array($i->id," ", $i->name));
+	}
 
-	<?php echo $form->textFieldRow($model,'label_id',array('class'=>'span5')); ?>
+	      echo $form->dropDownListRow($model,'label_id',$Labelvals); ?>
 
-	<?php echo $form->textFieldRow($model,'create_time',array('class'=>'span5')); ?>
-
+	
 	<?php echo $form->textFieldRow($model,'status',array('class'=>'span5','maxlength'=>16)); ?>
 
 <div class="form-actions">
@@ -28,3 +41,4 @@
 </div>
 
 <?php $this->endWidget(); ?>
+<?php echo $ImgSet[0]->name; ?>
