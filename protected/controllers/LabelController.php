@@ -32,7 +32,7 @@ class LabelController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','addAnswer'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -45,40 +45,62 @@ class LabelController extends Controller
 		);
 	}
 
+	
+	
+	
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
+	
+		$criteria = new CDbCriteria();
+		//$criteria->with = array('Label');
+		$criteria->compare('label_id', $id, true);
+		$answers = PossibleAnswer::model()->findAll($criteria);
+		
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$this->loadModel($id),'answers'=>$answers,
 		));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
+	
+	
 	public function actionCreate()
 	{
-		$model=new Label;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		Yii::import('ext.multimodelform.MultiModelForm');
+	 
+		$model = new Label;
+	 
+		$member = new PossibleAnswer;
+		$validatedMembers = array();  //ensure an empty array
+	 
 		if(isset($_POST['Label']))
 		{
 			$model->attributes=$_POST['Label'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			
+			if( //validate detail before saving the master
+				MultiModelForm::validate($member,$validatedMembers,$deleteItems) &&
+				$model->save()
+			   )
+			   {
+				 //the value for the foreign key 'groupid'
+				 $masterValues = array ('label_id'=>$model->id);
+				 if (MultiModelForm::save($member,$validatedMembers,$deleteMembers,$masterValues))
+					$this->redirect(array('view','id'=>$model->id));
+				}
 		}
-
+	 
 		$this->render('create',array(
 			'model'=>$model,
+			//submit the member and validatedItems to the widget in the edit form
+			'member'=>$member,
+			'validatedMembers' => $validatedMembers,
 		));
 	}
-
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -86,20 +108,32 @@ class LabelController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		Yii::import('ext.multimodelform.MultiModelForm');
+	 
+		$model=$this->loadModel($id); //the Group model
+	 
+		$member = new PossibleAnswer;
+		$validatedMembers = array(); //ensure an empty array
+	 
 		if(isset($_POST['Label']))
 		{
 			$model->attributes=$_POST['Label'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+	 
+			//the value for the foreign key 'groupid'
+			$masterValues = array ('label_id'=>$model->id);
+	 
+			if( //Save the master model after saving valid members
+				MultiModelForm::save($member,$validatedMembers,$deleteMembers,$masterValues) &&
+				$model->save()
+			   )
+					$this->redirect(array('view','id'=>$model->id));
 		}
-
+	 
 		$this->render('update',array(
 			'model'=>$model,
+			//submit the member and validatedItems to the widget in the edit form
+			'member'=>$member,
+			'validatedMembers' => $validatedMembers,
 		));
 	}
 

@@ -17,7 +17,8 @@ echo CHtml::ajaxSubmitButton (
     array('data'=>'js:function(){$(#uploadform).serialize()}',
 		  'context'=>'this',
 	      'type' => 'post',),
-	array('id'=>'sub', 'name'=>'t')
+	array('class'=>'btn btn-primary',
+			'id'=>'sub', 'name'=>'t')
  );?>
 <p><font color=red><?php echo $model->error;?> </font></p>
 </div>

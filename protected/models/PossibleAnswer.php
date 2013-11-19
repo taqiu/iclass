@@ -1,29 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "{{label}}".
+ * This is the model class for table "{{possible_answer}}".
  *
- * The followings are the available columns in table '{{label}}':
+ * The followings are the available columns in table '{{possible_answer}}':
  * @property integer $id
- * @property integer $owner
- * @property string $name
- * @property string $description
- * @property string $create_time
+ * @property integer $label_id
+ * @property string $answer
  *
  * The followings are the available model relations:
- * @property User $owner0
  * @property LabelResponse[] $labelResponses
- * @property LabelTask[] $labelTasks
- * @property PossibleAnswer[] $possibleAnswers
+ * @property Label $label
  */
-class Label extends CActiveRecord
+class PossibleAnswer extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{label}}';
+		return '{{possible_answer}}';
 	}
 
 	/**
@@ -34,15 +30,12 @@ class Label extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('owner', 'required'),
-			array('name', 'required'),
-			array('description', 'required'),
-			array('owner', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>64),
-			array('description, create_time', 'safe'),
+			//array('label_id', 'required'),
+			array('label_id', 'numerical', 'integerOnly'=>true),
+			array('answer', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, owner, name, description, create_time', 'safe', 'on'=>'search'),
+			array('id, label_id, answer', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,10 +47,8 @@ class Label extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'owner0' => array(self::BELONGS_TO, 'User', 'owner'),
-			'labelResponses' => array(self::HAS_MANY, 'LabelResponse', 'label_id'),
-			'labelTasks' => array(self::HAS_MANY, 'LabelTask', 'label_id'),
-			'possibleAnswers' => array(self::HAS_MANY, 'PossibleAnswer', 'label_id'),
+			'labelResponses' => array(self::HAS_MANY, 'LabelResponse', 'answer_id'),
+			'label' => array(self::BELONGS_TO, 'Label', 'label_id'),
 		);
 	}
 
@@ -68,10 +59,8 @@ class Label extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'owner' => 'Owner',
-			'name' => 'Name',
-			'description' => 'Description',
-			'create_time' => 'Create Time',
+			'label_id' => 'Label',
+			'answer' => 'Answer',
 		);
 	}
 
@@ -94,10 +83,8 @@ class Label extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('owner',$this->owner);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('create_time',$this->create_time,true);
+		$criteria->compare('label_id',$this->label_id);
+		$criteria->compare('answer',$this->answer,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -108,25 +95,10 @@ class Label extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Label the static model class
+	 * @return PossibleAnswer the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-	
-
-	/**
-	 * Prepares create_time, owner, update_time and update_user_id attributes before performing validation.
-	 */
-	protected function beforeValidate()
-	{
-		if($this->isNewRecord)
-		{
-			// set the create date and the user doing the creating
-			$this->create_time = new CDbExpression('NOW()');
-			$this->owner = Yii::app()->user->id;
-		}
-		return parent::beforeValidate();
 	}
 }

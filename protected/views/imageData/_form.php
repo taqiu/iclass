@@ -27,6 +27,13 @@
 
 	<?php echo $form->textFieldRow($model,'date_uploaded',array('class'=>'span5')); ?>
 
+	<?php echo $form->textFieldRow($model,'farm',array('class'=>'span5')); ?>
+
+	<?php echo $form->textFieldRow($model,'server',array('class'=>'span5')); ?>
+
+	<?php echo $form->textFieldRow($model,'secret',array('class'=>'span5')); ?>
+
+	
 <div class="form-actions">
 	<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',

@@ -1,24 +1,22 @@
 <div class="view">
 
-		<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('owner')); ?>:</b>
-	<?php echo CHtml::encode($data->owner); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
-	<?php echo CHtml::encode($data->name); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
-	<?php echo CHtml::encode($data->description); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('create_time')); ?>:</b>
-	<?php echo CHtml::encode($data->create_time); ?>
-	<br />
-
-
+	<?php $this->widget('bootstrap.widgets.TbDetailView',array(
+	'data'=>$model,//array('model'=>$model,'answers'=>$answers),
+	'attributes'=>array(
+			'id',
+			'owner',
+			'name',
+			'description',
+			'create_time',
+	),
+	)); ?>
+	<?php $gridDataProvider = new CArrayDataProvider($answers); ?>
+	<?php $this->widget('bootstrap.widgets.TbGridView',array(
+	'type'=>'striped bordered condensed',
+	'dataProvider'=>$gridDataProvider,
+	'template'=>"{items}",
+	'columns'=>array(
+		array('name'=>'id', 'header'=>'#'),
+		array('name'=>'answer','header'=>'Possible Answer'))
+	)); ?>
 </div>

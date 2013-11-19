@@ -1,12 +1,12 @@
 <?php
 $this->breadcrumbs=array(
 	'Image Data'=>array('index'),
-	'Upload',
+	'Upload'=>Yii::app()->createUrl('imageData/upload'),
+	'Summary',
 );
 
 $this->menu=array(
 array('label'=>'Upload Image Data','url'=>array('upload')),
-array('label'=>'Manually Enter Image Data','url'=>array('create')),
 array('label'=>'Manage Image Data','url'=>array('admin'))
 );
 ?>

@@ -1,27 +1,22 @@
 <?php
 $this->breadcrumbs=array(
 	'Labels'=>array('index'),
+	'Manage'=>Yii::app()->createUrl('label/admin'),
 	$model->name,
 );
 
 $this->menu=array(
-array('label'=>'List Label','url'=>array('index')),
-array('label'=>'Create Label','url'=>array('create')),
+array('label'=>'Label Home','url'=>array('index')),
+array('label'=>'Create Labels','url'=>array('create')),
+array('label'=>'Manage Labels','url'=>array('admin')),
 array('label'=>'Update Label','url'=>array('update','id'=>$model->id)),
 array('label'=>'Delete Label','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-array('label'=>'Manage Label','url'=>array('admin')),
 );
 ?>
 
-<h1>View Label #<?php echo $model->id; ?></h1>
+<h1>View Label: <?php echo $model->name; ?></h1>
 
-<?php $this->widget('bootstrap.widgets.TbDetailView',array(
-'data'=>$model,
-'attributes'=>array(
-		'id',
-		'owner',
-		'name',
-		'description',
-		'create_time',
-),
-)); ?>
+<?php echo $this->renderPartial('_view',array('model'=>$model, 'answers'=>$answers)); ?>
+
+
+

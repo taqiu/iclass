@@ -4,14 +4,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'Create Label','url'=>array('create')),
-array('label'=>'Manage Label','url'=>array('admin')),
+array('label'=>'Label Home', 'url'=>array('index')),
+array('label'=>'Create Labels','url'=>array('create')),
+array('label'=>'Manage Labels','url'=>array('admin')),
 );
 ?>
 
 <h1>Labels</h1>
 
-<?php $this->widget('bootstrap.widgets.TbListView',array(
-'dataProvider'=>$dataProvider,
-'itemView'=>'_view',
-)); ?>

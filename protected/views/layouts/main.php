@@ -44,7 +44,7 @@
 							array('label'=>'Search', 'url'=>'#', 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
 							array('label'=>'Image Data', 'url'=>array('/imageData/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
 							array('label'=>'Image Sets', 'url'=>array('/imageSet/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
-							array('label'=>'Label', 'url'=>array('/label/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
+							array('label'=>'Labels', 'url'=>array('/label/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
 							array('label'=>'Tasks', 'url'=>array('/labelTask/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
 							array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 						/*	array('label'=>'Contact', 'url'=>array('/site/contact')), */
