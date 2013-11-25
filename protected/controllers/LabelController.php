@@ -57,7 +57,6 @@ class LabelController extends Controller
 		$model = $this->loadModel($id);
 	
 		$criteria = new CDbCriteria();
-		//$criteria->with = array('Label');
 		$criteria->compare('label_id', $id, true);
 		$answers = PossibleAnswer::model()->findAll($criteria);
 		

@@ -24,7 +24,7 @@ return false;
 ");
 ?>
 
-<h1>Manage Image Datas</h1>
+<h1>Manage Image Data</h1>
 
 <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
@@ -50,15 +50,15 @@ return false;
 		'date_uploaded_flickr',
 		'latitude',
 		'longitude',
-		/*
-		'precision',
-		'title',
-		'license',
-		'flickr_photo_id',
-		'date_uploaded',
-		*/
+		array('header'=>'Tags','name'=>'tagSearch','value'=>function($data){
+													$temp = array();
+													foreach($data->tags as $t)
+														$temp[] = $t->tag_text;
+													$string = implode(',', $temp);
+													return (strlen($string) > 20) ? substr($string, 0, 20).'...' : $string;
+													}),
 array(
-'class'=>'bootstrap.widgets.TbButtonColumn',
+'class'=>'bootstrap.widgets.TbButtonColumn', 'template'=>'{view}{delete}',
 ),
 ),
 )); ?>

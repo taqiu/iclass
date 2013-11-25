@@ -12,5 +12,4 @@ array('label'=>'Manage Image Sets','url'=>array('admin')),
 ?>
 
 <h1>Create ImageSet</h1>
-
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model, 'data_model'=>$data_model), true, false); ?>

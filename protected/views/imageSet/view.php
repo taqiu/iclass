@@ -26,3 +26,30 @@ array('label'=>'Delete This Image Set','url'=>'#','linkOptions'=>array('submit'=
 		'create_time',
 ),
 )); ?>
+
+
+
+
+<?php 
+
+$this->widget('bootstrap.widgets.TbGridView',array(
+'id'=>'image-data-grid',
+'dataProvider'=>new CActiveDataProvider('ImageData', array('data'=>$model->devImageDatas)),
+'columns'=>array(
+		'id',
+		'uploader',
+		'flickr_user',
+		'date_uploaded_flickr',
+		'latitude',
+		'longitude',
+		array('header'=>'Tags','name'=>'tagSearch','value'=>function($data){
+													$temp = array();
+													foreach($data->tags as $t)
+														$temp[] = $t->tag_text;
+													$string = implode(',', $temp);
+													return (strlen($string) > 20) ? substr($string, 0, 20).'...' : $string;
+													}),
+),
+)); ?>
+
+

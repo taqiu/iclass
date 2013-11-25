@@ -63,19 +63,36 @@ class ImageSetController extends Controller
 	public function actionCreate()
 	{
 		$model=new ImageSet;
-
+		$data_model = new ImageData('search');
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['ImageSet']))
+		if(isset($_GET['ImageData']))
+			$data_model->attributes=$_GET['ImageData'];
+			
+		if(isset($_POST['ImageSet']) && isset($_POST['ImageSet']))
 		{
 			$model->attributes=$_POST['ImageSet'];
-			if($model->save())
+			$model->imageList =$_POST['checkedImages'];
+			$model->size = count($model->imageList);
+			$model->owner = Yii::app()->user->getId();
+			$model->create_time = date("Y-m-d");
+			if($model->save()){
+				$i = 0;
+				foreach($model->imageList as $img_id){
+					$temp = new ImageSetDetail;
+					$temp->set_id = $model->id;
+					$temp->image_id = $img_id;
+					$temp->index_in_set = $i;
+					
+					if($temp->save())
+						$i++;
+				}
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$model, 'data_model'=>$data_model
 		));
 	}
 
@@ -87,19 +104,45 @@ class ImageSetController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+		$model->imageList = array();
+		foreach($model->devImageDatas as $t){
+			$model->imageList[] = $t->id;
+		}
+		$data_model = new ImageData('search');
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['ImageSet']))
+		if(isset($_GET['ImageData']))
+			$data_model->attributes=$_GET['ImageData'];
+			
+		if(isset($_POST['ImageSet']) && isset($_POST['ImageSet']))
 		{
 			$model->attributes=$_POST['ImageSet'];
-			if($model->save())
+			$oldList = $model->imageList;
+			$model->imageList =$_POST['checkedImages'];
+			$model->size = count($model->imageList);
+			
+			if($model->save()){
+				$i = 0;
+				
+				
+				
+				foreach($model->imageList as $img_id){
+					
+					
+					$temp = new ImageSetDetail;
+					$temp->set_id = $model->id;
+					$temp->image_id = $img_id;
+					$temp->index_in_set = $i;
+					
+					if($temp->save())
+						$i++;
+				}
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model'=>$model, 'data_model'=>$data_model
 		));
 	}
 

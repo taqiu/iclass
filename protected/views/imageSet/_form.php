@@ -1,3 +1,7 @@
+
+
+
+
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'image-set-form',
 	'enableAjaxValidation'=>false,
@@ -7,15 +11,38 @@
 
 <?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->textFieldRow($model,'owner',array('class'=>'span5')); ?>
-
 	<?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>64)); ?>
 
 	<?php echo $form->textAreaRow($model,'description',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 
-	<?php echo $form->textFieldRow($model,'size',array('class'=>'span5')); ?>
 
-	<?php echo $form->textFieldRow($model,'create_time',array('class'=>'span5')); ?>
+<?php $form->widget('ext.selgridview.BootSelGridView',array(
+'id'=>'image-data-grid',
+'dataProvider'=>$data_model->search(),
+'selectableRows'=>2,
+'filter'=>$data_model,
+'columns'=>array(
+		array(
+          'id' => 'checkedImages',
+		  'class' => 'CCheckBoxColumn',
+        ),
+		'id',
+		'uploader',
+		'flickr_user',
+		'date_uploaded_flickr',
+		'latitude',
+		'longitude',
+		array('header'=>'Tags','name'=>'tagSearch','value'=>function($data){
+													$temp = array();
+													foreach($data->tags as $t)
+														$temp[] = $t->tag_text;
+													$string = implode(',', $temp);
+													return (strlen($string) > 20) ? substr($string, 0, 20).'...' : $string;
+													}),
+),
+)); ?>
+
+
 
 <div class="form-actions">
 	<?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -26,3 +53,4 @@
 </div>
 
 <?php $this->endWidget(); ?>
+<?php Yii::app()->clientScript->registerScript('fill','$("#image-data-grid").selGridView("addSelection", '.json_encode($model->imageList).');');?>

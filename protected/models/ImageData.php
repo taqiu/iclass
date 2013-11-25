@@ -25,8 +25,12 @@
  * @property LabelResponse[] $labelResponses
  * @property Tag[] $tags
  */
+ 
+
+ 
 class ImageData extends CActiveRecord
 {
+	public $tagSearch;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -53,7 +57,7 @@ class ImageData extends CActiveRecord
 			array('date_uploaded_flickr, title, date_uploaded', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, uploader, flickr_user, date_uploaded_flickr, latitude, longitude, precision, title, license, flickr_photo_id, date_uploaded, farm, server, secret', 'safe', 'on'=>'search'),
+			array('id, uploader, flickr_user, date_uploaded_flickr, latitude, longitude, precision, title, license, flickr_photo_id, date_uploaded, farm, server, secret, tagSearch', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -127,12 +131,24 @@ class ImageData extends CActiveRecord
 		$criteria->compare('farm',$this->farm);
 		$criteria->compare('server',$this->server);
 		$criteria->compare('secret',$this->secret,true);
-
+		
+		$criteria->with = array('tags');
+		#$criteria->together = true;
+		#$criteria->compare('tag_text',$this->tagSearch,true);
+		$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE tag_text LIKE :tagSearch)');
+		$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>array(
+					'attributes'=>array('tagSearch'=>array('asc'=>'tags.tag_text', 'desc'=>'tags.tag_test DESC',
+					),
+					'*',))
 		));
 	}
 
+	
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

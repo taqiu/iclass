@@ -1,31 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "{{image_set}}".
+ * This is the model class for table "{{image_set_detail}}".
  *
- * The followings are the available columns in table '{{image_set}}':
- * @property integer $id
- * @property integer $owner
- * @property string $name
- * @property string $description
- * @property integer $size
- * @property string $create_time
- *
- * The followings are the available model relations:
- * @property User $owner0
- * @property ImageData[] $devImageDatas
- * @property LabelTask[] $labelTasks
+ * The followings are the available columns in table '{{image_set_detail}}':
+ * @property integer $set_id
+ * @property integer $image_id
+ * @property integer $index_in_set
  */
-class ImageSet extends CActiveRecord
+class ImageSetDetail extends CActiveRecord
 {
-	public $imageList=array();
-
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{image_set}}';
+		return '{{image_set_detail}}';
 	}
 
 	/**
@@ -36,13 +26,11 @@ class ImageSet extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('owner', 'required'),
-			array('owner, size', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>64),
-			array('description, create_time', 'safe'),
+			array('set_id, image_id, index_in_set', 'required'),
+			array('set_id, image_id, index_in_set', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, owner, name, description, size, create_time', 'safe', 'on'=>'search'),
+			array('set_id, image_id, index_in_set', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,9 +42,6 @@ class ImageSet extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'owner0' => array(self::BELONGS_TO, 'User', 'owner'),
-			'devImageDatas' => array(self::MANY_MANY, 'ImageData', '{{image_set_detail}}(set_id, image_id)'),
-			'labelTasks' => array(self::HAS_MANY, 'LabelTask', 'set_id'),
 		);
 	}
 
@@ -66,12 +51,9 @@ class ImageSet extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'owner' => 'Owner',
-			'name' => 'Name',
-			'description' => 'Description',
-			'size' => 'Size',
-			'create_time' => 'Create Time',
+			'set_id' => 'Set',
+			'image_id' => 'Image',
+			'index_in_set' => 'Index In Set',
 		);
 	}
 
@@ -93,12 +75,9 @@ class ImageSet extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('owner',$this->owner);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('size',$this->size);
-		$criteria->compare('create_time',$this->create_time,true);
+		$criteria->compare('set_id',$this->set_id);
+		$criteria->compare('image_id',$this->image_id);
+		$criteria->compare('index_in_set',$this->index_in_set);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -109,7 +88,7 @@ class ImageSet extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ImageSet the static model class
+	 * @return ImageSetDetail the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
