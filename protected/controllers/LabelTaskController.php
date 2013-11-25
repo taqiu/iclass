@@ -26,18 +26,11 @@ class LabelTaskController extends Controller
 	 */
 	public function accessRules()
 	{
+		
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('@'),
+			array('allow',  
+				'actions'=>array('index','view', 'create', 'admin', 'delete'),
+				'roles'=>array('labMember'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -51,8 +44,32 @@ class LabelTaskController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
+		$owner = User::model()->findByPk($model->owner);
+		$label = Label::model()->findByPk($model->label_id);
+		$imageSet = ImageSet::model()->findByPk($model->set_id);
+		$model->owner_name = $owner->name;
+		$model->image_set_name = $imageSet->name;
+		$model->label_name = $label->name;
+		
+		if(isset($_POST['LabelTask']))
+		{
+			$params=array('task' => $model);
+			if (Yii::app()->user->checkAccess('updateTask', $params))
+			{
+				$model->attributes=$_POST['LabelTask'];
+				if($model->save())
+					Yii::app()->user->setFlash('success', "Label Task saved!");
+					$this->redirect(array('view','id'=>$model->id));
+			}
+			else
+			{
+				throw new CHttpException(403,'You are not authorized to update this label task.');
+			}
+		}
+		
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
 		));
 	}
 
@@ -62,7 +79,7 @@ class LabelTaskController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new LabelTask;
+		$model=new LabelTask();
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -70,52 +87,28 @@ class LabelTaskController extends Controller
 		if(isset($_POST['LabelTask']))
 		{
 			$model->attributes=$_POST['LabelTask'];
-			$model->set_id=explode(' ',$model->set_id)[0];
-			$model->label_id=explode(' ',$model->label_id)[0];
-			$model->owner=Yii::app()->user->getId();
-			$model->create_time=date("Y-m-d");
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
-		$criteria = new CDbCriteria();
-		$answersImageSet = ImageSet::model()->findAll($criteria);
+		// Get all imagee set names
+		$imageSets = ImageSet::model()->findAll();
+		$imageSetNames = array();
+		foreach($imageSets as $imageSet)
+		{
+			$imageSetNames[] = $imageSet->name;
+		}
 		
-		$criteria = new CDbCriteria();
-		$answersLabel = Label::model()->findAll($criteria);
+		// Get all label names
+		$labels = Label::model()->findAll();
+		$labelNames = array();
+		foreach($labels as $label)
+		{
+			$labelNames[] = $label->name;
+		}
+		
 		$this->render('create',array(
-			'model'=>$model,'ImgSet'=>$answersImageSet,'Label1'=>$answersLabel,
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['LabelTask']))
-		{
-			$model->attributes=$_POST['LabelTask'];
-			$model->set_id=explode(' ',$model->set_id)[0];
-			$model->label_id=explode(' ',$model->label_id)[0];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$criteria = new CDbCriteria();
-		$answersImageSet = ImageSet::model()->findAll($criteria);
-		
-		$criteria = new CDbCriteria();
-		$answersLabel = Label::model()->findAll($criteria);
-		$this->render('update',array(
-			'model'=>$model,'ImgSet'=>$answersImageSet,'Label1'=>$answersLabel,
+			'model'=>$model,'imageSetNames'=>$imageSetNames,'labelNames'=>$labelNames
 		));
 	}
 
@@ -126,11 +119,20 @@ class LabelTaskController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		
+		$model = $this->loadModel($id);
+		$params=array('task' => $model);
+		if (Yii::app()->user->checkAccess('updateTask', $params))
+		{
+			$model->delete();
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+		{
+			throw new CHttpException(403,'You are not authorized to delete this label task.');
+		}
 	}
 
 	/**
@@ -138,10 +140,7 @@ class LabelTaskController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('LabelTask');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$this->render('index');
 	}
 
 	/**
