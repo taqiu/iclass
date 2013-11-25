@@ -25,7 +25,6 @@ class RbacCommand extends CConsoleCommand
 		// provide the oportunity for the use to abort the request
 		$message = "This command will create four roles: Guest, Labeler, Lab Member and Admin\n";
 		$message .= " and the following permissions:\n";
-		$message .= "(.........)\n";
 		$message .= "Would you like to continue?";
 	  
 		// check the input from the user and continue if
@@ -79,11 +78,17 @@ class RbacCommand extends CConsoleCommand
 
 			//create the lowest level operations for [label task]
 			$this->_authManager->createOperation(
-					"createTask",
-					"create a new task");
+					"updateTask",
+					"update label task");
 			$this->_authManager->createOperation(
-					"viewTask",
-					"view label task list");
+					"deleteTask",
+					"delete label task");
+			$bizRule='return Yii::app()->user->id===$params["task"]->owner;';
+			$task=$this->_authManager->createTask('updateOwnTask','update own task',$bizRule);
+			$task->addChild('updateTask');
+			$bizRule='return Yii::app()->user->id===$params["task"]->owner;';
+			$task=$this->_authManager->createTask('deleteOwnTask','update own task',$bizRule);
+			$task->addChild('deleteTask');
 			
 
 			//create the guest role and add the appropriate
@@ -97,7 +102,9 @@ class RbacCommand extends CConsoleCommand
 			
 			//create the labeler, and add the appropriate
 			//permissions, as well as the guest role itself, as children
-			$bizRule="return Yii::app()->user->getRole() === 'labeler';";
+			$bizRule="return Yii::app()->user->getRole() === 'labeler'
+						|| Yii::app()->user->getRole() === 'labMember'
+						|| Yii::app()->user->getRole() === 'admin';";
 			$role=$this->_authManager->createRole("labeler", "labeler user", $bizRule);
 			$role->addChild("guest");
 				
@@ -105,10 +112,12 @@ class RbacCommand extends CConsoleCommand
 			
 			//create the lab member role, and add the appropriate
 			//permissions, as well as the labeler role itself, as children
-			$bizRule="return Yii::app()->user->getRole() === 'labMember';";
+			$bizRule="return Yii::app()->user->getRole() === 'labMember'
+						|| Yii::app()->user->getRole() === 'admin';";
 			$role=$this->_authManager->createRole("labMember", "lab member user", $bizRule);
 			$role->addChild("labeler");
-
+			$role->addChild("updateOwnTask");
+			$role->addChild("deleteOwnTask");
 			
 			
 			//create the admin role, and add the appropriate
@@ -117,6 +126,8 @@ class RbacCommand extends CConsoleCommand
 			$role=$this->_authManager->createRole("admin", "admin user", $bizRule);
 			$role->addChild("labMember");
 			$role->addChild("manageUser");
+			$role->addChild("updateTask");
+			$role->addChild("deleteTask");
 			
 			
 			//provide a message indicating success
