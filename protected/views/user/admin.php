@@ -48,7 +48,10 @@ Hint: click the right side button to edit user information
 	'type'=>'striped bordered condensed',
 	'filter'=>$model,
 	'columns'=>array(
-		'uid',
+		array(
+			'name'=>'uid',
+			'htmlOptions'=>array('width'=>'50px'),
+		),
 		'username',
 		'email',
 		'name',

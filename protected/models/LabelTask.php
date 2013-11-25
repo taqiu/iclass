@@ -20,6 +20,30 @@
  */
 class LabelTask extends CActiveRecord
 {
+	const STATUS_ACTIVE = 'active';
+	const STATUS_INACTIVE = 'inactive';
+	
+	public $image_set_name;
+	public $label_name;
+	public $owner_name;
+	
+	public function getStatusOptions()
+	{
+		return array(
+			self::STATUS_ACTIVE => 'Active',
+			self::STATUS_INACTIVE => 'Inactive',
+		);
+	}
+	
+	public static function getAllowedStatusRange()
+	{
+		return array(
+				self::STATUS_ACTIVE,
+				self::STATUS_INACTIVE,
+		);
+	}
+	
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -36,11 +60,13 @@ class LabelTask extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('owner, set_id, label_id', 'required'),
+			array('status','in','range'=>$this->getAllowedStatusRange(),'allowEmpty'=>false),
+			array('name, owner, image_set_name, label_name', 'required'),
 			array('owner, set_id, label_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			array('status', 'length', 'max'=>16),
-			array('create_time', 'safe'),
+			array('image_set_name', 'exist', 'className'=>'ImageSet', 'attributeName'=>'name'),
+			array('label_name', 'exist', 'className'=>'Label', 'attributeName'=>'name'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, owner, name, set_id, label_id, create_time, status', 'safe', 'on'=>'search'),
@@ -69,9 +95,12 @@ class LabelTask extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'owner' => 'Owner',
-			'name' => 'Name',
-			'set_id' => 'Set',
+			'owner' => 'Owner UID',
+			'owner_name' => 'Owner',
+			'name' => 'Task Name',
+			'image_set_name' => 'Image Set Name',
+			'label_name' => 'Label Name',
+			'set_id' => 'Image Set',
 			'label_id' => 'Label',
 			'create_time' => 'Create Time',
 			'status' => 'Status',
@@ -118,5 +147,30 @@ class LabelTask extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	/**
+	 * Prepares create_time, owner, update_time and update_user_id attributes before performing validation.
+	 */
+	protected function beforeValidate()
+	{
+ 		if($this->isNewRecord)
+		{
+			// set the create date and the user doing the creating
+			$this->create_time = new CDbExpression('NOW()');
+			$this->owner = Yii::app()->user->id;
+		}
+		return parent::beforeValidate();
+	}
+
+	protected function afterValidate()
+	{
+		parent::afterValidate();
+		if(!$this->hasErrors()) {
+			$label = Label::model()->findByAttributes(array('name'=>$this->label_name));
+			$imageSet = ImageSet::model()->findByAttributes(array('name'=>$this->image_set_name));
+			$this->label_id = $label->id;
+			$this->set_id = $imageSet->id;
+		}
 	}
 }

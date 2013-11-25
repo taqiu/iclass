@@ -36,7 +36,7 @@ class User extends CActiveRecord
 			self::ROLE_GUEST => 'Guest',
 			self::ROLE_LABELER => 'Labeler',
 			self::ROLE_LAB_MEMBER => 'Lab member',
-			self::ROLE_ADMIN => 'admin'
+			self::ROLE_ADMIN => 'Admin'
 		);
 	}
 	
