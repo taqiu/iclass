@@ -28,7 +28,6 @@
 	<?php echo CHtml::encode($data->precision); ?>
 	<br />
 
-	<?php 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('title')); ?>:</b>
 	<?php echo CHtml::encode($data->title); ?>
 	<br />
@@ -46,9 +45,9 @@
 	<br />
 
 	<b> Tags: </b>
-	<?php foreach $data.tags as $t{
-		echo CHtml::encode($t.tag_text)
+	<?php foreach ($data.tags as $t) {
+		echo CHtml::encode($t.tag_text);
 	}
-	 ?>
+	?>
 
 </div>

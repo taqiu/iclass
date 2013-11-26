@@ -1,4 +1,5 @@
-<div id="document" class="form-actions">
+
+<div id="document" class="form-actions">	
 <?php
 $form = $this->beginWidget(
     'CActiveForm',
@@ -8,8 +9,12 @@ $form = $this->beginWidget(
         'enableAjaxValidation' => true,
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
     )
-);
-echo $form->fileField($model, 'imageData');?> 
+);?>
+<?php echo $form->errorSummary($model,
+		$header='<button type="button" class="close" data-dismiss="alert">&times;</button><p>Please fix the following input errors:</p>',
+			'', array('class'=>'alert alert-error',)); ?>
+		
+<? echo $form->fileField($model, 'imageData');?> 
 <?php 
 echo CHtml::ajaxSubmitButton (
    'Upload and Process', 
@@ -20,9 +25,9 @@ echo CHtml::ajaxSubmitButton (
 	array('class'=>'btn btn-primary',
 			'id'=>'sub', 'name'=>'t')
  );?>
-<p><font color=red><?php echo $model->error;?> </font></p>
-</div>
+
 <?php $this->endWidget(); ?>
+</div> 
 
 <script type="text/javascript">
 $(document).ready(function() {

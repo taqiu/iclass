@@ -68,7 +68,7 @@ class Label extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'owner' => 'Owner',
+			'owner' => 'Owner UID',
 			'name' => 'Name',
 			'description' => 'Description',
 			'create_time' => 'Create Time',

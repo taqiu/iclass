@@ -51,20 +51,25 @@ class RbacCommand extends CConsoleCommand
 			
 			// create the lowest level operations for [image data]
 			$this->_authManager->createOperation(
-					"uploadImageData",
-					"upload image image matedata");
-
+					"deleteImageData",
+					"delete image matedata");
+			$bizRule='return Yii::app()->user->id===$params["image"]->uploader;';
+			$task=$this->_authManager->createTask('delOwnImageData','delete own image data',$bizRule);
+			$task->addChild('deleteImageData');
 			
 			// create the lowest level operations for [label]
 			$this->_authManager->createOperation(
-					"createLabel",
-					"create a new label");
-			$this->_authManager->createOperation(
-					"readLabel",
-					"read label information");
+					"deleteLabel",
+					"delete label information");
 			$this->_authManager->createOperation(
 					"updateLabel",
 					"update label information");
+			$bizRule='return Yii::app()->user->id===$params["label"]->owner;';
+			$task=$this->_authManager->createTask('updateOwnLabel','update own task',$bizRule);
+			$task->addChild('updateLabel');
+			$bizRule='return Yii::app()->user->id===$params["label"]->owner;';
+			$task=$this->_authManager->createTask('deleteOwnLabel','update own task',$bizRule);
+			$task->addChild('deleteLabel');
 			
 			
 			// create the lowest level operations for [image set]
@@ -118,7 +123,9 @@ class RbacCommand extends CConsoleCommand
 			$role->addChild("labeler");
 			$role->addChild("updateOwnTask");
 			$role->addChild("deleteOwnTask");
-			
+			$role->addChild("updateOwnLabel");
+			$role->addChild("deleteOwnLabel");
+			$role->addChild("delOwnImageData");
 			
 			//create the admin role, and add the appropriate
 			//permissions, as well as the lab member role, as children
@@ -128,7 +135,9 @@ class RbacCommand extends CConsoleCommand
 			$role->addChild("manageUser");
 			$role->addChild("updateTask");
 			$role->addChild("deleteTask");
-			
+			$role->addChild("updateLabel");
+			$role->addChild("deleteLabel");
+			$role->addChild("deleteImageData");
 			
 			//provide a message indicating success
 			echo "Authorization hierarchy successfully generated.\n";

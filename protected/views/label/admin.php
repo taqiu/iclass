@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 array('label'=>'Label Home', 'url'=>array('index')),
 array('label'=>'Create Labels','url'=>array('create')),
-array('label'=>'Manage Labels','url'=>array('admin')),
+array('label'=>'Manage Labels','url'=>array('admin'), 'itemOptions'=>array('class'=>'active')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -24,7 +24,7 @@ return false;
 ");
 ?>
 
-<h1>Manage Labels</h1>
+<h3>Manage Labels</h3>
 
 <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
@@ -43,14 +43,21 @@ return false;
 'id'=>'label-grid',
 'dataProvider'=>$model->search(),
 'filter'=>$model,
+'type'=>'striped bordered condensed',
 'columns'=>array(
-		'id',
-		'owner',
+		array(
+			'name'=>'id',
+			'htmlOptions'=>array('width'=>'50px'),
+		),
+		array(
+			'name'=>'owner',
+			'htmlOptions'=>array('width'=>'80px'),
+		),
 		'name',
 		'description',
 		'create_time',
-array(
-'class'=>'bootstrap.widgets.TbButtonColumn',
-),
+		array(
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+		),
 ),
 )); ?>

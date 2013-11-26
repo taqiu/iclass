@@ -61,7 +61,8 @@ class LabelTask extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('status','in','range'=>$this->getAllowedStatusRange(),'allowEmpty'=>false),
-			array('name, owner, image_set_name, label_name', 'required'),
+			array('name, image_set_name, label_name, status', 'required'),
+			array('name', 'unique'),
 			array('owner, set_id, label_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			array('status', 'length', 'max'=>16),
