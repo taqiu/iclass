@@ -27,17 +27,9 @@ class LabelController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','addAnswer'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('@'),
+			array('allow',  
+				'actions'=>array('index', 'view', 'update', 'create', 'admin', 'delete'),
+				'roles'=>array('labMember'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -116,16 +108,24 @@ class LabelController extends Controller
 	 
 		if(isset($_POST['Label']))
 		{
-			$model->attributes=$_POST['Label'];
-	 
-			//the value for the foreign key 'groupid'
-			$masterValues = array ('label_id'=>$model->id);
-	 
-			if( //Save the master model after saving valid members
-				MultiModelForm::save($member,$validatedMembers,$deleteMembers,$masterValues) &&
-				$model->save()
-			   )
-					$this->redirect(array('view','id'=>$model->id));
+			$params=array('label' => $model);
+			if (Yii::app()->user->checkAccess('updateLabel', $params))
+			{
+				$model->attributes=$_POST['Label'];
+				//the value for the foreign key 'groupid'
+				$masterValues = array ('label_id'=>$model->id);
+		 
+				if( //Save the master model after saving valid members
+					MultiModelForm::save($member,$validatedMembers,$deleteMembers,$masterValues) &&
+					$model->save()
+				   )
+						$this->redirect(array('view','id'=>$model->id));
+			}
+			else
+			{
+				throw new CHttpException(403,'You are not authorized to update this label.');
+			}
+			
 		}
 	 
 		$this->render('update',array(
@@ -143,11 +143,19 @@ class LabelController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		$model = $this->loadModel($id);
+		$params=array('image' => $model);
+		if (Yii::app()->user->checkAccess('deleteLabel', $params))
+		{
+			$model->delete();
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+		{
+			throw new CHttpException(403,'You are not authorized to delete this label.');
+		}
 	}
 
 	/**
@@ -155,10 +163,7 @@ class LabelController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Label');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$this->render('index');
 	}
 
 	/**

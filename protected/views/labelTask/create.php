@@ -12,13 +12,15 @@ array('label'=>'Manage Label Task','url'=>array('admin')),
 ?>
 
 <h3>Create New Label Task</h3>
-<hr/>
+
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'label-task-form',
 	'enableAjaxValidation'=>false,
 )); ?>
 
-<p class="help-block">Fields with <span class="required">*</span> are required.</p>
+<p class="help-block">Fields with <span class="required">*</span> are required. <br/> 'Image Set Name' and 
+'Label Name' can autocomplete.</p>
+<hr/>
 
 <?php echo $form->errorSummary($model); ?>
 

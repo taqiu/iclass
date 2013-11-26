@@ -7,8 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'Image Data Home', 'url'=>array('index')),
 	array('label'=>'Upload Image Data','url'=>array('upload')),
-	array('label'=>'Manage Image Data','url'=>array('admin')),
-	array('label'=>'Delete This Record','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this record?')),
+	array('label'=>'Manage Image Data','url'=>array('admin'), 'itemOptions'=>array('class'=>'active')),
 	);
 ?>
 <style>
@@ -24,14 +23,16 @@ $this->menu=array(
 }
 </style>
 
-<h1>View ImageData #<?php echo $model->id; ?></h1>
-<div class=left>
+<h3>View Image #<?php echo $model->id; ?></h3>
+<hr/>
+<div class="left">
 <?php $photo_url = implode(array('http://farm',$model->farm,'.staticflickr.com/',$model->server,'/',$model->flickr_photo_id,'_',$model->secret,'.jpg')) ?>
-<a href= <?php echo $photo_url ?>> <img width="240" src=<?php echo $photo_url ?>></a>
+<a href= <?php echo $photo_url ?>> <img width="280" src=<?php echo $photo_url ?>></a>
 </div>
-<div class=right>
+<div class="right">
 <?php $this->widget('bootstrap.widgets.TbDetailView',array(
 'data'=>$model,
+'type' => 'striped bordered',
 'attributes'=>array(
 		'id',
 		'uploader',
@@ -54,3 +55,6 @@ $this->menu=array(
 ),
 )); ?>
 </div>
+<hr/>
+<input Type="button" VALUE="Back" class="btn btn-success" onClick="location.href='<?php echo Yii::app()->createURL('imageData/admin');?>'"/>
+<?php echo CHtml::button('Delete', array('class'=>"btn btn-danger pull-right", 'submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')); ?>

@@ -2,6 +2,7 @@
 
 	<?php $this->widget('bootstrap.widgets.TbDetailView',array(
 	'data'=>$model,//array('model'=>$model,'answers'=>$answers),
+	'type'=>'striped bordered condensed',
 	'attributes'=>array(
 			'id',
 			'owner',

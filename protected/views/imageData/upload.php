@@ -6,12 +6,12 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 array('label'=>'Image Data Home', 'url'=>array('index')),
-array('label'=>'Upload Image Data','url'=>array('upload')),
+array('label'=>'Upload Image Data','url'=>array('upload'), 'itemOptions'=>array('class'=>'active')),
 array('label'=>'Manage Image Data','url'=>array('admin'))
 );
 ?>
 <?php $this->widget('ext.widgets.loading.LoadingWidget');?>
-<h1>Upload Crawler Dump File</h1>
+<h3>Upload Crawler Dump File</h3>
 Uploading and parsing the file may take a long period of time. Please be patient.
 <?php
 if(get_class($model) == "FileUploadForm")

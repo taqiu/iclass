@@ -60,6 +60,7 @@ class m131104_015029_create_image_data_and_set_tables extends CDbMigration
 			'size' => 'integer',
 			'create_time' => 'datetime DEFAULT NULL',
 		), 'ENGINE=InnoDB');
+		$this->createIndex('image_set_name', '{{image_set}}', 'name', true);
 		// the image_set.owner is a reference to user.uid
 		$this->addForeignKey(
 				'fk_image_set_owner',

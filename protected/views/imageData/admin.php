@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 array('label'=>'Image Data Home', 'url'=>array('index')),
 array('label'=>'Upload Image Data','url'=>array('upload')),
-array('label'=>'Manage Image Data','url'=>array('admin'))
+array('label'=>'Manage Image Data','url'=>array('admin'), 'itemOptions'=>array('class'=>'active'))
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -24,7 +24,7 @@ return false;
 ");
 ?>
 
-<h1>Manage Image Data</h1>
+<h3>Manage Image Data</h3>
 
 <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
@@ -43,6 +43,7 @@ return false;
 'id'=>'image-data-grid',
 'dataProvider'=>$model->search(),
 'filter'=>$model,
+'type'=>'striped bordered condensed',
 'columns'=>array(
 		'id',
 		'uploader',
