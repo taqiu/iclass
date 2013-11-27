@@ -57,6 +57,7 @@ class RbacCommand extends CConsoleCommand
 			$task=$this->_authManager->createTask('delOwnImageData','delete own image data',$bizRule);
 			$task->addChild('deleteImageData');
 			
+			
 			// create the lowest level operations for [label]
 			$this->_authManager->createOperation(
 					"deleteLabel",
@@ -74,11 +75,17 @@ class RbacCommand extends CConsoleCommand
 			
 			// create the lowest level operations for [image set]
 			$this->_authManager->createOperation(
-					"createImageSet",
-					"create a new issue");
+					"updateImageSet",
+					"update a new issue");
 			$this->_authManager->createOperation(
-					"viewImageSet",
-					"view image set list");
+					"deleteImageSet",
+					"delete image set");
+			$bizRule='return Yii::app()->user->id===$params["set"]->owner;';
+			$task=$this->_authManager->createTask('updateOwnImageSet','update own image set',$bizRule);
+			$task->addChild('updateImageSet');
+			$bizRule='return Yii::app()->user->id===$params["set"]->owner;';
+			$task=$this->_authManager->createTask('deleteOwnImageSet','update own image set',$bizRule);
+			$task->addChild('deleteImageSet');
 			
 
 			//create the lowest level operations for [label task]
@@ -126,6 +133,9 @@ class RbacCommand extends CConsoleCommand
 			$role->addChild("updateOwnLabel");
 			$role->addChild("deleteOwnLabel");
 			$role->addChild("delOwnImageData");
+			$role->addChild("updateOwnImageSet");
+			$role->addChild("deleteOwnImageSet");
+			
 			
 			//create the admin role, and add the appropriate
 			//permissions, as well as the lab member role, as children
@@ -138,6 +148,8 @@ class RbacCommand extends CConsoleCommand
 			$role->addChild("updateLabel");
 			$role->addChild("deleteLabel");
 			$role->addChild("deleteImageData");
+			$role->addChild("updateImageSet");
+			$role->addChild("deleteImageSet");
 			
 			//provide a message indicating success
 			echo "Authorization hierarchy successfully generated.\n";

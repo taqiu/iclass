@@ -4,7 +4,7 @@ $this->breadcrumbs=array(
 	'About',
 );
 ?>
-<h2>About</h2>
+<h3>About</h3>
 <hr/>
 
 <h4> I. Motivation </h4>

@@ -138,6 +138,38 @@ class LabelTask extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function getUnfinishTasks($uid)
+	{
+		
+		//$command=Yii::app()->db->createCommand('SELECT * FROM {{label_task}}');
+		$sql="SELECT t.id as id, t.create_time as create_time, t.name as name, s.size as size
+			FROM {{label_task}} t, {{image_set}} s
+			WHERE  t.status='active' AND t.set_id = s.id 
+				AND t.id NOT IN
+				(SELECT task_id FROM {{participate}} 
+				 WHERE user_id=$uid AND is_done=1)";
+		$command=Yii::app()->db->createCommand($sql);
+		$rows = $command->queryAll();
+		foreach ($rows as &$row) {
+			//die(print_r($row));
+			$task_id = $row['id'];
+			$participate = Participate::model()->findByPk(array('user_id' => $uid, 'task_id' => $task_id));
+			if ($participate === null) {
+				$row['progress'] = -1;
+			} else {
+				$progross = $participate->last_image_labeled;
+				$row['progress'] = $progross + 1;
+			}
+		}
+		$dataProvider = new CArrayDataProvider($rows, array(
+			'pagination'=>array(
+						'pageSize'=>10,
+				),
+		));
+		return $dataProvider;
+	}
+	
 
 	/**
 	 * Returns the static model of the specified AR class.
