@@ -45,7 +45,7 @@ class SiteController extends Controller
 					if (Yii::app()->user->getRole() === 'guest')
 						$this->redirect(Yii::app()->createUrl('site/page', array('view'=>'guest')));
 					else
-						$this->redirect(Yii::app()->createUrl('site/page', array('view'=>'construction')));
+						$this->redirect(Yii::app()->createUrl('participate/index'));
 				}
 			}
 			// renders the view file 'protected/views/site/index.php'
@@ -57,7 +57,7 @@ class SiteController extends Controller
 			if (Yii::app()->user->getRole() === 'guest')
 				$this->redirect(Yii::app()->createUrl('site/page', array('view'=>'guest')));
 			else
-				$this->redirect(Yii::app()->createUrl('site/page', array('view'=>'construction')));
+				$this->redirect(Yii::app()->createUrl('participate/index'));
 		}
 	}
 
