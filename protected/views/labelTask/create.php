@@ -18,8 +18,7 @@ array('label'=>'Manage Label Task','url'=>array('admin')),
 	'enableAjaxValidation'=>false,
 )); ?>
 
-<p class="help-block">Fields with <span class="required">*</span> are required. <br/> 'Image Set Name' and 
-'Label Name' can autocomplete.</p>
+<p class="help-block">Fields with <span class="required">*</span> are required.</p>
 <hr/>
 
 <?php echo $form->errorSummary($model); ?>
@@ -28,21 +27,43 @@ array('label'=>'Manage Label Task','url'=>array('admin')),
 	<?php echo $form->textField($model, 'name', array('class'=>'span4','maxlength'=>64)); ?>
 	
 	<?php echo $form->labelEx($model,'image_set_name'); ?>
-	<?php $this->widget('CAutoComplete', array(
+	<?php /*$this->widget('CAutoComplete', array(
 			'model'=>$model,
 			'attribute'=>'image_set_name',
 			'data'=>$imageSetNames,
 			'multiple'=>false,
 			'htmlOptions'=>array('class'=>'span4'),
+	)); */?>
+	<?php $this->widget('bootstrap.widgets.TbTypeahead', array(
+			'name'=>'LabelTask[image_set_name]',
+			'options'=>array(
+				'source'=>$imageSetNames,
+				'items'=>5,
+				'matcher'=>"js:function(item) {
+            		return ~item.toLowerCase().indexOf(this.query.toLowerCase());
+        		}",
+			),
+			'htmlOptions'=>array('class'=>'span4', 'placeholder' => 'auto-complete'),
 	)); ?>
 	
     <?php echo $form->labelEx($model,'label_name'); ?>
-	<?php $this->widget('CAutoComplete', array(
+	<?php /* $this->widget('CAutoComplete', array(
     		'model'=>$model,
 			'attribute'=>'label_name',
 			'data'=>$labelNames,
 			'multiple'=>false,
 			'htmlOptions'=>array('class'=>'span4'),
+	)); */?>
+	<?php $this->widget('bootstrap.widgets.TbTypeahead', array(
+			'name'=>'LabelTask[label_name]',
+			'options'=>array(
+				'source'=>$labelNames,
+				'items'=>5,
+				'matcher'=>"js:function(item) {
+            		return ~item.toLowerCase().indexOf(this.query.toLowerCase());
+        		}",
+			),
+			'htmlOptions'=>array('class'=>'span4', 'placeholder' => 'auto-complete'),
 	)); ?>
 	
 	<?php echo $form->labelEx($model,'status'); ?>
