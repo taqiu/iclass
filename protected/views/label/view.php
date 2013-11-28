@@ -19,7 +19,7 @@ array('label'=>'Manage Labels','url'=>array('admin'), 'itemOptions'=>array('clas
 <hr/>
 <input style='margin:0px 0px 0px 0px' Type="button" VALUE="Update" class="btn btn-primary" onClick="location.href='<?php echo Yii::app()->createURL('label/update', array('id'=>$model->id));?>'"/>
 <input style='margin:0px 15px 0px 15px' Type="button" VALUE="Back" class="btn btn-success" onClick="location.href='<?php echo Yii::app()->createURL('label/admin');?>'"/>
-<?php echo CHtml::button('Delete', array('style'=>'margin:5px 0px 0px 0px', 'class'=>"btn btn-danger pull-right", 'submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')); ?>
+<?php echo CHtml::button('Delete', array('style'=>'margin:0px 0px 0px 0px', 'class'=>"btn btn-danger pull-right", 'submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')); ?>
 		
 
 
