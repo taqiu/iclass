@@ -209,7 +209,10 @@ class ImageDataController extends Controller
 						}
 					}
 				}
-				$this->render('processing', array('model'=>$model), false, true);
+				Yii::app()->user->setFlash('success', "<p>Record Upload Summary</p>
+						<ul><li><b>$model->added_records</b> of <b>$model->tot_records</b> records added.</li>
+						 <li><b>$model->added_tags</b> tags added.</li></ul>");
+				$this->refresh();
             }
 			else{
 				$model->error="Invalid file type. Requires .dump files.";

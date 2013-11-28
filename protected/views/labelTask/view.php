@@ -54,7 +54,7 @@ array('label'=>'Manage Label Task','url'=>array('admin'), 'itemOptions'=>array('
 					'label'=>'Save',
 				)); ?>
 			<input style='margin:0px 15px 0px 15px' Type="button" VALUE="Back" class="btn btn-success" onClick="location.href='<?php echo Yii::app()->createURL('labelTask/admin');?>'"/>
-			<?php echo CHtml::button('Delete', array('style'=>'margin:5px 0px 0px 0px', 'class'=>"btn btn-danger pull-right", 'submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')); ?>
+			<?php echo CHtml::button('Delete', array('style'=>'margin:0px 0px 0px 0px', 'class'=>"btn btn-danger pull-right", 'submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')); ?>
 		</div>
 	</div>
 <?php $this->endWidget(); ?>

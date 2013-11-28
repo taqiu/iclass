@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 array('label'=>'Image Set Home','url'=>array('index')),
 array('label'=>'Create Image Set','url'=>array('create')),
-array('label'=>'Manage Image Sets','url'=>array('admin')),
+array('label'=>'Manage Image Sets','url'=>array('admin'), 'itemOptions'=>array('class'=>'active')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -24,7 +24,7 @@ return false;
 ");
 ?>
 
-<h1>Manage Image Sets</h1>
+<h3>Manage Image Sets</h3>
 
 <p>
 	You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
@@ -43,6 +43,7 @@ return false;
 'id'=>'image-set-grid',
 'dataProvider'=>$model->search(),
 'filter'=>$model,
+'type'=>'striped bordered condensed',
 'columns'=>array(
 		'id',
 		'owner',

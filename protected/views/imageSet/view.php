@@ -7,16 +7,19 @@ $this->breadcrumbs=array(
 $this->menu=array(
 array('label'=>'Image Set Home','url'=>array('index')),
 array('label'=>'Create Image Set','url'=>array('create')),
-array('label'=>'Manage Image Sets','url'=>array('admin')),
-array('label'=>'Update This Image Set','url'=>array('update','id'=>$model->id)),
-array('label'=>'Delete This Image Set','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+array('label'=>'Manage Image Sets','url'=>array('admin'), 'itemOptions'=>array('class'=>'active')),
 );
 ?>
 
-<h1>View ImageSet #<?php echo $model->id; ?></h1>
-
+<h3>View Image Set #<?php echo $model->id; ?></h3>
+<div>
+<input style='margin:0px 0px 0px 0px' Type="button" VALUE="Update" class="btn btn-primary" onClick="location.href='<?php echo Yii::app()->createURL('imageSet/update', array('id'=>$model->id));?>'"/>
+<input style='margin:0px 15px 0px 15px' Type="button" VALUE="Back" class="btn btn-success" onClick="location.href='<?php echo Yii::app()->createURL('imageSet/admin');?>'"/>
+<?php echo CHtml::button('Delete', array('style'=>'margin:0px 0px 0px 0px', 'class'=>"btn btn-danger pull-right", 'submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')); ?>
+</div><br/>
 <?php $this->widget('bootstrap.widgets.TbDetailView',array(
 'data'=>$model,
+'type'=>'striped bordered condensed',
 'attributes'=>array(
 		'id',
 		'owner',
@@ -26,9 +29,6 @@ array('label'=>'Delete This Image Set','url'=>'#','linkOptions'=>array('submit'=
 		'create_time',
 ),
 )); ?>
-
-
-
 
 <?php 
 

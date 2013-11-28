@@ -27,7 +27,7 @@ function showProgress($progress, $size) {
 	} 
 	$percent = 100*$progress/$size;
 	if ($percent > 100) {
-		$percent = 97;
+		$percent = 90;
 	}
 	return '<div class="progress progress-striped">
 				<div class="bar" style="width:'.$percent.'%"></div>
