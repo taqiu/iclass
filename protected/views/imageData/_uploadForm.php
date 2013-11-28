@@ -14,7 +14,7 @@ $form = $this->beginWidget(
 		$header='<button type="button" class="close" data-dismiss="alert">&times;</button><p>Please fix the following input errors:</p>',
 			'', array('class'=>'alert alert-error',)); ?>
 		
-<? echo $form->fileField($model, 'imageData');?> 
+<?php echo $form->fileField($model, 'imageData');?> 
 <?php 
 echo CHtml::ajaxSubmitButton (
    'Upload and Process', 

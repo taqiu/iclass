@@ -36,10 +36,10 @@ class ImageSet extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('owner', 'required'),
+			array('owner, name', 'required'),
 			array('owner, size', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
-			array('description, create_time', 'safe'),
+			array('description, create_time, imageList', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, owner, name, description, size, create_time', 'safe', 'on'=>'search'),

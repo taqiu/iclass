@@ -20,6 +20,7 @@
 'id'=>'image-data-grid',
 'dataProvider'=>$data_model->search(),
 'selectableRows'=>2,
+#'selectionChanged'=>'js:postChecked',
 'filter'=>$data_model,
 'columns'=>array(
 		array(
@@ -43,9 +44,12 @@
 )); ?>
 
 
+<?php echo $form->hiddenField($model,'imageList',array('value'=>''));?>
+
 
 <div class="form-actions">
 	<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'id'=>'sub',
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Create' : 'Save',
@@ -54,3 +58,9 @@
 
 <?php $this->endWidget(); ?>
 <?php Yii::app()->clientScript->registerScript('fill','$("#image-data-grid").selGridView("addSelection", '.json_encode($model->imageList).');');?>
+<?php Yii::app()->clientScript->registerScript('postChecked', 'function postChecked(){
+		var arraySel = $("#image-data-grid").selGridView("getAllSelection");
+ 
+        var stringSel=arraySel.join(",");                                                                          
+        $("#ImageSet_imageList").val(stringSel);}');?>
+<?php Yii::app()->clientScript->registerScript('init','$(document).ready(function(){ $("#sub").on("click", postChecked);});'); ?>

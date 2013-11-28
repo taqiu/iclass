@@ -26,10 +26,9 @@ class LabelTaskController extends Controller
 	 */
 	public function accessRules()
 	{
-		
 		return array(
 			array('allow',  
-				'actions'=>array('index','view', 'create', 'admin', 'delete'),
+				'actions'=>array('index','view', 'create', 'admin', 'delete','update'),
 				'roles'=>array('labMember'),
 			),
 			array('deny',  // deny all users

@@ -61,9 +61,6 @@ return false;
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			'template'=>'{view}{delete}',
-			//'class'=>'CButtonColumn',
-			//'updateButtonUrl'=>'Yii::app()->controller->createUrl("update",array("id"=>$data["uid"]))',
-			//'updateButtonOptions'=>array('class'=>'btn', 'title'=>'edit'),
 		),
 ),
 )); ?>

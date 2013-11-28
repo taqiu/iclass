@@ -117,7 +117,7 @@ class ImageData extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->compare('t.id',$this->id);
 		$criteria->compare('uploader',$this->uploader);
 		$criteria->compare('flickr_user',$this->flickr_user,true);
 		$criteria->compare('date_uploaded_flickr',$this->date_uploaded_flickr,true);
@@ -135,9 +135,10 @@ class ImageData extends CActiveRecord
 		$criteria->with = array('tags');
 		#$criteria->together = true;
 		#$criteria->compare('tag_text',$this->tagSearch,true);
+		if($this->tagSearch !== null && $this->tagSearch !== ''){
 		$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE tag_text LIKE :tagSearch)');
 		$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
-		
+		}
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'sort'=>array(

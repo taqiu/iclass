@@ -84,6 +84,15 @@ class ImageSetDetail extends CActiveRecord
 		));
 	}
 
+	public function loadModel(array $id)
+	{
+			$model=ImageSetDetail::model()->findByPk($id);
+			if($model===null)
+					throw new CHttpException(404,implode(',',$id));#'The requested page does not exist. Cant Open Model');
+			return $model;
+	}
+	
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

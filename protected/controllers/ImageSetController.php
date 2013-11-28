@@ -66,13 +66,16 @@ class ImageSetController extends Controller
 		$data_model = new ImageData('search');
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
+		
+	
+		
 		if(isset($_GET['ImageData']))
 			$data_model->attributes=$_GET['ImageData'];
 			
-		if(isset($_POST['ImageSet']) && isset($_POST['ImageSet']))
+		if(isset($_POST['ImageSet']))
 		{
 			$model->attributes=$_POST['ImageSet'];
-			$model->imageList =$_POST['checkedImages'];
+			$model->imageList=explode(',',$model->imageList);
 			$model->size = count($model->imageList);
 			$model->owner = Yii::app()->user->getId();
 			$model->create_time = date("Y-m-d");
@@ -104,39 +107,54 @@ class ImageSetController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-		$model->imageList = array();
-		foreach($model->devImageDatas as $t){
-			$model->imageList[] = $t->id;
-		}
 		$data_model = new ImageData('search');
+		
+		foreach($model->devImageDatas as $t)
+			$model->imageList[] = $t->id;
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 		if(isset($_GET['ImageData']))
 			$data_model->attributes=$_GET['ImageData'];
 			
-		if(isset($_POST['ImageSet']) && isset($_POST['ImageSet']))
+		if(isset($_POST['ImageSet']))
 		{
-			$model->attributes=$_POST['ImageSet'];
 			$oldList = $model->imageList;
-			$model->imageList =$_POST['checkedImages'];
+			$model->attributes=$_POST['ImageSet'];
+			$model->imageList=explode(',',$model->imageList);
+			
 			$model->size = count($model->imageList);
 			
 			if($model->save()){
 				$i = 0;
 				
 				
+				$delList = array_diff($oldList, $model->imageList);
+				$restList = array_diff($model->imageList,$delList);
 				
-				foreach($model->imageList as $img_id){
-					
-					
-					$temp = new ImageSetDetail;
-					$temp->set_id = $model->id;
-					$temp->image_id = $img_id;
-					$temp->index_in_set = $i;
-					
-					if($temp->save())
-						$i++;
+				
+				foreach($delList as $d){
+					$temp = ImageSetDetail::model()->loadModel(array('set_id'=>$model->id,'image_id'=>$d));
+					$temp->delete();
 				}
+				
+				foreach($restList as $r){
+					$temp =ImageSetDetail::model()->findByPk(array('set_id'=>$model->id,'image_id'=>$r));
+					if($temp!=NULL){
+						$temp->index_in_set = $i;
+						$i++;
+					}
+					else{
+						$temp = new ImageSetDetail;
+						$temp->set_id = $model->id;
+						$temp->image_id = $r;
+						$temp->index_in_set = $i;
+						$i++;
+					}
+					$temp->save();
+				
+				}
+				
 				$this->redirect(array('view','id'=>$model->id));
 			}
 		}
