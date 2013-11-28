@@ -42,16 +42,6 @@ $this->menu=array(
 
 </style>
 
-<script type='text/javascript'>
-
- $(document).ready(function() { 
-   $('input[name=answer]').change(function(){
-        $('form').submit();
-   });
-  });
-
-</script>
-
 <span class="pull-right"> Set ID: <?php echo $task->set_id; ?> | Index of Set: <?php echo  $index_in_set; ?></span>
 <h4>Current Task: <?php echo $task->name;?></h4>
 <hr/>
@@ -73,3 +63,13 @@ $this->menu=array(
 <?php $photo_url = implode(array('http://farm',$image->farm,'.staticflickr.com/',$image->server,'/',$image->flickr_photo_id,'_',$image->secret,'.jpg')) ?>
 <a href= <?php echo $photo_url ?>> <img width="300" src=<?php echo $photo_url ?>></a>
 </div>
+
+<script type='text/javascript'>
+
+ $(document).ready(function() { 
+   $('input[name=answer]').change(function(){
+        $('form').submit();
+   });
+  });
+
+</script>

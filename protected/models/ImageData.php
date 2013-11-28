@@ -117,7 +117,8 @@ class ImageData extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		//$criteria->compare('id',$this->id);
+		$criteria->compare('t.id',$this->id);
 		$criteria->compare('uploader',$this->uploader);
 		$criteria->compare('flickr_user',$this->flickr_user,true);
 		$criteria->compare('date_uploaded_flickr',$this->date_uploaded_flickr,true);
@@ -132,18 +133,23 @@ class ImageData extends CActiveRecord
 		$criteria->compare('server',$this->server);
 		$criteria->compare('secret',$this->secret,true);
 		
-		$criteria->with = array('tags');
-		#$criteria->together = true;
-		#$criteria->compare('tag_text',$this->tagSearch,true);
-		$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE tag_text LIKE :tagSearch)');
-		$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
+		// Add criteria only when tagSearch is set,
+		// so that empty tag image can be displayed
+		if (isset($this->tagSearch) && $this->tagSearch !== '') {
+			$criteria->with = array('tags');
+			#$criteria->together = true;
+			#$criteria->compare('tag_text',$this->tagSearch,true);
+			$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE tag_text LIKE :tagSearch)');
+			$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
+		}
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'sort'=>array(
+			// commet out the sort, because it might cause error
+			/*'sort'=>array(
 					'attributes'=>array('tagSearch'=>array('asc'=>'tags.tag_text', 'desc'=>'tags.tag_test DESC',
 					),
-					'*',))
+					'*',))*/
 		));
 	}
 

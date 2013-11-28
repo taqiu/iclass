@@ -37,6 +37,7 @@ class Label extends CActiveRecord
 			array('owner', 'required'),
 			array('name', 'required'),
 			array('description', 'required'),
+			array('name', 'unique'),
 			array('owner', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			array('description, create_time', 'safe'),

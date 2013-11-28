@@ -93,8 +93,11 @@ class ParticipateController extends Controller
 		}
 		
 		// Get all images in set and get next image
-		$imageSetDtails = ImageSetDetail::model()->findAllByAttributes(array('set_id'=>$task->set_id), array('order'=>'index_in_set'));
-		// die(print_r($imageSetDtails));
+		$criteria = new CDbCriteria;
+		$criteria->compare('set_id',$task->set_id);
+		$criteria->order = 'index_in_set';
+		$imageSetDtails = ImageSetDetail::model()->findAll($criteria);
+		//die(print_r($imageSetDtails));
 		$image_id = -1;
 		foreach ($imageSetDtails as $imageSetDetail ) {
 			$cursor = $imageSetDetail->index_in_set;
