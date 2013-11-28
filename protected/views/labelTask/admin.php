@@ -57,8 +57,12 @@ return false;
 		),
 		'name',
 		'create_time',
-		'status',
 		array(
+			'name'=>'status',
+			'filter'=> LabelTask::model()->getStatusOptions(),
+		),
+		array(
+			'header'=>'Edit',
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			'template'=>'{view}{delete}',
 			//'class'=>'CButtonColumn',

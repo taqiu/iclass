@@ -57,6 +57,7 @@ return false;
 		'description',
 		'create_time',
 		array(
+			'header'=>'Edit',
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),
 ),
