@@ -55,9 +55,13 @@ Hint: click the right side button to edit user information
 		'username',
 		'email',
 		'name',
-		'role',
+		array(
+			'name'=>'role',
+			'filter'=>User::model()->getRoleOptions(),
+		),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'header'=>'Edit',
 			'template'=>'{update}',
 			//'class'=>'CButtonColumn',
 			'updateButtonUrl'=>'Yii::app()->controller->createUrl("update",array("id"=>$data["uid"]))',

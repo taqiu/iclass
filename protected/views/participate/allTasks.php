@@ -32,7 +32,10 @@ array('label'=>'All Tasks','url'=>array('allTasks'), 'itemOptions'=>array('class
 			),
 			'name',
 			'create_time',
-			'status',
+			array(
+				'name'=>'status',
+				'filter'=> LabelTask::model()->getStatusOptions(),
+			),
 			//array(
 					//'class'=>'bootstrap.widgets.TbButtonColumn',
 					//'template'=>'{view}{delete}',

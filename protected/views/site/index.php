@@ -6,13 +6,13 @@
 
 <div class="row">
 	<div class="span8">
-		<center><h2><font color=red>I</font>mage 
+		<center><h3><font color=red>I</font>mage 
 			<font color=red>C</font>ollaborative 
 			<font color=red>L</font>abelling 
-			<font color=red>A</font>nd 
+			<font color=red>A</font>nd <br/>
 			<font color=red>S</font>emantic 
-			<font color=red>S</font>earch System</h2>
-		<hr/></center>
+			<font color=red>S</font>earch System</h3></center>
+		<hr/>
 		<h4>I. About <font color=red>ICLASS</font></h4>
 		<p> <b><font color=red>ICLASS</font></b> is a collaborative labelling system designed by the Computer Vision Lab at Indiana University. It provides the capability to
 		manage a large-scale image collection and coordinate collaborative human-labelling tasks based on image content. The responses to these

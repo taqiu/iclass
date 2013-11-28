@@ -141,14 +141,13 @@ class LabelTask extends CActiveRecord
 	
 	public function getUnfinishTasks($uid)
 	{
-		
-		//$command=Yii::app()->db->createCommand('SELECT * FROM {{label_task}}');
 		$sql="SELECT t.id as id, t.create_time as create_time, t.name as name, s.size as size
 			FROM {{label_task}} t, {{image_set}} s
 			WHERE  t.status='active' AND t.set_id = s.id 
 				AND t.id NOT IN
 				(SELECT task_id FROM {{participate}} 
-				 WHERE user_id=$uid AND is_done=1)";
+				 WHERE user_id=$uid AND is_done=1)
+			ORDER BY t.id ASC";
 		$command=Yii::app()->db->createCommand($sql);
 		$rows = $command->queryAll();
 		foreach ($rows as &$row) {

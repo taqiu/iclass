@@ -18,13 +18,7 @@ class UserIdentity extends CUserIdentity
 	 * @return boolean whether authentication succeeds.
 	 */
 	public function authenticate()
-	{
-		if( $this->username === 'admin' && $this->password === 'admin') {
-			$this->_id= 0;
-			$this->errorCode = self::ERROR_NONE;
-			return !$this->errorCode;
-		}
-		
+	{	
 		$user=User::model()->find('LOWER(username)=?',array(strtolower($this->username)));
 		if ($user === null)
 			$this->errorCode = self::ERROR_USERNAME_INVALID;
