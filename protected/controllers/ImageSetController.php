@@ -130,30 +130,32 @@ class ImageSetController extends Controller
 				
 				
 				$delList = array_diff($oldList, $model->imageList);
-				$restList = array_diff($model->imageList,$delList);
+				$newList = array_diff($model->imageList, $oldList);
 				
+				$criteria = new CDbCriteria;
+				$criteria->select = 'max(index_in_set)';
+				$criteria->addColumnCondition(array('set_id' => $model->id));
+				$temp = ImageSetDetail::model();
+				$i = $temp->commandBuilder->createFindCommand($temp->tableName(), $criteria)->queryScalar();
+				$i++;
 				
 				foreach($delList as $d){
 					$temp = ImageSetDetail::model()->loadModel(array('set_id'=>$model->id,'image_id'=>$d));
 					$temp->delete();
 				}
 				
-				foreach($restList as $r){
-					$temp =ImageSetDetail::model()->findByPk(array('set_id'=>$model->id,'image_id'=>$r));
-					if($temp!=NULL){
-						$temp->index_in_set = $i;
-						$i++;
-					}
-					else{
-						$temp = new ImageSetDetail;
-						$temp->set_id = $model->id;
-						$temp->image_id = $r;
-						$temp->index_in_set = $i;
-						$i++;
-					}
-					$temp->save();
 				
+				foreach($newList as $r){
+					$temp = new ImageSetDetail;
+					$temp->set_id = $model->id;
+					$temp->image_id = $r;
+					$temp->index_in_set = $i;
+					$i++;
+					
+					$temp->save();
 				}
+				
+				
 				
 				$this->redirect(array('view','id'=>$model->id));
 			}
