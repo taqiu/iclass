@@ -29,7 +29,7 @@ class ImageDataController extends Controller
 	{
 		return array(
 			array('allow',
-					'actions'=>array('index', 'view', 'admin', 'delete', 'upload'),
+					'actions'=>array('index', 'view', 'admin', 'delete', 'upload', 'gallery'),
 					'roles'=>array('labMember'),
 			),
 			array('deny',  // deny all users
@@ -221,6 +221,14 @@ class ImageDataController extends Controller
         $this->render('upload', array('model'=>$model));
     }
 	
+    public function actionGallery() 
+    {
+    	$model=new ImageData('search');
+    	$model->unsetAttributes();  // clear any default values	
+    	$this->render('gallery',array(
+    			'model'=>$model,
+    	));
+    }
 	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
