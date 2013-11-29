@@ -5,41 +5,74 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-		array('label'=>'Image Data Home', 'url'=>array('index')),
-		array('label'=>'Upload Image Data','url'=>array('upload')),
-		array('label'=>'Manage Image Data','url'=>array('admin'), 'itemOptions'=>array('class'=>'active'))
+		//array('label'=>'Image Data Home', 'url'=>array('index')),
+		//array('label'=>'Upload Image Data','url'=>array('upload')),
+		//array('label'=>'Manage Image Data','url'=>array('admin'), 'itemOptions'=>array('class'=>'active'))
 );
 //$this->renderPartial('bootstrap.views.gallery.preview');
 ?>
 <style>
-ol.thumb-grid li {
-	float: left;
-	width: 15%;
-	margin: 0 5% 5% 0;
-	}
-ol.thumb-grid li:nth-child(5n) {
-	margin-right: 0;
-	}
-ol.thumb-grid li a img {
-	width: 100%;
-	}				
-</style>
+.items {
+ 	text-align: center;
+}
+.item {
+	height:120px;
+/* 	width: 130px;
+   	min-height: 130px; 
+    max-height: 130px;
+    float: left;*/
+    margin: 1px;
+    padding: 1px;
+    display:inline-block;
+}
+.item:hover {
+}
+.item img {
+    width: auto;
+    height: 120px;;
+} 
+.list-view {
+    padding-top: 0px;
+}
+.clearboth { clear: both; }
 
-<h3>Gallery</h3>
+.item a {
+  position: relative;
+}
+.item a:hover:after {
+  content: attr(help);
+  color: #000;
+  padding-left: 5px;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity:0.5;
+  min-height: 30px;
+  background: #FFF;
+  bottom: 0px;
+  left: 0px;
+}
+</style>	
+<h5>Scroll down to view more images</h5>
 <hr/>
-
-<?php //  id="links" $photo_url = implode(array('http://farm',$model->farm,'.staticflickr.com/',$model->server,'/',$model->flickr_photo_id,'_',$model->secret,'.jpg')) ?>
-<ol class="thumb-grid group">
-	<li><a href="#"><img src="http://farm1.staticflickr.com/5/10000000_106b46b078.jpg" alt="thumbnail" /></a></li>
-	<li><a href="#"><img src="http://farm2.staticflickr.com/1036/1000000134_85ca7edfc6.jpg" /></a></li>
-	<li><a href="#"><img src="http://farm2.staticflickr.com/1237/1000001320_71442845e7.jpg" alt="thumbnail" /></a></li>
-	<li><a href="#"><img src="http://farm1.staticflickr.com/33/100000172_0461732dc7.jpg" alt="thumbnail" /></a></li>
-	<li><a href="#"><img src="http://farm1.staticflickr.com/31/100000174_bdc79086d6.jpg" alt="thumbnail" /></a></li>
-	<li><a href="#"><img src="http://farm1.staticflickr.com/36/100000176_5ff6324dda.jpg" alt="thumbnail" /></a></li>
-	<li><a href="#"><img src="http://farm2.staticflickr.com/1069/1000002218_3ab21cd245.jpg" alt="thumbnail" /></a></li>
-	<li><a href="#"><img src="http://farm1.staticflickr.com/39/100000048_59ca4b28ed.jpg" alt="thumbnail" /></a></li>
-	<li><a href="#"><img src="http://farm1.staticflickr.com/39/100000048_59ca4b28ed.jpg" alt="thumbnail" /></a></li>
-	<li><a href="#"><img src="http://farm1.staticflickr.com/39/100000048_59ca4b28ed.jpg" alt="thumbnail" /></a></li>
-</ol>
-
-
+<?php // id="links" $photo_url = implode(array('http://farm',$model->farm,'.staticflickr.com/',$model->server,'/',$model->flickr_photo_id,'_',$model->secret,'.jpg')) ?>
+<?php 
+$this->widget('zii.widgets.CListView', array(
+       'id' => 'VideoList',
+       'dataProvider' => $dataProvider,
+       'itemView' => '_view',
+	   //'htmlOptions' => array('class'=>''),
+	   'itemsCssClass'=>'items',
+       'template' => '{items} {pager}',
+       'pager' => array(
+                    'class' => 'ext.infiniteScroll.IasPager', 
+                    'rowSelector'=>'.item', 
+                    'listViewId' => 'VideoList', 
+                    'header' => '',
+                    'loaderText'=>'Loading...',
+                    'options' => array('history' => false, 'triggerPageTreshold' => 100, 'trigger'=>'Load more'),
+                  )
+            )
+       );
+?>

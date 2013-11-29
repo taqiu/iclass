@@ -223,11 +223,11 @@ class ImageDataController extends Controller
 	
     public function actionGallery() 
     {
-    	$model=new ImageData('search');
-    	$model->unsetAttributes();  // clear any default values	
-    	$this->render('gallery',array(
-    			'model'=>$model,
-    	));
+    	$dataProvider=new CActiveDataProvider('ImageData');
+		$this->layout = '//layouts/column1';
+		$this->render('gallery',array(
+			'dataProvider'=>$dataProvider,
+		));
     }
 	
 	/**
