@@ -28,7 +28,7 @@ class ImageSetController extends Controller
 	{
 		return array(
 			array('allow',  
-				'actions'=>array('index', 'view', 'update', 'create', 'admin', 'delete'),
+				'actions'=>array('index', 'view', 'update', 'create', 'admin', 'delete', 'refreshSize'),
 				'roles'=>array('labMember'),
 			),
 			array('deny',  // deny all users
@@ -178,6 +178,15 @@ class ImageSetController extends Controller
 		}
 	}
 
+	
+	public function actionRefreshSize()
+	{
+		$model = New ImageSet();
+		$model->refreshAllSize();
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+	}
+	
 	/**
 	 * Lists all models.
 	 */

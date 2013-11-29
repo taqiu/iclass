@@ -7,19 +7,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array();
-
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#user-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
 ?>
 
 <h3>Manage Users</h3>
@@ -29,15 +16,6 @@ You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&g
 or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.<br/>
 <span class="label label-info">Hint:</span>  click the right side button to edit user information
 </p>
-
-<?php /*
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-*/?>
 
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'user-grid',
