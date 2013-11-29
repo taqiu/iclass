@@ -37,6 +37,7 @@ class ImageSet extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('owner, name', 'required'),
+			array('name', 'unique'),
 			array('owner, size', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			array('description, create_time, imageList', 'safe'),
