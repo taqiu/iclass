@@ -29,7 +29,7 @@ class UserController extends Controller
 		return array(
 			array('allow',  
 				'actions'=>array('index'),
-				'users'=>array('*'),
+				'roles'=>array('admin'),
 			),
 			array('allow',
 				'actions'=>array('view', 'profile', 'password'),

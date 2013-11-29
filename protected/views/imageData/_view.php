@@ -1,5 +1,10 @@
-<div class="view">
-
+<div class="item">
+ 
+	<a help="Click to view detail" href="<?php echo Yii::app()->createURL('imageData/view', array('id'=>$data->id))?>"><img src="
+    <?php echo 'http://farm'.$data->farm.'.staticflickr.com/'.$data->server.'/'.$data->flickr_photo_id.'_'.$data->secret,'.jpg';
+    ?>" alt=""/></a>
+    
+<?php /*
 		<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
 	<br />
@@ -43,11 +48,5 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('date_uploaded')); ?>:</b>
 	<?php echo CHtml::encode($data->date_uploaded); ?>
 	<br />
-
-	<b> Tags: </b>
-	<?php foreach ($data.tags as $t) {
-		echo CHtml::encode($t.tag_text);
-	}
-	?>
-
+*/?>
 </div>
