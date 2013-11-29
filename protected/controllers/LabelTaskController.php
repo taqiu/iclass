@@ -63,7 +63,7 @@ class LabelTaskController extends Controller
 			}
 			else
 			{
-				throw new CHttpException(403,'You are not authorized to update this label task.');
+				throw new CHttpException(403,'You are not authorized to update this label task. (Only owner and admin can do this)');
 			}
 		}
 		

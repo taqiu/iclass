@@ -174,7 +174,7 @@ class ImageSetController extends Controller
 		}
 		else
 		{
-			throw new CHttpException(403,'You are not authorized to delete this label.');
+			throw new CHttpException(403,'You are not authorized to delete this Image Set. (Only owner and admin can do this)');
 		}
 	}
 
