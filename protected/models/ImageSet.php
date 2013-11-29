@@ -77,6 +77,20 @@ class ImageSet extends CActiveRecord
 	}
 
 	/**
+	 * When image is direcly deleted form image data, the size of image set might be changed.
+	 * Use this function to refrash size.
+	 */
+	public function refreshAllSize() 
+	{
+		$imageSets = ImageSet::model()->findAll();
+		foreach ($imageSets as $imageSet) {
+			$realSize = ImageSetDetail::model()->count("set_id=$imageSet->id");
+			$imageSet->size = $realSize;
+			$imageSet->save();
+		}
+	}
+	
+	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
 	 * Typical usecase:
