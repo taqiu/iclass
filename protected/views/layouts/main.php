@@ -41,7 +41,7 @@
 						'activeCssClass' => 'active',
 						'items'=>array(
 							array('label'=>'Home', 'url'=>array('/site/index'), 'active'=>Yii::app()->controller->id==='participate' ||(Yii::app()->controller->id ==='site' && Yii::app()->controller->getAction()->getId() ==='index')),
-							array('label'=>'Search', 'url'=>'#', 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
+							array('label'=>'Search', 'url'=>array('/search/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
 							array('label'=>'Image Data', 'url'=>array('/imageData/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember', 'active'=>Yii::app()->controller->id==='imageData'),
 							array('label'=>'Image Sets', 'url'=>array('/imageSet/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember', 'active'=>Yii::app()->controller->id==='imageSet'),
 							array('label'=>'Labels', 'url'=>array('/label/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember', 'active'=>Yii::app()->controller->id==='label'),
