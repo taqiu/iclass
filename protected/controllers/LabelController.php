@@ -123,7 +123,7 @@ class LabelController extends Controller
 			}
 			else
 			{
-				throw new CHttpException(403,'You are not authorized to update this label.');
+				throw new CHttpException(403,'You are not authorized to update this label. (Only owner and admin can do this)');
 			}
 			
 		}
