@@ -30,6 +30,7 @@
  
 class ImageData extends CActiveRecord
 {
+	//public $path='http://farm1.staticflickr.com/5/10000000_106b46b078.jpg';
 	public $tagSearch;
 	/**
 	 * @return string the associated database table name
@@ -148,8 +149,6 @@ class ImageData extends CActiveRecord
 		));
 	}
 
-	
-	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

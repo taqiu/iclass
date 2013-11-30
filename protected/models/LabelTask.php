@@ -157,8 +157,9 @@ class LabelTask extends CActiveRecord
 			if ($participate === null) {
 				$row['progress'] = -1;
 			} else {
-				$progross = $participate->last_image_labeled;
-				$row['progress'] = $progross + 1;
+				$task = LabelTask::model()->findByPk($participate->task_id);
+				$progross = ImageSetDetail::model()->count("set_id=$task->set_id AND index_in_set<=$participate->last_image_labeled");
+				$row['progress'] = $progross;
 			}
 		}
 		$dataProvider = new CArrayDataProvider($rows, array(

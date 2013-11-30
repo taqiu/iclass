@@ -19,15 +19,15 @@ vertical-align:middle;
 </style>
 <h3> Unfinished Tasks </h3>
 <hr/>
-<p> All unfinished and active label tasks.  Click the buttom to start or continue a task. </p>
+<p> <span class="label label-info">Hint</span>  Click the buttom to start or continue a task. Only unfinished and active label tasks are listed.</p>
 <?php 
 function showProgress($progress, $size) {
 	if ($progress===-1) {
 		return '';
 	} 
 	$percent = 100*$progress/$size;
-	if ($percent > 100) {
-		$percent = 97;
+	if ($percent >= 100) {
+		$percent = 90;
 	}
 	return '<div class="progress progress-striped">
 				<div class="bar" style="width:'.$percent.'%"></div>

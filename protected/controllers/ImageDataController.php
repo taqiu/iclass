@@ -29,7 +29,7 @@ class ImageDataController extends Controller
 	{
 		return array(
 			array('allow',
-					'actions'=>array('index', 'view', 'admin', 'delete', 'upload'),
+					'actions'=>array('index', 'view', 'admin', 'delete', 'upload', 'gallery'),
 					'roles'=>array('labMember'),
 			),
 			array('deny',  // deny all users
@@ -209,7 +209,10 @@ class ImageDataController extends Controller
 						}
 					}
 				}
-				$this->render('processing', array('model'=>$model), false, true);
+				Yii::app()->user->setFlash('success', "<p>Record Upload Summary</p>
+						<ul><li><b>$model->added_records</b> of <b>$model->tot_records</b> records added.</li>
+						 <li><b>$model->added_tags</b> tags added.</li></ul>");
+				$this->refresh();
             }
 			else{
 				$model->error="Invalid file type. Requires .dump files.";
@@ -218,6 +221,14 @@ class ImageDataController extends Controller
         $this->render('upload', array('model'=>$model));
     }
 	
+    public function actionGallery() 
+    {
+    	$dataProvider=new CActiveDataProvider('ImageData');
+		$this->layout = '//layouts/column1';
+		$this->render('gallery',array(
+			'dataProvider'=>$dataProvider,
+		));
+    }
 	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

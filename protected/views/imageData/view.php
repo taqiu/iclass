@@ -7,6 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'Image Data Home', 'url'=>array('index')),
 	array('label'=>'Upload Image Data','url'=>array('upload')),
+	array('label'=>'Image Gallery','url'=>array('gallery')),
 	array('label'=>'Manage Image Data','url'=>array('admin'), 'itemOptions'=>array('class'=>'active')),
 	);
 ?>
@@ -56,5 +57,7 @@ $this->menu=array(
 )); ?>
 </div>
 <hr/>
+<div>
 <input Type="button" VALUE="Back" class="btn btn-success" onClick="location.href='<?php echo Yii::app()->createURL('imageData/admin');?>'"/>
 <?php echo CHtml::button('Delete', array('class'=>"btn btn-danger pull-right", 'submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')); ?>
+</div>

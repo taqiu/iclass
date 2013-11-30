@@ -10,6 +10,12 @@ $form = $this->beginWidget(
     )
 );?>
 <input type="file" name="FileUploadForm[imageData]" style="visibility:hidden;" id="pdffile" /><br/>
+<?php if(Yii::app()->user->hasFlash('success')):?>
+	<div class="alert alert-success">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<?php echo Yii::app()->user->getFlash('success');?>
+	</div>
+<?php endif; ?>
 <?php echo $form->errorSummary($model,
 		$header='<button type="button" class="close" data-dismiss="alert">&times;</button><p>Please fix the following input errors:</p>',
 			'', array('class'=>'alert alert-error',)); ?>
