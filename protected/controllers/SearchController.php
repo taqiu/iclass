@@ -54,9 +54,8 @@ class SearchController extends Controller
 		}
 		
 		if(isset($_POST['set'])){
-			#$model->attributes=$_POST['ImageSet'];
-			#$model->imageList=explode(',',$model->imageList);
-			$this->forward('imageSet/transfer');
+			$model->attributes=$_POST['ImageSet'];
+			$this->redirect(array('imageSet/create', 'imageList'=>$model->imageList));
 		}
 		
 		$this->render('index',array(
