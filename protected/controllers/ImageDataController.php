@@ -173,7 +173,6 @@ class ImageDataController extends Controller
 						$row_data = explode(' ', $line);
 						$temp = explode('@N',$row_data[0]);
 						
-						$record->uploader = Yii::app()->user->getId(); 
 						$record->flickr_user = implode(array($temp[0],$temp[1]));
 						$record->flickr_photo_id = $row_data[1];
 						$record->date_uploaded_flickr = $row_data[7];
@@ -190,7 +189,9 @@ class ImageDataController extends Controller
 						
 						$temp = explode('=',$row_data[18]);
 						$record->license = $temp[1];
-						$record->date_uploaded = date("Y-m-d");
+						// move thoese to ImageData beforeValidate()
+						//$record->uploader = Yii::app()->user->getId(); 
+						//$record->date_uploaded = date("Y-m-d");
 						
 						$model->tot_records++;
 						if($record->validate()){

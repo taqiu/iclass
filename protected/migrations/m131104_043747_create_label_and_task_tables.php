@@ -18,7 +18,8 @@ class m131104_043747_create_label_and_task_tables extends CDbMigration
 			'owner' => 'integer NOT NULL',
 			'name' => 'varchar(64)',
 			'description' => 'text',
-			'create_time' => 'datetime',
+			'create_time' => 'datetime DEFAULT NULL',
+			'last_search_time' => 'datetime DEFAULT NULL',
 		), 'ENGINE=InnoDB');
 		$this->createIndex('label_name', '{{label}}', 'name', true);
 		$this->addForeignKey(
