@@ -88,8 +88,10 @@ class ImageSetController extends Controller
 			$model->attributes=$_POST['ImageSet'];
 			$model->imageList=explode(',',$model->imageList);
 			$model->size = count($model->imageList);
-			$model->owner = Yii::app()->user->getId();
-			$model->create_time = date("Y-m-d");
+			
+			// Do this in ImageSet beforeValidate()
+			//$model->owner = Yii::app()->user->getId();
+			//$model->create_time = date("Y-m-d");
 			if($model->save()){
 				$i = 0;
 				foreach($model->imageList as $img_id){
