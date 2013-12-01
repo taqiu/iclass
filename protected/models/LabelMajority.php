@@ -83,14 +83,12 @@ class LabelMajority extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-
 	
-	public function updateAll() {
-		
-	}
-	
+	/*
+	 * update majorty table with the given label id
+	 */
 	public function partialUpdate($label_id) {
-		$update_period = 60*60*24; // one day
+		$update_period = 60; // one day
 		
 		$label = Label::model()->findByPk((int) $label_id);
 		if ($label === null) 
@@ -105,19 +103,54 @@ class LabelMajority extends CActiveRecord
 			}
 		}
 		
-		$sql = "SELECT T1.id, 
-				FROM {{image_data}} AS T1
-				WHERE 
-					(SELECT label_id, image_id, answer_id, COUNT(*) as c
-					FROM {{label_response}}
-					WHERE label_id=:labelId AND image_id = T1.id
-					GROUP BY label_id, image_id, answer_id
-					ORDER BY c DESC) AS count_table
-
-				";
+		// Get ans_count for each image 
+		$sql = "SELECT image_id, answer_id, COUNT(*) AS ans_count
+				FROM {{label_response}} 
+				WHERE label_id=:labelId
+				GROUP BY image_id, answer_id
+				ORDER BY image_id";
 		$command = Yii::app()->db->createCommand($sql);
 		$command->bindValue(":labelId", $label_id, PDO::PARAM_INT);
+		$rows = $command->queryAll();
 		
+		// Update majority tabel
+		$cur_image = 0;
+		$max_ans = 0;
+		$max = 0;
+		foreach ($rows as $row) {
+			if($cur_image !== $row['image_id']) {
+				// skip the fist row
+				if ($cur_image !== 0) {
+					$label_maj = $this->findByPk(array('label_id'=>$label_id, 'image_id'=>$cur_image));
+					if ($label_maj === null) {
+						$label_maj->label_id = $label_id;
+						$label_maj->image_id = $cur_image;
+					}
+					$label_maj->answer_id = $max_ans;
+					$label_maj->save();
+				}
+				$max = $row['ans_count'];
+				$max_ans = $row['answer_id'];
+				$cur_image = $row['image_id'];
+			} else {
+				if ($max < $row['ans_count']) {
+					$max = $row['ans_count'];
+					$max_ans = $row['answer_id'];
+				}
+			}			
+		}
+		// Handle the last row
+		if ($cur_image !== 0) {
+			$label_maj = $this->findByPk(array('label_id'=>$label_id, 'image_id'=>$cur_image));
+			if ($label_maj === null) {
+				$label_maj->label_id = $label_id;
+				$label_maj->image_id = $cur_image;
+			}
+			$label_maj->answer_id = $max_ans;
+			$label_maj->save();
+		}
+		
+		// Update the last search time
 		$label->last_search_time = new CDbExpression('NOW()');
 		$label->save();
 	}
