@@ -84,6 +84,41 @@ class LabelMajority extends CActiveRecord
 		));
 	}
 	
+	
+	public static function updateByImage($label_id, $image_id) {
+		// Get ans_count for each image
+		$sql = "SELECT answer_id, COUNT(*) AS ans_count
+				FROM {{label_response}}
+				WHERE label_id=:labelId AND image_id=:imageId
+				GROUP BY answer_id";
+		$command = Yii::app()->db->createCommand($sql);
+		$command->bindValue(":labelId", $label_id, PDO::PARAM_INT);
+		$command->bindValue(":imageId", $image_id, PDO::PARAM_INT);
+		$rows = $command->queryAll();
+		
+		// Update majority tabel
+		$max = 0;
+		$answer = 0;
+		foreach ($rows as $row) {	
+			if ($row['ans_count'] > $max) {
+				$max = $row['ans_count'];
+				$answer = $row['answer_id'];
+			}
+		}
+		
+		if ($max !== 0) {
+			$label_maj = LabelMajority::model()->findByPk(array('label_id'=>$label_id, 'image_id'=>$image_id));
+			if ($label_maj === null) {
+				$label_maj = new LabelMajority();
+				$label_maj->label_id = $label_id;
+				$label_maj->image_id = $image_id;
+			}
+			$label_maj->answer_id = $answer;
+			if($label_maj->save());
+			else die(print_r($label_maj->errors));
+		}		
+	}
+	
 	/*
 	 * update majorty table with the given label id
 	 */
