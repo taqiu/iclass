@@ -41,12 +41,38 @@
 
 <div class="form-actions">
 	<?php $this->widget('bootstrap.widgets.TbButton', array(
-			'id'=>'sub',
+			'id'=>'all',
 			'buttonType'=>'submit',
 			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Create' : 'Save',
+			'label'=>'Select All',
+			'htmlOptions'=>array('id'=>'all', 'name'=>'all'),
 		)); ?>
+	<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'id'=>'clear',
+			'buttonType'=>'reset',
+			'type'=>'primary',
+			'label'=>'Clear All',
+		)); ?>
+	<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'id'=>'down',
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>'Download URLs',
+			'htmlOptions'=>array('id'=>'down', 'name'=>'down'),
+		)); ?>
+		
+	<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'id'=>'set',
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'url'=>Yii::app()->createUrl('imageSet/create'),
+			'label'=>'Save as Image Set',
+			'htmlOptions'=>array('id'=>'set', 'name'=>'set'),
+		)); ?>
+			
 </div>
+
+
 
 <?php $this->endWidget(); ?>
 <?php Yii::app()->clientScript->registerScript('fill','$("#image-data-grid").selGridView("addSelection", '.json_encode($model->imageList).');');?>
@@ -55,4 +81,11 @@
  
         var stringSel=arraySel.join(",");                                                                          
         $("#ImageSet_imageList").val(stringSel);}');?>
-<?php Yii::app()->clientScript->registerScript('init','$(document).ready(function(){ $("#sub").on("click", postChecked);});'); ?>
+		
+
+<?php Yii::app()->clientScript->registerScript('clearall', 'function clearall(){
+		$("#image-data-grid").selGridView("clearAllSelection");}');?>
+		
+<?php Yii::app()->clientScript->registerScript('init','$(document).ready(function(){ $("#down").on("click", postChecked);});'); ?>
+<?php Yii::app()->clientScript->registerScript('init2','$(document).ready(function(){ $("#set").on("click", postChecked);});'); ?>
+<?php Yii::app()->clientScript->registerScript('sel', '$(document).ready(function(){ $("#clear").on("click", clearall);});');?>

@@ -30,8 +30,19 @@
  
 class ImageData extends CActiveRecord
 {
-	//public $path='http://farm1.staticflickr.com/5/10000000_106b46b078.jpg';
+	
 	public $tagSearch;
+	
+	public function imageURL(){
+		return 'http://farm'.$this->farm.'.staticflickr.com/'.$this->server.'/'.$this->flickr_photo_id.'_'.$this->secret.'.jpg';
+	}
+	
+	
+	public function asCSVString(){
+		return $this->id.', '.$this->flickr_photo_id.', '.$this->imageURL()."\n";
+	
+	}
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -149,6 +160,50 @@ class ImageData extends CActiveRecord
 		));
 	}
 
+	
+	
+	
+	
+	public function searchNoPage()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('uploader',$this->uploader);
+		$criteria->compare('flickr_user',$this->flickr_user,true);
+		$criteria->compare('date_uploaded_flickr',$this->date_uploaded_flickr,true);
+		$criteria->compare('latitude',$this->latitude);
+		$criteria->compare('longitude',$this->longitude);
+		$criteria->compare('precision',$this->precision);
+		$criteria->compare('title',$this->title,true);
+		$criteria->compare('license',$this->license);
+		$criteria->compare('flickr_photo_id',$this->flickr_photo_id,true);
+		$criteria->compare('date_uploaded',$this->date_uploaded,true);
+		$criteria->compare('farm',$this->farm);
+		$criteria->compare('server',$this->server);
+		$criteria->compare('secret',$this->secret,true);
+		
+
+		// Add criteria only when tagSearch is set,
+		// so that empty tag image can be displayed
+		
+			
+		if (isset($this->tagSearch) && $this->tagSearch !== '') {
+			$criteria->with = array('tags');
+			$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE tag_text LIKE :tagSearch)');
+			$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
+		}
+		
+		$c = new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=>false,
+		));
+		
+		return $c;
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
