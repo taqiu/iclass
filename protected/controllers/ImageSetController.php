@@ -55,7 +55,7 @@ class ImageSetController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ImageSet']))
+		if(isset($_GET['ImageSet']))
 		{
 			$model->attributes=$_POST['ImageSet'];
 			$model->imageList=explode(',',$model->imageList);
@@ -78,7 +78,11 @@ class ImageSetController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 		
-	
+		if(isset($_GET['imageList']))
+		{
+			$model->imageList=$_GET['imageList'];
+			$model->imageList=explode(',',$model->imageList);
+		}
 		
 		if(isset($_GET['ImageData']))
 			$data_model->attributes=$_GET['ImageData'];
