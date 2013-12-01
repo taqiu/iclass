@@ -233,6 +233,6 @@ class UserController extends Controller
 	public function actionTest()
 	{
 		$model = new LabelMajority();
-		$this->render('login',array('model'=>$model));
+		$this->render('test',array('model'=>$model));
 	}
 }
