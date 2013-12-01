@@ -28,7 +28,7 @@ class ImageSetController extends Controller
 	{
 		return array(
 			array('allow',  
-				'actions'=>array('index', 'view', 'update', 'create', 'admin', 'delete', 'refreshSize'),
+				'actions'=>array('index','transfer', 'view', 'update', 'create', 'admin', 'delete', 'refreshSize'),
 				'roles'=>array('labMember'),
 			),
 			array('deny',  // deny all users
@@ -48,6 +48,25 @@ class ImageSetController extends Controller
 		));
 	}
 
+	public function actionTransfer(){
+	
+		$model = new ImageSet;
+		$data_model = new ImageData('search');
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['ImageSet']))
+		{
+			$model->attributes=$_POST['ImageSet'];
+			$model->imageList=explode(',',$model->imageList);
+		}
+		
+		$this->render('create',array(
+			'model'=>$model, 'data_model'=>$data_model
+		));
+	
+	}
+	
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
