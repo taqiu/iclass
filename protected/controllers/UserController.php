@@ -36,7 +36,7 @@ class UserController extends Controller
 				'roles'=>array('guest'),
 			),
 			array('allow', 
-				'actions'=>array('admin','delete', 'update'),
+				'actions'=>array('admin','delete', 'update', 'test'),
 				'roles'=>array('manageUser'),
 			),
 			array('deny',  // deny all users
@@ -228,5 +228,11 @@ class UserController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionTest()
+	{
+		$model = new LabelMajority();
+		$this->render('login',array('model'=>$model));
 	}
 }
