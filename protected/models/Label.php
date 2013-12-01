@@ -9,6 +9,7 @@
  * @property string $name
  * @property string $description
  * @property string $create_time
+ * @property string $last_search_time
  *
  * The followings are the available model relations:
  * @property User $owner0
@@ -40,7 +41,7 @@ class Label extends CActiveRecord
 			array('name', 'unique'),
 			array('owner', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
-			array('description, create_time', 'safe'),
+			array('description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, owner, name, description, create_time', 'safe', 'on'=>'search'),
@@ -73,6 +74,7 @@ class Label extends CActiveRecord
 			'name' => 'Name',
 			'description' => 'Description',
 			'create_time' => 'Create Time',
+			'last_search_time' => 'Last search time', 
 		);
 	}
 
