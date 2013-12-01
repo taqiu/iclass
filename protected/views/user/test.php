@@ -7,4 +7,4 @@ $this->breadcrumbs=array(
 
 <h2>Testing </h2>
 
-<h2><?php echo $model->partialUpdate(3) ?></h2>
+<h2><?php echo $model->partialUpdate(1) ?></h2>
