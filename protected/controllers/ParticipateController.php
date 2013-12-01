@@ -64,13 +64,16 @@ class ParticipateController extends Controller
 		}
 		
 		// read task
-		$task = LabelTask::model()->findByPk($task_id);
+		$task = LabelTask::model()->findByPk((int) $task_id);
+		if ($task === null) {
+			throw new CHttpException(404,'The requested page does not exist.');
+		}
 		
 		// process user selection
 		if (isset($_POST['answer'])) {
-			$image_id = $_POST['imageId'];
-			$index_in_set = $_POST['indexInSet'];
-			$answer = $_POST['answer'];
+			$image_id = (int) $_POST['imageId'];
+			$index_in_set =  (int)$_POST['indexInSet'];
+			$answer =  (int) $_POST['answer'];
 			// die($answer.'|'.$image_id.'|'.$index_in_set);
 			// check Duplicate entry in databse
 			$labelResponse = LabelResponse::model()->findByPk(array('image_id'=>$image_id, 'label_id'=>$task->label_id, 'user_id'=>$user_id));
@@ -97,22 +100,20 @@ class ParticipateController extends Controller
 		
 		// Get all images in set and get next image
 		$criteria = new CDbCriteria;
-		$criteria->compare('set_id',$task->set_id);
+		$criteria->condition = 'set_id=:setID AND index_in_set>:indexInSet';
+		$criteria->params = array(':setID'=>$task->set_id, ':indexInSet'=>$partipate->last_image_labeled);
 		$criteria->order = 'index_in_set';
-		$imageSetDtails = ImageSetDetail::model()->findAll($criteria);
-		//die(print_r($imageSetDtails));
-		$image_id = -1;
-		foreach ($imageSetDtails as $imageSetDetail ) {
-			$cursor = $imageSetDetail->index_in_set;
-			if ($cursor > $partipate->last_image_labeled) {
-				$image_id = $imageSetDetail->image_id;
-				break;
-			} 
+		$criteria->limit = 1;
+		$imageSetDetail = ImageSetDetail::model()->find($criteria);
+		if ($imageSetDetail != null) {
+			$image_id = $imageSetDetail->image_id;
+		} else {
+			$image_id = -1;
 		}
 		
 		if ($image_id < 0) {
 			$partipate->is_done = 1;
-			if(!$partipate->save()) { die(print_r($partipate->errors));}
+			if(!$partipate->save()) {die(print_r($partipate->errors));}
 			$this->render('done');
 		} else {
 			$image = ImageData::model()->findByPk($image_id);
@@ -123,7 +124,7 @@ class ParticipateController extends Controller
 				'task' => $task,
 				'image' => $image,
 				'label' => $label,
-				'index_in_set' => $cursor,
+				'index_in_set' => $imageSetDetail->index_in_set,
 				'answers' => $answers,
 			));
 		}
