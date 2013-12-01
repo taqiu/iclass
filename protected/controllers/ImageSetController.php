@@ -48,24 +48,7 @@ class ImageSetController extends Controller
 		));
 	}
 
-	public function actionTransfer(){
 	
-		$model = new ImageSet;
-		$data_model = new ImageData('search');
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_GET['ImageSet']))
-		{
-			$model->attributes=$_POST['ImageSet'];
-			$model->imageList=explode(',',$model->imageList);
-		}
-		
-		$this->render('create',array(
-			'model'=>$model, 'data_model'=>$data_model
-		));
-	
-	}
 	
 	/**
 	 * Creates a new model.
