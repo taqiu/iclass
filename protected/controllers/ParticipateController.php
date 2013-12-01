@@ -90,6 +90,9 @@ class ParticipateController extends Controller
 				$partipate->last_image_labeled = $index_in_set;
 				$partipate->save();
 			}
+			
+			// Upate Majority table
+			LabelMajority::updateByImage($task->label_id, $image_id);
 		}
 		
 		// Get all images in set and get next image
