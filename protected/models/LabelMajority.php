@@ -123,6 +123,7 @@ class LabelMajority extends CActiveRecord
 				if ($cur_image !== 0) {
 					$label_maj = $this->findByPk(array('label_id'=>$label_id, 'image_id'=>$cur_image));
 					if ($label_maj === null) {
+						$label_maj = new LabelMajority();
 						$label_maj->label_id = $label_id;
 						$label_maj->image_id = $cur_image;
 					}
@@ -143,6 +144,7 @@ class LabelMajority extends CActiveRecord
 		if ($cur_image !== 0) {
 			$label_maj = $this->findByPk(array('label_id'=>$label_id, 'image_id'=>$cur_image));
 			if ($label_maj === null) {
+				$label_maj = new LabelMajority();
 				$label_maj->label_id = $label_id;
 				$label_maj->image_id = $cur_image;
 			}
