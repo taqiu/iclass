@@ -3,22 +3,20 @@ $url = Yii::app()->createUrl('search/loadAns');
 Yii::app()->clientScript->registerScript('load_ans', "
 $('input[id=ImageData_label_name]').change(function() {
 	$('#ImageData_possible_ans option').remove();
-	var label = $('input[id=ImageData_label_name]');
-	var data = 'label_name=' + label.val();
-		$.ajax({
-            url:\"".$url."\",
-            type: 'GET',
-            data: data,
-            success: function(data) {
-                if (data == 1) {
-                    	alert(label.val());
-                }
-                else {
-                    alert('error');
-                }
-            }
-        });
-        return false;
+	var label_name = $(this).val();
+	var sent_data = 'label_name='+label_name;
+	$.ajax({
+		url:\"".$url."\",
+		type: 'GET',
+		data: sent_data,
+		cache:false,
+		success: function(data) {
+        	$('#ImageData_possible_ans').append(data);
+		},
+		error:function(jxhr){
+        	//alert(jxhr.responseText);
+    	}
+	});
 });"
 );
 ?>
@@ -98,7 +96,6 @@ $('input[id=ImageData_label_name]').change(function() {
 		<div class="controls span6">
 			<label>Possible Answer </label>
 			<select id="ImageData_possible_ans" name="ImageData[possible_ans]" class="span6">
-				<option> asdfasdf </option>
 			</select>
 		</div>
 		<div class="controls span2 pull-right">

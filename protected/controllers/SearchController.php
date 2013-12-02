@@ -79,23 +79,23 @@ class SearchController extends Controller
 		}
 		
 		if (empty($_GET['label_name'])) {
-			throw new CHttpException('404', 'Missing "label_name" GET parameter.');
+			throw new CHttpException('404', 'Missing "labelName" GET parameter.');
 		}
 		
 		$label = Label::model()->find('name=:label_name',
-				array(':label_name'=>(int) $_GET['label_name']));
-		if (isset($label)) {
-			$answers = PossibleAnswer::model()->find('lable_id=:lable_id',
-				array('label_id'=>$lable->id));
-			$data = CHtml::listData($answer,'id','answer');
+				array(':label_name'=>$_GET['label_name']));
+		if ($label !== null) {
+			$answers = PossibleAnswer::model()->findAll('label_id=:labelId',
+				array(':labelId'=>$label->id));
+			//print_r($answers);	
+			$data = CHtml::listData($answers,'id','answer');
 			echo "<option value=''>Select Answer</option>";
 			foreach($data as $value=>$answer)
 				echo CHtml::tag('option', array('value'=>$value),CHtml::encode($answer),true);
+			Yii::app()->end();
 		} else {
-			
+			throw new CHttpException('404', 'Cannot find Label');
 		}
-		
-		Yii::app()->end();
 	}
 	
 }
