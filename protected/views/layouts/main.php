@@ -41,7 +41,7 @@
 						'activeCssClass' => 'active',
 						'items'=>array(
 							array('label'=>'Home', 'url'=>array('/site/index'), 'active'=>Yii::app()->controller->id==='participate' ||(Yii::app()->controller->id ==='site' && Yii::app()->controller->getAction()->getId() ==='index')),
-							array('label'=>'Search', 'url'=>array('/search/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember'),
+							array('label'=>'Search', 'url'=>array('/search/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember', 'active'=>Yii::app()->controller->id==='search'),
 							array('label'=>'Image Data', 'url'=>array('/imageData/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember', 'active'=>Yii::app()->controller->id==='imageData'),
 							array('label'=>'Image Sets', 'url'=>array('/imageSet/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember', 'active'=>Yii::app()->controller->id==='imageSet'),
 							array('label'=>'Labels', 'url'=>array('/label/index'), 'visible'=> Yii::app()->user->getRole()==='admin' || Yii::app()->user->getRole()==='labMember', 'active'=>Yii::app()->controller->id==='label'),
@@ -64,13 +64,13 @@
         				<li><a href="<?php echo $this->createUrl('site/logout')?>"><i class="icon-off  icon-white"></i> Logout</a></li>
       				</ul>					
 					<?php elseif (Yii::app()->controller->getAction()->getId() !== "login"): ?>
-					<form class="navbar-form pull-right" id="nav-login" action="<?php echo $this->createUrl('site/login')?>" method="post">
-						<input class="span2" type="text" placeholder="Username" name="LoginForm[username]" id="LoginForm_username" >
-						<input class="span2" type="password" placeholder="Password" name="LoginForm[password]" id="LoginForm_password">
-						<button type="submit" class="btn btn-success">Log In</button>
+					<form class="navbar-form pull-right form-inline" id="nav-login" action="<?php echo $this->createUrl('site/login')?>" method="post">
+						<input class="input-small" type="text" placeholder="Username" name="LoginForm[username]" id="LoginForm_username" >
+						<input class="input-small" type="password" placeholder="Password" name="LoginForm[password]" id="LoginForm_password">
 						<input id="ytLoginForm_rememberMe" type="hidden" value="0" name="LoginForm[rememberMe]" />
 						<label class="checkbox" for="LoginForm_rememberMe"><input name="LoginForm[rememberMe]" id="LoginForm_rememberMe" value="1" type="checkbox" />
-		Keep me logged in</label>
+						Remember me</label>
+						<button type="submit" class="btn btn-success">Log In</button>
 					</form>
 					<?php endif?>
 				</div><!--/.nav-collapse -->
@@ -78,8 +78,7 @@
 		</div>
 	</div>	<!-- navbar -->
 
-	<div class="container" style="<?php if (Yii::app()->user->isGuest && Yii::app()->controller->getAction()->getId() !== "login") {echo 'margin-top:77px';} ?>
-								  <?php if (!Yii::app()->user->isGuest || Yii::app()->controller->getAction()->getId() === "login") {echo 'margin-top:60px';} ?>">							  
+	<div class="container" style="margin-top:60px">							  
 		<?php if (isset($this->breadcrumbs)): ?>
 			<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
 			'links' => $this->breadcrumbs,

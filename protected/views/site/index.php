@@ -1,7 +1,7 @@
 <?php $this->pageTitle=Yii::app()->name; ?>
 
 <div id='logo'>
-       <a href="http://vision.soic.indiana.edu/"><img src="<?php echo Yii::app()->request->baseUrl; ?>/img/default-logo.png" width="960" height="129" /></a>
+       <img src="<?php echo Yii::app()->request->baseUrl; ?>/img/default-logo.png" width="960" height="129" />
 </div><!-- end of #logo -->
 
 <div class="row">
