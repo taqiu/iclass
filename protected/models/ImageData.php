@@ -86,6 +86,8 @@ class ImageData extends CActiveRecord
 		return array(
 			'uploader0' => array(self::BELONGS_TO, 'User', 'uploader'),
 			'devImageSets' => array(self::MANY_MANY, 'ImageSet', '{{image_set_detail}}(image_id, set_id)'),
+			'devLabels' => array(self::MANY_MANY, 'Label', '{{label_majority}}(image_id, label_id)'),
+			'labelMajority' => arraY(self::HAS_MANY, 'LabelMajority','image_id'),
 			'labelResponses' => array(self::HAS_MANY, 'LabelResponse', 'image_id'),
 			'tags' => array(self::HAS_MANY, 'Tag', 'image_id'),
 		);
@@ -158,6 +160,17 @@ class ImageData extends CActiveRecord
 			$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
 		}
 		
+		if (isset($this->label_name) && $this->label_name !== '') {
+			$criteria->with = array('devLabels');
+			$criteria->together = true;
+			$label = Label::model()->findByAttributes(array('name'=>$this->label_name));
+			
+			$criteria->compare('devLabels_devLabels.label_id',$label->id);
+			
+			if(isset($this->possible_ans))
+				$criteria->compare('devLabels_devLabels.answer_id', $this->possible_ans);
+		}
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -197,6 +210,18 @@ class ImageData extends CActiveRecord
 			$criteria->with = array('tags');
 			$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE tag_text LIKE :tagSearch)');
 			$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
+		}
+		
+		
+		if (isset($this->label_name) && $this->label_name !== '') {
+			$criteria->with = array('devLabels');
+			$criteria->together = true;
+			$label = Label::model()->findByAttributes(array('name'=>$this->label_name));
+			
+			$criteria->compare('devLabels_devLabels.label_id',$label->id);
+			
+			if(isset($this->possible_ans))
+				$criteria->compare('devLabels_devLabels.answer_id', $this->possible_ans);
 		}
 		
 		$c = new CActiveDataProvider($this, array(

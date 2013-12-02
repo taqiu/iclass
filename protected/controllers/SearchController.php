@@ -46,13 +46,13 @@ class SearchController extends Controller
 		if(isset($_GET['ImageData']))
 			$data_model->attributes=$_GET['ImageData'];
 		
-		if(isset($_POST['all'])){
-			$data_model->attributes=$_POST['ImageData'];
+		if(isset($_GET['all'])){
+			$data_model->attributes=$_GET['ImageData'];
 			$model->imageList = $data_model->searchNoPage()->getKeys();
 		}
 		
-		if(isset($_POST['down'])){
-			$model->attributes=$_POST['ImageSet'];
+		if(isset($_GET['down'])){
+			$model->attributes=$_GET['ImageSet'];
 			$model->imageList=explode(',',$model->imageList);
 			$temp = "Internal ID, Flickr Photo ID, URL\n";
 			foreach($model->imageList as $i)
@@ -61,8 +61,8 @@ class SearchController extends Controller
 			Yii::app()->getRequest()->sendFile('records.txt',$temp);
 		}
 		
-		if(isset($_POST['set'])){
-			$model->attributes=$_POST['ImageSet'];
+		if(isset($_GET['set'])){
+			$model->attributes=$_GET['ImageSet'];
 			$this->redirect(array('imageSet/create', 'imageList'=>$model->imageList));
 		}
 		
