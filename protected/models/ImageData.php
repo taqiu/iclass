@@ -18,6 +18,8 @@
  * @property integer $farm
  * @property integer $server
  * @property string $secret
+ * @property string $lable_name
+ * @property string $possible_ans
  *
  * The followings are the available model relations:
  * @property User $uploader0
@@ -30,7 +32,8 @@
  
 class ImageData extends CActiveRecord
 {
-	
+	public $label_name;
+	public $possible_ans;
 	public $tagSearch;
 	
 	public function imageURL(){
@@ -69,7 +72,7 @@ class ImageData extends CActiveRecord
 			array('date_uploaded_flickr, title, date_uploaded', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, uploader, flickr_user, date_uploaded_flickr, latitude, longitude, precision, title, license, flickr_photo_id, date_uploaded, farm, server, secret, tagSearch', 'safe', 'on'=>'search'),
+			array('id, uploader, flickr_user, date_uploaded_flickr, latitude, longitude, precision, title, license, flickr_photo_id, date_uploaded, farm, server, secret, tagSearch, label_name, possible_ans', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -108,6 +111,8 @@ class ImageData extends CActiveRecord
 			'farm' => 'Farm',
 			'server' => 'Server',
 			'secret' => 'Secret',
+			'label_name' => 'Label Name',
+			'possible_ans' => 'Possoble Answer',
 		);
 	}
 
@@ -147,8 +152,6 @@ class ImageData extends CActiveRecord
 
 		// Add criteria only when tagSearch is set,
 		// so that empty tag image can be displayed
-		
-			
 		if (isset($this->tagSearch) && $this->tagSearch !== '') {
 			$criteria->with = array('tags');
 			$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE tag_text LIKE :tagSearch)');

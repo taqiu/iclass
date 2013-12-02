@@ -13,7 +13,7 @@
 'dataProvider'=>$data_model->search(),
 'selectableRows'=>2,
 #'selectionChanged'=>'js:postChecked',
-'filter'=>$data_model,
+//'filter'=>$data_model,
 'columns'=>array(
 		array(
           'id' => 'checkedImages',

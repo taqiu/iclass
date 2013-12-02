@@ -12,14 +12,7 @@ margin-top: 10px;
 }
     
 #nav-login .checkbox {
-margin-top: 3px;
-margin-bottom: 0px;
 color:#CCCCCC;
-font-size: 12px;
-}
-
-#nav-login #LoginForm_rememberMe {
-margin-top: 3px;
 }
     
 #login-form label {

@@ -4,7 +4,7 @@ class SearchController extends Controller
 {
 	
 
-	public $layout='//layouts/column2';
+	public $layout='//layouts/column1';
 
 	/**
 	 * @return array action filters
@@ -21,8 +21,8 @@ class SearchController extends Controller
 	{
 		return array(
 				array('allow',
-						'actions'=>array('index', 'label', ),
-						'roles'=>array('labeler'),
+						'actions'=>array('index', 'loadAns'),
+						'roles'=>array('labMember'),
 				),
 				array('deny',  // deny all users
 						'users'=>array('*'),
@@ -34,6 +34,14 @@ class SearchController extends Controller
 	{
 		$model = new ImageSet;
 		$data_model=new ImageData('search');
+		
+		// Get all label names
+		$labels = Label::model()->findAll();
+		$labelNames = array();
+		foreach($labels as $label)
+		{
+			$labelNames[] = $label->name;
+		}
 		
 		if(isset($_GET['ImageData']))
 			$data_model->attributes=$_GET['ImageData'];
@@ -59,22 +67,35 @@ class SearchController extends Controller
 		}
 		
 		$this->render('index',array(
-			'model'=>$model,'data_model'=>$data_model
+			'model'=>$model,'data_model'=>$data_model, 'labelNames'=>$labelNames
 		));
 		
 	}
 	
-	public function actionLabel()
-	{
-		$model=new ImageData('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['LabelTask']))
-			$model->attributes=$_GET['LabelTask'];
-
-		$this->render('label',array(
-			'model'=>$model,
-		));
+	public function actionLoadAns()
+	{	
+		if (!YII_DEBUG && !Yii::app()->request->isAjaxRequest) {
+			throw new CHttpException('403', 'Forbidden access.');
+		}
+		
+		if (empty($_GET['label_name'])) {
+			throw new CHttpException('404', 'Missing "label_name" GET parameter.');
+		}
+		
+		$label = Label::model()->find('name=:label_name',
+				array(':label_name'=>(int) $_GET['label_name']));
+		if (isset($label)) {
+			$answers = PossibleAnswer::model()->find('lable_id=:lable_id',
+				array('label_id'=>$lable->id));
+			$data = CHtml::listData($answer,'id','answer');
+			echo "<option value=''>Select Answer</option>";
+			foreach($data as $value=>$answer)
+				echo CHtml::tag('option', array('value'=>$value),CHtml::encode($answer),true);
+		} else {
+			
+		}
+		
+		Yii::app()->end();
 	}
-	
 	
 }

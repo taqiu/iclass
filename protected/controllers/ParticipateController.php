@@ -105,17 +105,13 @@ class ParticipateController extends Controller
 		$criteria->order = 'index_in_set';
 		$criteria->limit = 1;
 		$imageSetDetail = ImageSetDetail::model()->find($criteria);
-		if ($imageSetDetail != null) {
-			$image_id = $imageSetDetail->image_id;
-		} else {
-			$image_id = -1;
-		}
 		
-		if ($image_id < 0) {
+		if ($imageSetDetail === null) {
 			$partipate->is_done = 1;
 			if(!$partipate->save()) {die(print_r($partipate->errors));}
 			$this->render('done');
 		} else {
+			$image_id = $imageSetDetail->image_id;
 			$image = ImageData::model()->findByPk($image_id);
 			$label = Label::model()->findByPk($task->label_id);
 			$answers = PossibleAnswer::model()->findAllByAttributes(array('label_id' => $task->label_id));
