@@ -33,6 +33,7 @@
 class ImageData extends CActiveRecord
 {
 	public $label_name;
+	public $label_id;
 	public $possible_ans;
 	public $tagSearch;
 	
@@ -161,14 +162,15 @@ class ImageData extends CActiveRecord
 		}
 		
 		if (isset($this->label_name) && $this->label_name !== '') {
-			$criteria->with = array('devLabels');
-			$criteria->together = true;
 			$label = Label::model()->findByAttributes(array('name'=>$this->label_name));
-			
-			$criteria->compare('devLabels_devLabels.label_id',$label->id);
-			
-			if(isset($this->possible_ans))
-				$criteria->compare('devLabels_devLabels.answer_id', $this->possible_ans);
+			if ($label !== null) {
+				$this->label_id = $label->id;
+				$criteria->with = array('devLabels');
+				$criteria->together = true;
+				$criteria->compare('devLabels_devLabels.label_id',$label->id);
+				if(isset($this->possible_ans))
+					$criteria->compare('devLabels_devLabels.answer_id', $this->possible_ans);
+			}
 		}
 		
 		return new CActiveDataProvider($this, array(
