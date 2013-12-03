@@ -21,7 +21,7 @@ class m131104_015029_create_image_data_and_set_tables extends CDbMigration
 			'server' => 'integer NOT NULL',
 			'secret' => 'char(10) NOT NULL',
 			'UNIQUE KEY `k` (`flickr_user`,`flickr_photo_id`)',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		// the image_data.uploader is a reference to user.uid
 		$this->addForeignKey(
 				'fk_image_date_uploader',
@@ -38,7 +38,7 @@ class m131104_015029_create_image_data_and_set_tables extends CDbMigration
 			'id' => 'pk',
 			'image_id' => 'integer NOT NULL',
 			'tag_text' => 'text',
-		),'ENGINE=InnoDB');
+		),'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		// the tag.image_id is a reference to image_data.id
 		$this->addForeignKey(
 				'fk_tag_image_id', 
@@ -59,7 +59,7 @@ class m131104_015029_create_image_data_and_set_tables extends CDbMigration
 			'description' => 'text',
 			'size' => 'integer',
 			'create_time' => 'datetime DEFAULT NULL',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->createIndex('image_set_name', '{{image_set}}', 'name', true);
 		// the image_set.owner is a reference to user.uid
 		$this->addForeignKey(
@@ -79,7 +79,7 @@ class m131104_015029_create_image_data_and_set_tables extends CDbMigration
 			'image_id' => 'integer NOT NULL',
 			'index_in_set' => 'integer NOT NULL',
 			'PRIMARY KEY (`set_id`,`image_id`)',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->addForeignKey(
 				'fk_image_set_detail_set_id',
 				'{{image_set_detail}}',

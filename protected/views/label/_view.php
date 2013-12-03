@@ -9,7 +9,6 @@
 			'name',
 			'description',
 			'create_time',
-			'last_search_time',
 	),
 	)); ?>
 	<?php $gridDataProvider = new CArrayDataProvider($answers); ?>

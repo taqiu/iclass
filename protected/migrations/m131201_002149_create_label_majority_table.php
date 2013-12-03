@@ -10,7 +10,7 @@ class m131201_002149_create_label_majority_table extends CDbMigration
 				'label_id' => 'integer NOT NULL',
 				'answer_id' => 'integer DEFAULT NULL',              // Default  NULL
 				'PRIMARY KEY (`image_id`,`label_id`)',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->addForeignKey(
 				'fk_label_majority_image_id',
 				'{{label_majority}}',
