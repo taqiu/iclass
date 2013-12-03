@@ -52,7 +52,7 @@ class SearchController extends Controller
 		
 		// Ajax select all button
 		if (isset($_GET['all'])) {
-			$model->imageList = $data_model->search($pagination=false)->getKeys();		
+			$model->imageList = $data_model->search($pagination=false)->getKeys();
 			if (sizeof($model->imageList) > 1000)
 				throw new CHttpException('500', 'Too many image selected');
 			echo json_encode($model->imageList);

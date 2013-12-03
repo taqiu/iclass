@@ -75,10 +75,11 @@ tr.filters {
 // selet all button action
 Yii::app()->clientScript->registerScript('selet-all', "
 $('#all').click(function(){
+	var image_data = $('.search-form form').serialize();
 	$.ajax({
 		url:\"".Yii::app()->createUrl('search/index')."\",
 		type: 'GET',
-		data: 'all=1',
+		data: image_data +'&all=1',
 		cache:false,
 		success: function(data) {
 			alert(data);
