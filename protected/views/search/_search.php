@@ -33,15 +33,15 @@ $('input[id=ImageData_label_name]').change(function() {
 		</div>
 		<div class="controls span2">
 			<label>Uploader UID </label>
-			<?php echo $form->textField($data_model,'uploader',array('class'=>'span2')); ?>
+			<?php echo $form->textField($data_model,'uploader',array('class'=>'span2', 'placeholder'=>'uid')); ?>
 		</div>
 		<div class="controls span2">
 			<label>Upload Time </label>
-			<?php echo $form->textField($data_model,'date_uploaded',array('class'=>'span2')); ?>
+			<?php echo $form->textField($data_model,'date_uploaded',array('class'=>'span2', 'placeholder'=>'e.g. 2013-12-03')); ?>
 		</div>
 		<div class="controls span3">
 			<label>Flickr User </label>
-			<?php echo $form->textField($data_model,'flickr_user',array('class'=>'span3','maxlength'=>128)); ?>
+			<?php echo $form->textField($data_model,'flickr_user',array('class'=>'span3','maxlength'=>128, 'placeholder'=>'e.g. 8377643900')); ?>
 		</div>
 		<div class="controls span2">
 			<label> Flickr Upload Time</label>
@@ -63,19 +63,19 @@ $('input[id=ImageData_label_name]').change(function() {
 		</div>
 		<div class="controls span1">
 			<label>Precision </label>
-			<?php echo $form->textField($data_model,'precision',array('class'=>'span1')); ?>
+			<?php echo $form->textField($data_model,'precision',array('class'=>'span1', 'placeholder'=>'integer')); ?>
 		</div>
 		<div class="controls span2">
 			<label>Flickr Photo ID </label>
-			<?php echo $form->textField($data_model,'flickr_photo_id',array('class'=>'span2')); ?>
+			<?php echo $form->textField($data_model,'flickr_photo_id',array('class'=>'span2', 'placeholder'=>'e.g. 1000000646')); ?>
 		</div>
 		<div class="controls span2">
 			<label>Title </label>
-			<?php echo $form->textField($data_model,'title',array('class'=>'span2','maxlength'=>64)); ?>
+			<?php echo $form->textField($data_model,'title',array('class'=>'span2','maxlength'=>64, 'placeholder'=>'e.g. keyword')); ?>
 		</div>
 		<div class="controls span2">
-			<label>Tags </label>
-			<?php echo $form->textField($data_model,'tagSearch',array('class'=>'span2','maxlength'=>64, 'placeholder' => 'tag keyword')); ?>
+			<label>Tag</label>
+			<?php echo $form->textField($data_model,'tagSearch',array('class'=>'span2','maxlength'=>64, 'placeholder' => 'one tag')); ?>
 		</div>
 	</div>
 	<div class="control-group controls-row">
@@ -111,3 +111,4 @@ $('input[id=ImageData_label_name]').change(function() {
 	</div>
 <?php $this->endWidget(); ?>
 <hr/> 
+<p><span class="label">Hints:</span> All results will be diaplayed if no condition is specified.</p>

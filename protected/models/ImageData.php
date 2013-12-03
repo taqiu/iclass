@@ -168,8 +168,11 @@ class ImageData extends CActiveRecord
 				$criteria->with = array('devLabels');
 				$criteria->together = true;
 				$criteria->compare('devLabels_devLabels.label_id',$label->id);
-				if(isset($this->possible_ans))
-					$criteria->compare('devLabels_devLabels.answer_id', $this->possible_ans);
+				if(isset($this->possible_ans) && $this->possible_ans !== '')
+					$criteria->compare('devLabels_devLabels.answer_id', (int) $this->possible_ans);
+			} else {
+				// show no result if label doesn't exist
+				$criteria->compare('t.id','<1');
 			}
 		}
 		
