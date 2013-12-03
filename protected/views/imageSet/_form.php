@@ -53,6 +53,7 @@
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>$model->isNewRecord ? 'Create' : 'Save',
+			'htmlOptions'=>array('id'=>'sub', 'name'=>'sub'),
 		)); ?>
 </div>
 

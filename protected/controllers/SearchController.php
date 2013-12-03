@@ -62,9 +62,9 @@ class SearchController extends Controller
 			Yii::app()->getRequest()->sendFile('records.txt',$temp);
 		}
 		
-		if(isset($_POST['set'])){
+		if(isset($_POST['set']) || isset($_POST['sub'])){
 			$model->attributes=$_POST['ImageSet'];
-			$this->redirect(array('imageSet/create', 'imageList'=>$model->imageList));
+			$this->forward('imageSet/create');
 		}
 		
 		$this->render('index',array(

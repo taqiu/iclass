@@ -31,10 +31,13 @@ array('label'=>'Manage Image Sets','url'=>array('admin'), 'itemOptions'=>array('
 )); ?>
 
 <?php 
-
+$criteria=new CDbCriteria;
+$criteria->with= array('devImageSets');
+$criteria->together = true;
+$criteria->compare('devImageSets_devImageSets.set_id',$model->id);
 $this->widget('bootstrap.widgets.TbGridView',array(
 'id'=>'image-data-grid',
-'dataProvider'=>new CActiveDataProvider('ImageData', array('data'=>$model->devImageDatas)),
+'dataProvider'=>new CActiveDataProvider('ImageData', array('criteria'=>$criteria,'pagination'=>array('pageSize'=>10,),)),
 'columns'=>array(
 		'id',
 		'uploader',
