@@ -56,6 +56,7 @@ class ImageSetController extends Controller
 	 */
 	public function actionCreate()
 	{
+		set_time_limit(86400);
 		$model=new ImageSet;
 		$data_model = new ImageData('search');
 		// Uncomment the following line if AJAX validation is needed
