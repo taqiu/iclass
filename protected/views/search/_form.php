@@ -5,7 +5,7 @@
 
 <style>
 #image-set-form {
-	display:none;
+	<?php if (!$show_result) echo 'display:none;'?>
 }
 tr.filters {
 	display:none;

@@ -31,7 +31,7 @@ $('.search-form form').submit(function(){
 )); ?> 
 </div>
  
-<?php echo $this->renderPartial('_form', array('model'=>$model, 'data_model'=>$data_model), true, false); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model, 'data_model'=>$data_model, 'show_result'=>$show_result), true, false); ?>
 
 <div class='preview-list' style='display:none'>
 <hr/>
