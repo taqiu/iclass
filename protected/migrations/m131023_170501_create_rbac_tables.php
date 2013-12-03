@@ -12,7 +12,7 @@ class m131023_170501_create_rbac_tables extends CDbMigration
 			'bizrule' =>'text',
 			'data' =>'text',
 			'PRIMARY KEY (`name`)',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 
 		
 		// create the auth item child table
@@ -20,7 +20,7 @@ class m131023_170501_create_rbac_tables extends CDbMigration
 			'parent' =>'varchar(64) NOT NULL',
 			'child' =>'varchar(64) NOT NULL',
 			'PRIMARY KEY (`parent`,`child`)',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		// the auth_item_child.parent is a reference to auth_item.name
 		// see: http://www.yiiframework.com/doc/api/1.1/CDbMigration#addForeignKey-detail
 		$this->addForeignKey(
@@ -51,7 +51,7 @@ class m131023_170501_create_rbac_tables extends CDbMigration
 			'bizrule' => 'text',
 			'data' => 'text',
 			'PRIMARY KEY (`itemname`,`userid`)',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		// the auth_assignment.itemname is a reference
 		// to auth_item.name
 		$this->addForeignKey(
