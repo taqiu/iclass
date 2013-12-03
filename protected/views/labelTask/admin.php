@@ -10,6 +10,7 @@ array('label'=>'Create Label Task','url'=>array('create')),
 array('label'=>'Manage Label Task','url'=>array('admin'), 'itemOptions'=>array('class'=>'active')),
 );
 
+/*
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 $('.search-form').toggle();
@@ -22,6 +23,7 @@ data: $(this).serialize()
 return false;
 });
 ");
+*/
 ?>
 
 <h3>Manage Label Tasks</h3>
