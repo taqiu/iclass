@@ -202,7 +202,7 @@ class ImageDataController extends Controller
 								if($tag != ''){
 									$t = new Tag;
 									$t->image_id = $record->id;
-									$t->tag_text = $tag;
+									$t->tag_text = preg_replace('/[^A-Za-z0-9\-]/', '',$tag);
 									$t->save();
 									$model->added_tags++;
 								}
