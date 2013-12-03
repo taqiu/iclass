@@ -29,7 +29,7 @@ tr.filters {
 													$temp = array();
 													foreach($data->tags as $t)
 														$temp[] = $t->tag_text;
-													$string = CHtml::encode(implode(',', $temp));
+													$string = implode(',', $temp);
 													return (strlen($string) > 20) ? substr($string, 0, 20).'...' : $string;
 													}),
 		),
