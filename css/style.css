@@ -150,3 +150,45 @@ ul.sidebar li a:focus {
 }
 
 
+.image-list .items {
+ 	text-align: center;
+}
+.image-list .item {
+	height:120px;
+/* 	width: 130px;
+   	min-height: 130px; 
+    max-height: 130px;
+    float: left;*/
+    margin: 1px;
+    padding: 1px;
+    display:inline-block;
+}
+.image-list .item:hover {
+}
+.image-list .item img {
+    width: auto;
+    height: 120px;;
+} 
+.image-list .list-view {
+    padding-top: 0px;
+}
+.image-list .clearboth { clear: both; }
+
+.image-list .item a {
+  position: relative;
+}
+.image-list .item a:hover:after {
+  content: attr(help);
+  color: #000;
+  padding-left: 5px;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity:0.5;
+  min-height: 30px;
+  background: #FFF;
+  bottom: 0px;
+  left: 0px;
+}
+
