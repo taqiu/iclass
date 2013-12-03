@@ -46,14 +46,17 @@ class SearchController extends Controller
 		}
 		
 		// Ajax update
-		if(isset($_GET['ImageData']))
+		if(isset($_GET['ImageData'])) {
 			$data_model->attributes=$_GET['ImageData'];
+		}
 		
-		// Select all button
-		if(isset($_POST['all'])){
-			$show_result = true;
-			$data_model->attributes=$_POST['ImageData'];
-			$model->imageList = $data_model->searchNoPage()->getKeys();
+		// Ajax select all button
+		if (isset($_GET['all'])) {
+			$model->imageList = $data_model->search($pagination=false)->getKeys();		
+			if (sizeof($model->imageList) > 1000)
+				throw new CHttpException('500', 'Too many image selected');
+			echo json_encode($model->imageList);
+			Yii::app()->end();
 		}
 		
 		// Download button

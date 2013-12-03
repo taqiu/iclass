@@ -40,7 +40,7 @@ tr.filters {
 <?php echo $form->hiddenField($model,'imageList',array('value'=>''));?>
 	<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'id'=>'all',
-			'buttonType'=>'submit',
+			'buttonType'=>'button',
 			'type'=>'primary',
 			'label'=>'Select All',
 			'htmlOptions'=>array('id'=>'all', 'name'=>'all'),
@@ -70,6 +70,28 @@ tr.filters {
 	<?php echo CHtml::link('Hide List','#',array('class'=>'hide-button btn')); ?>
 	<?php echo CHtml::link('Preview','#',array('class'=>'preview-button btn btn-success pull-right')); ?>
 <?php $this->endWidget(); ?>
+
+<?php
+// selet all button action
+Yii::app()->clientScript->registerScript('selet-all', "
+$('#all').click(function(){
+	$.ajax({
+		url:\"".Yii::app()->createUrl('search/index')."\",
+		type: 'GET',
+		data: 'all=1',
+		cache:false,
+		success: function(data) {
+			alert(data);
+        	$('#image-data-grid').selGridView('addSelection', data);
+		},
+		error:function(jxhr){
+        	alert(jxhr.responseText);
+    	}
+	});
+	return false;
+ });
+");
+?>
 
 <?php Yii::app()->clientScript->registerScript('fill','$("#image-data-grid").selGridView("addSelection", '.json_encode($model->imageList).');');?>
 <?php Yii::app()->clientScript->registerScript('postChecked', 'function postChecked(){
