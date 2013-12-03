@@ -6,11 +6,16 @@ Yii::app()->clientScript->registerScript('search', "
 $('.preview-button').click(function(){
 	$('.preview-list').toggle();
 	return false;
-});		
+});
+$('.hide-button').click(function(){
+	$('#image-data-grid').toggle();
+	return false;
+});	
 $('.search-form form').submit(function(){
 	$.fn.yiiGridView.update('image-data-grid', {
 	data: $(this).serialize()
 	});
+	$('#image-set-form').show();
 	$.fn.yiiListView.update('image-list', {
 	data: $(this).serialize()
 	});

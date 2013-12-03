@@ -4,6 +4,9 @@
 )); ?>
 
 <style>
+#image-set-form {
+	display:none;
+}
 tr.filters {
 	display:none;
 }
@@ -35,8 +38,6 @@ tr.filters {
 		),
 )); ?>
 <?php echo $form->hiddenField($model,'imageList',array('value'=>''));?>
-
-<hr/>
 	<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'id'=>'all',
 			'buttonType'=>'submit',
@@ -66,7 +67,7 @@ tr.filters {
 			'label'=>'Save as Image Set',
 			'htmlOptions'=>array('id'=>'set', 'name'=>'set'),
 		)); ?>
-		
+	<?php echo CHtml::link('Hide List','#',array('class'=>'hide-button btn')); ?>
 	<?php echo CHtml::link('Preview','#',array('class'=>'preview-button btn btn-success pull-right')); ?>
 <?php $this->endWidget(); ?>
 
