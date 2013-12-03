@@ -4,17 +4,17 @@ $this->breadcrumbs=array(
 );
 Yii::app()->clientScript->registerScript('search', "
 $('.preview-button').click(function(){
-$('.preview-list').toggle();
-return false;
+	$('.preview-list').toggle();
+	return false;
 });		
 $('.search-form form').submit(function(){
-$.fn.yiiGridView.update('image-data-grid', {
-data: $(this).serialize()
-});
-$.fn.yiiListView.update('image-data-grid', {
-data: $(this).serialize()
-});
-return false;
+	$.fn.yiiGridView.update('image-data-grid', {
+	data: $(this).serialize()
+	});
+	$.fn.yiiListView.update('preview-image-list', {
+	data: $(this).serialize()
+	});
+	return false;
 });
 ");
 ?>
@@ -32,7 +32,7 @@ return false;
 <p>Result Preview </p>
 <?php 
 $this->widget('zii.widgets.CListView', array(
-       'id' => 'VideoList',
+       'id' => 'preview-image-list',
        'htmlOptions' => array('class'=>'image-list'),
        'dataProvider' => $data_model->search(),
        'itemView' => '_view',

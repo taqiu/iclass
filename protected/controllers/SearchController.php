@@ -34,8 +34,9 @@ class SearchController extends Controller
 	{
 		$model = new ImageSet;
 		$data_model=new ImageData('search');
+		$data_model->unsetAttributes();  // clear any default values
 		
-		// Get all label names
+		// Get all label names for search form
 		$labels = Label::model()->findAll();
 		$labelNames = array();
 		foreach($labels as $label)
@@ -68,8 +69,7 @@ class SearchController extends Controller
 		
 		$this->render('index',array(
 			'model'=>$model,'data_model'=>$data_model, 'labelNames'=>$labelNames
-		));
-		
+		));	
 	}
 	
 	public function actionLoadAns()
