@@ -192,3 +192,7 @@ ul.sidebar li a:focus {
   left: 0px;
 }
 
+.image-list .pager {
+display: none;
+}
+
