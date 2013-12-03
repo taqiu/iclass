@@ -11,7 +11,7 @@ $('.search-form form').submit(function(){
 	$.fn.yiiGridView.update('image-data-grid', {
 	data: $(this).serialize()
 	});
-	$.fn.yiiListView.update('preview-image-list', {
+	$.fn.yiiListView.update('VideoList', {
 	data: $(this).serialize()
 	});
 	return false;
@@ -32,7 +32,7 @@ $('.search-form form').submit(function(){
 <p>Result Preview </p>
 <?php 
 $this->widget('zii.widgets.CListView', array(
-       'id' => 'preview-image-list',
+       'id' => 'VideoList',
        'htmlOptions' => array('class'=>'image-list'),
        'dataProvider' => $data_model->search(),
        'itemView' => '_view',
