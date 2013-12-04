@@ -131,7 +131,7 @@ class ImageData extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($pagination=true)
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
@@ -168,71 +168,32 @@ class ImageData extends CActiveRecord
 				$criteria->with = array('devLabels');
 				$criteria->together = true;
 				$criteria->compare('devLabels_devLabels.label_id',$label->id);
-				if(isset($this->possible_ans))
-					$criteria->compare('devLabels_devLabels.answer_id', $this->possible_ans);
+				if(isset($this->possible_ans) && $this->possible_ans !== '')
+					$criteria->compare('devLabels_devLabels.answer_id', (int) $this->possible_ans);
+			} else {
+				// show no result if label doesn't exist
+				$criteria->compare('t.id','<1');
 			}
 		}
 		
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		if ($pagination)
+			return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+			));
+		else 
+			return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'pagination'=>false,
+			));
 	}
 
 	
-	
-	
-	
-	public function searchNoPage()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('t.id',$this->id);
-		$criteria->compare('uploader',$this->uploader);
-		$criteria->compare('flickr_user',$this->flickr_user,true);
-		$criteria->compare('date_uploaded_flickr',$this->date_uploaded_flickr,true);
-		$criteria->compare('latitude',$this->latitude);
-		$criteria->compare('longitude',$this->longitude);
-		$criteria->compare('precision',$this->precision);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('license',$this->license);
-		$criteria->compare('flickr_photo_id',$this->flickr_photo_id,true);
-		$criteria->compare('date_uploaded',$this->date_uploaded,true);
-		$criteria->compare('farm',$this->farm);
-		$criteria->compare('server',$this->server);
-		$criteria->compare('secret',$this->secret,true);
-		
-
-		// Add criteria only when tagSearch is set,
-		// so that empty tag image can be displayed
-		
+	/* Remove this duplicate funtion
+		public function searchNoPage()
+		{
 			
-		if (isset($this->tagSearch) && $this->tagSearch !== '') {
-			$criteria->with = array('tags');
-			$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE tag_text LIKE :tagSearch)');
-			$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
 		}
-		
-		
-		if (isset($this->label_name) && $this->label_name !== '') {
-			$criteria->with = array('devLabels');
-			$criteria->together = true;
-			$label = Label::model()->findByAttributes(array('name'=>$this->label_name));
-			
-			$criteria->compare('devLabels_devLabels.label_id',$label->id);
-			
-			if(isset($this->possible_ans))
-				$criteria->compare('devLabels_devLabels.answer_id', $this->possible_ans);
-		}
-		
-		$c = new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-			'pagination'=>false,
-		));
-		
-		return $c;
-	}
+	*/
 	
 	/**
 	 * Returns the static model of the specified AR class.

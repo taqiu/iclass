@@ -6,14 +6,20 @@ Yii::app()->clientScript->registerScript('search', "
 $('.preview-button').click(function(){
 	$('.preview-list').toggle();
 	return false;
-});		
+});
+$('.hide-button').click(function(){
+	$('#image-data-grid').toggle();
+	return false;
+});	
 $('.search-form form').submit(function(){
 	$.fn.yiiGridView.update('image-data-grid', {
 	data: $(this).serialize()
 	});
-	$.fn.yiiListView.update('VideoList', {
+	$('#image-set-form').show();
+	$.fn.yiiListView.update('image-list', {
 	data: $(this).serialize()
 	});
+	$('.preview-list').hide();
 	return false;
 });
 ");
@@ -25,14 +31,14 @@ $('.search-form form').submit(function(){
 )); ?> 
 </div>
  
-<?php echo $this->renderPartial('_form', array('model'=>$model, 'data_model'=>$data_model), true, false); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model, 'data_model'=>$data_model, 'show_result'=>$show_result), true, false); ?>
 
 <div class='preview-list' style='display:none'>
 <hr/>
 <p>Result Preview </p>
 <?php 
 $this->widget('zii.widgets.CListView', array(
-       'id' => 'VideoList',
+       'id' => 'image-list',
        'htmlOptions' => array('class'=>'image-list'),
        'dataProvider' => $data_model->search(),
        'itemView' => '_view',
@@ -44,9 +50,19 @@ $this->widget('zii.widgets.CListView', array(
                     'listViewId' => 'VideoList', 
                     'header' => '',
                     'loaderText'=>'Loading...',
-                    'options' => array('history' => false, 'triggerPageTreshold' => 100, 'trigger'=>'Load more'),
-                  )
-            )
-       );
-?>
+                    'options' => array('history' => false, 'triggerPageTreshold' => 15, 'trigger'=>'Load more'),
+                    ),
+	   'afterAjaxUpdate' => "function(id, data) {
+	        $.ias({
+	            'history': false,
+	            'triggerPageTreshold': 15,
+	            'trigger': 'Load more',
+	            'container': '#image-list > .items',
+	            'item': '.item',
+	            'pagination': '#image-list .pager',
+	            'next': '#image-list .next:not(.disabled):not(.hidden) a',
+	            'loader': 'Loading...'
+	        });
+       }",
+));?>
 </div>

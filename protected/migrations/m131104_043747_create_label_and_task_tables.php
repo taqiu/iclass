@@ -19,8 +19,7 @@ class m131104_043747_create_label_and_task_tables extends CDbMigration
 			'name' => 'varchar(64)',
 			'description' => 'text',
 			'create_time' => 'datetime DEFAULT NULL',
-			'last_search_time' => 'datetime DEFAULT NULL',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->createIndex('label_name', '{{label}}', 'name', true);
 		$this->addForeignKey(
 				'fk_label_owner',
@@ -43,7 +42,7 @@ class m131104_043747_create_label_and_task_tables extends CDbMigration
 			'id' => 'pk',
 			'label_id' => 'integer NOT NULL',
 			'answer' => 'text',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->addForeignKey(
 				'fk_possible_answer_label_id',
 				'{{possible_answer}}',
@@ -75,7 +74,7 @@ class m131104_043747_create_label_and_task_tables extends CDbMigration
 			'label_id' => 'integer NOT NULL',
 			'create_time' => 'datetime',
 			'status' => 'varchar(16)',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->createIndex('label_task_name', '{{label_task}}', 'name', true);
 		$this->addForeignKey(
 				'fk_label_task_owner',
@@ -119,7 +118,7 @@ class m131104_043747_create_label_and_task_tables extends CDbMigration
 			'last_image_labeled' => 'integer NOT NULL',
 			'is_done' => 'boolean',
 			'PRIMARY KEY (`user_id`,`task_id`)',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->addForeignKey(
 				'fk_participate_user_id',
 				'{{participate}}',
@@ -156,7 +155,7 @@ class m131104_043747_create_label_and_task_tables extends CDbMigration
 			'user_id' => 'integer NOT NULL',
 			'answer_id' => 'integer NOT NULL',
 			'PRIMARY KEY (`image_id`,`label_id`, `user_id`)',
-		), 'ENGINE=InnoDB');
+		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->addForeignKey(
 				'fk_label_response_image_id',
 				'{{label_response}}',
