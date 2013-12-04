@@ -28,6 +28,7 @@ tr.filters {
 		'date_uploaded_flickr',
 		'latitude',
 		'longitude',
+		'precision',
 		array('header'=>'Tags','name'=>'tagSearch','value'=>function($data){
 													$temp = array();
 													foreach($data->tags as $t)
@@ -82,11 +83,11 @@ $('#all').click(function(){
 		data: image_data +'&all=1',
 		cache:false,
 		success: function(data) {
-			alert(data);
-        	$('#image-data-grid').selGridView('addSelection', data);
+			
+       	$('#image-data-grid').selGridView('addSelection', data);
 		},
 		error:function(jxhr){
-        	alert(jxhr.responseText);
+       	alert(jxhr.responseText);
     	}
 	});
 	return false;
@@ -97,11 +98,13 @@ $('#all').click(function(){
 <?php Yii::app()->clientScript->registerScript('fill','$("#image-data-grid").selGridView("addSelection", '.json_encode($model->imageList).');');?>
 <?php Yii::app()->clientScript->registerScript('postChecked', 'function postChecked(){
 		var arraySel = $("#image-data-grid").selGridView("getAllSelection");
+
         var stringSel=arraySel.join(",");                                                                          
         $("#ImageSet_imageList").val(stringSel);}');?>
 <?php Yii::app()->clientScript->registerScript('clearall', 'function clearall(){
 		$("#image-data-grid").selGridView("clearAllSelection");}');?>
+		
 <?php Yii::app()->clientScript->registerScript('init','$(document).ready(function(){ $("#down").on("click", postChecked);});'); ?>
 <?php Yii::app()->clientScript->registerScript('init2','$(document).ready(function(){ $("#set").on("click", postChecked);});'); ?>
 <?php Yii::app()->clientScript->registerScript('init3','$(document).ready(function(){ $("#search").on("click", postChecked);});'); ?>
-<?php Yii::app()->clientScript->registerScript('sel', '$(document).ready(function(){ $("#clear").on("click", clearall);});');?>
+<?php Yii::app()->clientScript->registerScript('init4','$(document).ready(function(){ $("#clear").on("click", clearall);});'); ?>

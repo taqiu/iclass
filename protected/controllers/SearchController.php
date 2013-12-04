@@ -53,10 +53,14 @@ class SearchController extends Controller
 		// Ajax select all button
 		if (isset($_GET['all'])) {
 			$model->imageList = $data_model->search($pagination=false)->getKeys();
-			if (sizeof($model->imageList) > 1000)
-				throw new CHttpException('500', 'Too many image selected');
+			#if (sizeof($model->imageList) > 1000)
+			#	throw new CHttpException('500', 'Too many image selected');
 			echo json_encode($model->imageList);
 			Yii::app()->end();
+		}
+		
+		if(isset($_POST['all'])){
+			$model->imageList = $data_model->search($pagination=false)->getKeys();
 		}
 		
 		// Download button
@@ -66,7 +70,9 @@ class SearchController extends Controller
 			$model->imageList=explode(',',$model->imageList);
 			$temp = "Internal ID, Flickr Photo ID, URL\n";
 			foreach($model->imageList as $i)
-				$temp = $temp.$data_model->findByPK($i)->asCSVString();
+				$m = $data_model->findByPK($i);
+				if($m)
+					$temp = $temp.$m->asCSVString();
 			
 			Yii::app()->getRequest()->sendFile('records.txt',$temp);
 		}
