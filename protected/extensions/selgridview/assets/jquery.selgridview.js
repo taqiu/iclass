@@ -1,5 +1,6 @@
 (function ($) {
     var methods,
+	selected,
     selGridSettings = [];
     
     methods = {
@@ -11,7 +12,8 @@
             return this.each(function () {
                 var $grid = $(this),
                 id = $grid.attr('id'),
-                beforeAjaxUpdateOrig;
+                beforeAjaxUpdateOrig,
+				afterAjaxUpdateOrig;
 
                 selGridSettings[id] = selSettings;
 
@@ -25,39 +27,66 @@
 
                 delete settings.beforeAjaxUpdate;
                 settings.beforeAjaxUpdate = function(id, options) {
-                    var selVar = selGridSettings[id].selVar,
-                    selection = $('#' + id).selGridView('getAllSelection'),
-                    params = $.deparam.querystring(options.url);
-
-                    if(!selection.length) {  //if nothing selected in whole grid -> clear selVar in request
-                        params[selVar] = [];
-                    } else {                //otherwise set selVar to array of selected keys
-                        params[selVar] = selection;
-                    }                    
-
-                    options.url = $.param.querystring(options.url, params);
-
+                    var selection = $('#' + id).selGridView('getAllSelection');
+                    
+					$("#ImageSet_imageList").val(selection);
+					
                     //call user's handler
                     beforeAjaxUpdateOrig(id, options);
                 }
+				
+				
+				if(settings.beforeAjaxUpdate !== undefined) {
+                    afterAjaxUpdateOrig = settings.afterAjaxUpdate;
+                } else {
+                    afterAjaxUpdateOrig = function(id, options) {}; 
+                }
+
+                delete settings.afterAjaxUpdate;
+                settings.afterAjaxUpdate = function(id, options) {
+                                   
+					var keys = JSON.parse("[" + $("#ImageSet_imageList").val()+ "]"),
+					pageKeys = $('#' + id).find(".keys span"),
+                	rows = $('#' + id).find("tbody tr"),
+					checkedInPage = $('#' + id).yiiGridView('getSelection');
+					//uncheck things !!! TODO
+					if(!$.isArray(keys)) keys = [keys];
+					$('#' + id).find('tr.selected').click();
+					
+					$.each(keys, function(index, value) {
+							pageKeys.each(function (i) {
+								if($(this).text() == value) {
+									rows.eq(i).click();
+								}
+							});
+						 });
+					
+					
+					
+					
+					
+                    //call user's handler
+                    afterAjaxUpdateOrig(id, options);
+                }
+				
 
             });
         },        
           
         getAllSelection: function () {
             var settings = $.fn.yiiGridView.settings[this.attr('id')],
-            selVar = selGridSettings[this.attr('id')].selVar,
-            url = this.yiiGridView('getUrl');
-
-            var params = $.deparam.querystring(url);
-
+            
+			
             //rows selected by GET
-            var checkedInQuery = (params[selVar]) ? params[selVar] : [];
-            if(!$.isArray(checkedInQuery)) checkedInQuery = [checkedInQuery];
+            checkedInQuery = JSON.parse("[" + $("#ImageSet_imageList").val()+ "]");
+			
+			if(!$.isArray(checkedInQuery)) checkedInQuery = [checkedInQuery];
 
             //rows selected on current page
             var checkedInPage = this.yiiGridView('getSelection');
-
+			
+			//alert(checkedInQuery);
+			//alert(checkedInPage);
             /*
               if only one row can be selected:
                 1. if selected on current page - return it
@@ -79,10 +108,10 @@
             //iterating all keys of this page
             this.find(".keys span").each(function (i) {
                 var key = $(this).text();
-
+				
                 //row found in GET params: means row was selected on page load
-                var indexInQuery = $.inArray(key, checkedInQuery);
-
+                var indexInQuery = $.inArray(parseInt(key), checkedInQuery);
+				
                 //row is checked on current page
                 var indexInChecked = $.inArray(key, checkedInPage);
 
@@ -97,42 +126,30 @@
                 }
             });     
 
-            return checkedInQuery;
-
-            if(!checkedInQuery) {   //if nothing selected in whole grid -> delete "sel" variable from request
-                if(params[selVar]) delete params[selVar];
-            } else {                //otherwise set "sel" var to array of selected keys
-                params[selVar] = checkedInQuery;
-            }                    
-
+            return checkedInQuery;                  
         },
         
         clearAllSelection: function() {
              //clear on current page
              this.find('tr.selected').click();
-
-             //clear in url             
-             var parsed = this.selGridView('parseUrl');
-             parsed.params[parsed.selVar] = [];
-  
-             //set url back
-             var newUrl = $.param.querystring(parsed.url, parsed.params);
-             this.selGridView('setUrl', newUrl);
-        },
+			 $("#ImageSet_imageList").val(" ");      
+		},
         
         addSelection: function(keys) {
-            if(!keys) return;
-            if(!$.isArray(keys)) keys = [keys];
-
-            var parsed = this.selGridView('parseUrl'),
+            if(!keys || keys.length == 0) return;
+			if(!$.isArray(keys)) keys = [keys];
+			
+			if(keys.length == 1)
+				keys = JSON.parse("[" + keys[0].split(",") + "]")[0];
+			
+            var parsed = JSON.parse("[" + $("#ImageSet_imageList").val()+ "]"),
                 pageKeys = this.find(".keys span"),
                 rows = this.find("tbody tr");
-                
-             //add to url params
+               
+		     //add to url params
              $.each(keys, function(index, value) {
-                 if($.inArray(value, parsed.selected) === -1) {
-                    parsed.selected.push(value); 
-                    
+                 if($.inArray(value, parsed) === -1) {
+                    parsed.push(value); 
                     //select row on grid
                     pageKeys.each(function (i) {
                         if($(this).text() == value) {
@@ -142,55 +159,11 @@
                  }
              });
   
-             parsed.params[parsed.selVar] = parsed.selected; 
-  
-             //set url back
-             var newUrl = $.param.querystring(parsed.url, parsed.params);
-             this.selGridView('setUrl', newUrl);
-        },
-        
-        /**
-        * set new url of grid
-        */
-        setUrl: function(url) {
-            var id = this.attr('id'),
-                settings = $.fn.yiiGridView.settings[id],
-                ws
-             if(settings.url) {
-                settings.url = url; 
-             } else {
-                this.children('.keys').attr('title', url);
-             }  
-        },
-        
-        /**
-        * returns IDs selected in url.
-        * internal. 
-        */
-        parseUrl: function() {
-            var id = this.attr('id'),
-                settings = $.fn.yiiGridView.settings[id],
-                selVar = selGridSettings[id].selVar,
-                url = this.yiiGridView('getUrl'),
-                params, result;
-
-                // bug in BBQ when url does not contain '?'. https://github.com/cowboy/jquery-bbq/issues/34   
-                if(url.indexOf('?') === -1) {
-                    params = [];   
-                } else {
-                    params = $.deparam.querystring(url);
-                }               
-
-                //rows selected by GET
-                result = (params[selVar]) ? params[selVar] : [];
-                if(!$.isArray(result)) result = [result]; 
-
-                return {url: url, selVar: selVar, params: params, selected: result};
+			 $("#ImageSet_imageList").val(parsed);
         }
+	}
         
-    };
-
-
+       
     $.fn.selGridView = function (method) {
         if (methods[method]) {
             return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));

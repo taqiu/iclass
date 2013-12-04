@@ -143,7 +143,7 @@ class ImageData extends CActiveRecord
 		$criteria->compare('date_uploaded_flickr',$this->date_uploaded_flickr,true);
 		$criteria->compare('latitude',$this->latitude);
 		$criteria->compare('longitude',$this->longitude);
-		$criteria->compare('precision',$this->precision);
+		$criteria->compare('t.precision',$this->precision);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('license',$this->license);
 		$criteria->compare('flickr_photo_id',$this->flickr_photo_id,true);

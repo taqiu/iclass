@@ -32,7 +32,9 @@ array('label'=>'Manage Image Sets','url'=>array('admin'), 'itemOptions'=>array('
 		'id',
 		'owner',
 		'name',
-		'description',
+		array('header'=>'Description','name'=>'description','value'=>function($data){
+													return (strlen($data->description) > 50) ? substr($data->description, 0, 50).'...' : $data->description;
+													}),
 		'size',
 		'create_time',
 array(
