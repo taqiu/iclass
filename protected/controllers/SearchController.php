@@ -35,6 +35,7 @@ class SearchController extends Controller
 		$model = new ImageSet;
 		$data_model=new ImageData('search');
 		$data_model->unsetAttributes();  // clear any default values
+		$show_result = false;
 		
 		// Get all label names for search form
 		$labels = Label::model()->findAll();
@@ -44,15 +45,23 @@ class SearchController extends Controller
 			$labelNames[] = $label->name;
 		}
 		
-		if(isset($_GET['ImageData']))
+		// Ajax update
+		if(isset($_GET['ImageData'])) {
 			$data_model->attributes=$_GET['ImageData'];
-		
-		if(isset($_POST['all'])){
-			$data_model->attributes=$_POST['ImageData'];
-			$model->imageList = $data_model->searchNoPage()->getKeys();
 		}
 		
+		// Ajax select all button
+		if (isset($_GET['all'])) {
+			$model->imageList = $data_model->search($pagination=false)->getKeys();
+			if (sizeof($model->imageList) > 1000)
+				throw new CHttpException('500', 'Too many image selected');
+			echo json_encode($model->imageList);
+			Yii::app()->end();
+		}
+		
+		// Download button
 		if(isset($_POST['down'])){
+			$show_result = true;
 			$model->attributes=$_POST['ImageSet'];
 			$model->imageList=explode(',',$model->imageList);
 			$temp = "Internal ID, Flickr Photo ID, URL\n";
@@ -68,7 +77,7 @@ class SearchController extends Controller
 		}
 		
 		$this->render('index',array(
-			'model'=>$model,'data_model'=>$data_model, 'labelNames'=>$labelNames
+			'model'=>$model,'data_model'=>$data_model, 'labelNames'=>$labelNames, 'show_result'=>$show_result,
 		));	
 	}
 	

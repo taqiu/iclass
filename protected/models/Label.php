@@ -9,7 +9,6 @@
  * @property string $name
  * @property string $description
  * @property string $create_time
- * @property string $last_search_time
  *
  * The followings are the available model relations:
  * @property User $owner0
@@ -74,7 +73,6 @@ class Label extends CActiveRecord
 			'name' => 'Name',
 			'description' => 'Description',
 			'create_time' => 'Create Time',
-			'last_search_time' => 'Last search time', 
 		);
 	}
 
