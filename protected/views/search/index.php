@@ -49,7 +49,7 @@ $this->widget('zii.widgets.CListView', array(
                     'listViewId' => 'VideoList', 
                     'header' => '',
                     'loaderText'=>'Loading...',
-                    'options' => array('history' => false, 'triggerPageTreshold' => 12, 'trigger'=>'Load more'),
+                    'options' => array('history' => false, 'triggerPageTreshold' => 30, 'trigger'=>'Load more'),
                     ),
 	   'afterAjaxUpdate' => "function(id, data) {
 			// unbind to solvoe duplicate problem
@@ -57,7 +57,7 @@ $this->widget('zii.widgets.CListView', array(
 			$('#VideoList .items').unbind('scroll');
 	        $.ias({
 	            'history': false,
-	            'triggerPageTreshold': 12,
+	            'triggerPageTreshold': 30,
 	            'trigger': 'Load more',
 	            'container': '#VideoList > .items',
 	            'item': '.item',

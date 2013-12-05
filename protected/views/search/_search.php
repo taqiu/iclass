@@ -71,7 +71,7 @@ $('input[id=ImageData_label_name]').change(function() {
 		</div>
 		<div class="controls span2">
 			<label>Title </label>
-			<?php echo $form->textField($data_model,'title',array('class'=>'span2','maxlength'=>64, 'placeholder'=>'e.g. keyword')); ?>
+			<?php echo $form->textField($data_model,'title',array('class'=>'span2','maxlength'=>64, 'placeholder'=>'keyword')); ?>
 		</div>
 		<div class="controls span2">
 			<label>Tag</label>
