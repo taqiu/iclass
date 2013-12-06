@@ -52,6 +52,12 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 													$string = implode(',', $temp);
 													return (strlen($string) > 20) ? substr($string, 0, 20).'...' : $string;
 													}),
+		array(
+				'class'=>'bootstrap.widgets.TbButtonColumn',
+				'header'=>'View',
+				'template'=>'{view}',
+				'viewButtonUrl'=>'Yii::app()->controller->createUrl("imageData/view",array("id"=>$data["id"]))',
+		),
 ),
 )); ?>
 

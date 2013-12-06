@@ -36,7 +36,13 @@ tr.filters {
 													$string = implode(',', $temp);
 													return (strlen($string) > 20) ? substr($string, 0, 20).'...' : $string;
 													}),
+		array(
+				'class'=>'bootstrap.widgets.TbButtonColumn',
+				'header'=>'View',
+				'template'=>'{view}',
+				'viewButtonUrl'=>'Yii::app()->controller->createUrl("imageData/view",array("id"=>$data["id"]))',
 		),
+),
 )); ?>
 <?php echo $form->hiddenField($model,'imageList',array('value'=>''));?>
 	<?php $this->widget('bootstrap.widgets.TbButton', array(
