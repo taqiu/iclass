@@ -78,7 +78,8 @@ class ImageSetController extends Controller
 			$model->size = count($model->imageList);
 			
 			// Don't save if forward from search
-			if(!isset($_GET['forward']) && $_GET['forward'] !== 'search')
+			if(isset(Yii::app()->session['forwardfromsearch']) && Yii::app()->session['forwardfromsearch']===true);
+			else 
 				if($model->save()){
 					$i = 0;
 					foreach($model->imageList as $img_id){
@@ -90,6 +91,7 @@ class ImageSetController extends Controller
 						if($temp->save())
 							$i++;
 					}
+					unset(Yii::app()->session['forwardfromsearch']);
 					$this->redirect(array('view','id'=>$model->id));
 				}
 		}
