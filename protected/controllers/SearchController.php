@@ -79,6 +79,7 @@ class SearchController extends Controller
 		
 		if(isset($_POST['set']) || isset($_POST['sub'])){
 			$model->attributes=$_POST['ImageSet'];
+			$_GET['forward']='search';
 			$this->forward('imageSet/create');
 		}
 		
