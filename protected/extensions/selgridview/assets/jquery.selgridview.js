@@ -137,11 +137,11 @@
         
         addSelection: function(keys) {
             if(!keys || keys.length == 0) return;
-			if(!$.isArray(keys)) keys = [keys];
-			
-			if(keys.length == 1)
-				keys = JSON.parse("[" + keys[0].split(",") + "]")[0];
-			
+			if(!$.isArray(keys)){
+				keys = [keys];
+				if(keys.length == 1)
+					keys = JSON.parse("[" + keys[0].split(",") + "]")[0];
+			}
             var parsed = this.yiiGridView('getSelection'),
 				pageKeys = this.find(".keys span"),
                 rows = this.find("tbody tr");
