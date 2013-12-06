@@ -48,8 +48,9 @@ $this->widget('zii.widgets.CListView', array(
                     'rowSelector'=>'.item', 
                     'listViewId' => 'VideoList', 
                     'header' => '',
-                    'loaderText'=>'Loading...',
-                    'options' => array('history' => false, 'triggerPageTreshold' => 30, 'trigger'=>'Load more'),
+                    'loaderText'=>'<img width="40px" src="img/loading.gif"/>',
+                    'options' => array('history' => false, 'triggerPageTreshold' => 30, 
+						'trigger'=>'Load more'),
                     ),
 	   'afterAjaxUpdate' => "function(id, data) {
 			// unbind to solvoe duplicate problem
@@ -63,7 +64,7 @@ $this->widget('zii.widgets.CListView', array(
 	            'item': '.item',
 	            'pagination': '#VideoList .pager',
 	            'next': '#VideoList .next:not(.disabled):not(.hidden) a',
-	            'loader': 'Loading...'
+	            'loader': '<img width=\"40px\" src=\"img/loading.gif\"/>'
 	        });
        }",
 ));?>
