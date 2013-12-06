@@ -142,8 +142,8 @@
 			if(keys.length == 1)
 				keys = JSON.parse("[" + keys[0].split(",") + "]")[0];
 			
-            var parsed = JSON.parse("[" + $("#ImageSet_imageList").val()+ "]"),
-                pageKeys = this.find(".keys span"),
+            var parsed = this.yiiGridView('getSelection'),
+				pageKeys = this.find(".keys span"),
                 rows = this.find("tbody tr");
                
 		     //add to url params
