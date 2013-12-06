@@ -131,7 +131,7 @@ class ImageData extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search($pagination=true)
+	public function search($pagination=true, $result='default')
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
@@ -176,6 +176,22 @@ class ImageData extends CActiveRecord
 			}
 		}
 		
+		// return count
+		if ($result === 'count') {
+			return $this->count($criteria);
+		}
+		
+		// return only id list 
+		/*
+		 writing a code with select 
+		 Don't know how to make it work
+		 Try DAO in the future
+		if ($result === 'index') {
+			$criteria->select('id');
+			return $this->findAll($criteria);
+		}
+		*/
+		
 		if ($pagination)
 			return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
@@ -187,13 +203,6 @@ class ImageData extends CActiveRecord
 			));
 	}
 
-	
-	/* Remove this duplicate funtion
-		public function searchNoPage()
-		{
-			
-		}
-	*/
 	
 	/**
 	 * Returns the static model of the specified AR class.
