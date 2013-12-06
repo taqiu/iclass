@@ -189,9 +189,6 @@ class ImageDataController extends Controller
 						
 						$temp = explode('=',$row_data[18]);
 						$record->license = $temp[1];
-						// move thoese to ImageData beforeValidate()
-						//$record->uploader = Yii::app()->user->getId(); 
-						//$record->date_uploaded = date("Y-m-d");
 						
 						$model->tot_records++;
 						if($record->validate()){
