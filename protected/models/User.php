@@ -68,6 +68,7 @@ class User extends CActiveRecord
 		// Scenarios: register, change_profile, change_password
 		return array(
 			array('role','in','range'=>$this->getAllowedRoleRange(),'allowEmpty'=>false),
+			array('username', 'match' ,'pattern'=>'/^[a-z0-9_-]+\.[a-z]+$/i', 'message'=>'username can contain only alphanumeric characters and hyphens(-).'),
 			array('username, email', 'required', 'on'=>'changeProfile, register'),
 			array('password, password_repeat', 'required', 'on'=>'register'),
 			array('password', 'compare', 'on'=>'register'),
