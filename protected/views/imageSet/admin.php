@@ -19,9 +19,6 @@ array('label'=>'Manage Image Sets','url'=>array('admin'), 'itemOptions'=>array('
 	or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
  
 </p>
-<p><span class="label label-warning">Warning:</span> The set size might not be synchronized after deleting image data
-<?php echo CHtml::link('Refresh image set size', array('refreshSize'),array('class'=>'btn btn-success pull-right')); ?>
-</p>
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 'id'=>'image-set-grid',

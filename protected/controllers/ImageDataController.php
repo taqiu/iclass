@@ -110,6 +110,13 @@ class ImageDataController extends Controller
 		$params=array('label' => $model);
 		if (Yii::app()->user->checkAccess('deleteImageData', $params))
 		{
+		
+		
+		
+			foreach($model->devImageSets as $set){
+				$set->size = $set->size - 1;
+				$set->save();
+			}
 			$model->delete();
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
