@@ -83,8 +83,6 @@ class SearchController extends Controller
 			// set a session to avoid error message in create image set
 			if (!isset(Yii::app()->session['forwardfromsearch']))
 				Yii::app()->session['forwardfromsearch'] = true;
-			else 
-				Yii::app()->session['forwardfromsearch'] = false;
 			$this->forward('imageSet/create');
 		}
 		
