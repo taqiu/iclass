@@ -16,7 +16,8 @@ $('.search-form form').submit(function(){
 	$.fn.yiiGridView.update('image-data-grid', {
 	data: $(this).serialize()
 	});
-	$('#image-set-form').show();
+	$('#search-result').hide();
+	$('#search-img').show();
 	$(window).unbind('scroll');
 	$.fn.yiiListView.update('VideoList', {
 	data: $(this).serialize()
@@ -31,8 +32,11 @@ $('.search-form form').submit(function(){
   'data_model'=>$data_model, 'labelNames'=>$labelNames
 )); ?> 
 </div>
- 
-<?php echo $this->renderPartial('_form', array('model'=>$model, 'data_model'=>$data_model, 'show_result'=>$show_result), true, false); ?>
+<div id='search-img' style="text-align: center; margin-top: 60px; display:none">
+<img src="img/searching.gif"/>
+</div>
+<div id="search-result" <?php if(!$show_result) echo 'style="display:none;"'?>>
+<?php echo $this->renderPartial('_form', array('model'=>$model, 'data_model'=>$data_model), true, false); ?>
 
 <div class='preview-list' style='display:none'>
 <hr/>
@@ -71,3 +75,5 @@ $this->widget('zii.widgets.CListView', array(
        }",
 ));?>
 </div>
+
+</div> <!-- end of #search-result -->
