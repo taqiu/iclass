@@ -4,9 +4,6 @@
 )); ?>
 
 <style>
-#image-set-form {
-	<?php if (!$show_result) echo 'display:none;'?>
-}
 tr.filters {
 	display:none;
 }
@@ -17,6 +14,10 @@ tr.filters {
 'dataProvider'=>$data_model->search(),
 'selectableRows'=>2,
 'filter'=>$data_model,
+'afterAjaxUpdate' => "function(id, data) {
+		$('#search-img').hide();
+		$('#search-result').show();
+		}",
 'columns'=>array(
 		array(
           'id' => 'checkedImages',
