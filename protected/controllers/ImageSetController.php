@@ -77,22 +77,21 @@ class ImageSetController extends Controller
 			$model->imageList=explode(',',$model->imageList);
 			$model->size = count($model->imageList);
 			
-			// Do this in ImageSet beforeValidate()
-			//$model->owner = Yii::app()->user->getId();
-			//$model->create_time = date("Y-m-d");
-			if($model->save()){
-				$i = 0;
-				foreach($model->imageList as $img_id){
-					$temp = new ImageSetDetail;
-					$temp->set_id = $model->id;
-					$temp->image_id = $img_id;
-					$temp->index_in_set = $i;
-					
-					if($temp->save())
-						$i++;
+			// Don't save if forward from search
+			if(!isset($_GET['forward']) && $_GET['forward'] !== 'search')
+				if($model->save()){
+					$i = 0;
+					foreach($model->imageList as $img_id){
+						$temp = new ImageSetDetail;
+						$temp->set_id = $model->id;
+						$temp->image_id = $img_id;
+						$temp->index_in_set = $i;
+						
+						if($temp->save())
+							$i++;
+					}
+					$this->redirect(array('view','id'=>$model->id));
 				}
-				$this->redirect(array('view','id'=>$model->id));
-			}
 		}
 
 		$this->render('create',array(
