@@ -34,7 +34,8 @@ array('label'=>'Manage Labels','url'=>array('admin'), 'itemOptions'=>array('clas
 			'htmlOptions'=>array('width'=>'80px'),
 		),
 		'name',
-		'description',
+		array('name'=>'description',
+			  'value'=>function($data){return (strlen($data->description) > 80) ? substr($data->description, 0, 80).'...' : $data->description;}),
 		'create_time',
 		array(
 			'header'=>'Edit',
