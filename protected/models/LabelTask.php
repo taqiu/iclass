@@ -132,7 +132,7 @@ class LabelTask extends CActiveRecord
 		$criteria->compare('set_id',$this->set_id);
 		$criteria->compare('label_id',$this->label_id);
 		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('status',$this->status,true);
+		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

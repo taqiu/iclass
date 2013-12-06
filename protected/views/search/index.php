@@ -12,14 +12,14 @@ $('.hide-button').click(function(){
 	return false;
 });	
 $('.search-form form').submit(function(){
+	$(window).unbind('scroll');
 	$.fn.yiiGridView.update('image-data-grid', {
 	data: $(this).serialize()
 	});
 	$('#image-set-form').show();
-	$.fn.yiiListView.update('image-list', {
+	$.fn.yiiListView.update('VideoList', {
 	data: $(this).serialize()
 	});
-	$('.preview-list').hide();
 	return false;
 });
 ");
@@ -38,7 +38,7 @@ $('.search-form form').submit(function(){
 <p>Result Preview </p>
 <?php 
 $this->widget('zii.widgets.CListView', array(
-       'id' => 'image-list',
+       'id' => 'VideoList',
        'htmlOptions' => array('class'=>'image-list'),
        'dataProvider' => $data_model->search(),
        'itemView' => '_view',
@@ -49,19 +49,23 @@ $this->widget('zii.widgets.CListView', array(
                     'rowSelector'=>'.item', 
                     'listViewId' => 'VideoList', 
                     'header' => '',
-                    'loaderText'=>'Loading...',
-                    'options' => array('history' => false, 'triggerPageTreshold' => 15, 'trigger'=>'Load more'),
+                    'loaderText'=>'<img width="40px" src="img/loading.gif"/>',
+                    'options' => array('history' => false, 'triggerPageTreshold' => 30, 
+						'trigger'=>'Load more'),
                     ),
 	   'afterAjaxUpdate' => "function(id, data) {
+			// unbind to solvoe duplicate problem
+			$(window).unbind('scroll');
+			// rebind after update
 	        $.ias({
 	            'history': false,
-	            'triggerPageTreshold': 15,
+	            'triggerPageTreshold': 30,
 	            'trigger': 'Load more',
-	            'container': '#image-list > .items',
+	            'container': '#VideoList > .items',
 	            'item': '.item',
-	            'pagination': '#image-list .pager',
-	            'next': '#image-list .next:not(.disabled):not(.hidden) a',
-	            'loader': 'Loading...'
+	            'pagination': '#VideoList .pager',
+	            'next': '#VideoList .next:not(.disabled):not(.hidden) a',
+	            'loader': '<img width=\"40px\" src=\"img/loading.gif\"/>'
 	        });
        }",
 ));?>
