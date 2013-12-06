@@ -54,7 +54,7 @@
 					<?php if (!Yii::app()->user->isGuest): ?>
 					<ul class="nav pull-right">
 						 <li class="dropdown">
-							<a id="user-panel" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> <?php echo Yii::app()->user->name ?><b class="caret"></b></a>
+							<a id="user-panel" href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="content_right_head"><i class="icon-user icon-white"></i> <?php echo Yii::app()->user->name ?></span><b class="caret"></b></a>
 							<ul class="dropdown-menu">
           						<li><a href="<?php echo $this->createUrl('user/view', array('id'=>Yii::app()->user->id));?>"><i class="icon-cog"></i> Profile</a></li>
           						<li><a href="<?php echo $this->createUrl('user/password', array('id'=>Yii::app()->user->id));?>"><i class="icon-lock"></i> Change Password</a></li>
