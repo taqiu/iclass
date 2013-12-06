@@ -106,5 +106,5 @@ $('#all').click(function(){
 		
 <?php Yii::app()->clientScript->registerScript('init','$(document).ready(function(){ $("#down").on("click", postChecked);});'); ?>
 <?php Yii::app()->clientScript->registerScript('init2','$(document).ready(function(){ $("#set").on("click", postChecked);});'); ?>
-<?php Yii::app()->clientScript->registerScript('init3','$(document).ready(function(){ $("#search").on("click", postChecked);});'); ?>
+<?php Yii::app()->clientScript->registerScript('init3','$(document).ready(function(){ $("#search").on("click", clearall);});'); ?>
 <?php Yii::app()->clientScript->registerScript('init4','$(document).ready(function(){ $("#clear").on("click", clearall);});'); ?>

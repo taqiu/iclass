@@ -68,12 +68,12 @@ class SearchController extends Controller
 			$show_result = true;
 			$model->attributes=$_POST['ImageSet'];
 			$model->imageList=explode(',',$model->imageList);
-			$temp = "Internal ID, Flickr Photo ID, URL\n";
-			foreach($model->imageList as $i)
+			$temp = "Internal ID, Flickr Photo ID, URL \n";
+			foreach($model->imageList as $i){
 				$m = $data_model->findByPK($i);
-				if($m)
+				if($m!=Null)
 					$temp = $temp.$m->asCSVString();
-			
+			}
 			Yii::app()->getRequest()->sendFile('records.txt',$temp);
 		}
 		

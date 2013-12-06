@@ -105,7 +105,7 @@ $('input[id=ImageData_label_name]').change(function() {
 				'buttonType' => 'submit',
 				'type'=>'default',
 				'label'=>'Search',
-				'htmlOptions'=>array('class'=>'pull-right', 'name'=>'search'),
+				'htmlOptions'=>array('class'=>'pull-right', 'id'=>'search','name'=>'search'),
 			)); ?>
 		</div>
 	</div>
