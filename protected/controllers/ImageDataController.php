@@ -168,7 +168,10 @@ class ImageDataController extends Controller
 					$model->added_records = 0;
 					$model->added_tags = 0;
 					while(($line = fgets($handle)) != false){
-						
+										
+						$line = preg_replace("/\p{Han}+/u", '', $line);
+
+										
 						$record = new ImageData;
 						$row_data = explode(' ', $line);
 						$temp = explode('@N',$row_data[0]);
@@ -185,10 +188,12 @@ class ImageDataController extends Controller
 						$record->farm = $row_data[14];
 						
 						$temp = explode('=',$row_data[17]);
-						$record->title = $temp[1];
+						if(count($temp) > 1)
+							$record->title = $temp[1];
 						
 						$temp = explode('=',$row_data[18]);
-						$record->license = $temp[1];
+						if(count($temp) > 1)
+							$record->license = $temp[1];
 						
 						$model->tot_records++;
 						if($record->validate()){
