@@ -12,6 +12,7 @@ $('.hide-button').click(function(){
 	return false;
 });	
 $('.search-form form').submit(function(){
+	$(window).unbind('scroll');
 	$.fn.yiiGridView.update('image-data-grid', {
 	data: $(this).serialize()
 	});
@@ -55,7 +56,7 @@ $this->widget('zii.widgets.CListView', array(
 	   'afterAjaxUpdate' => "function(id, data) {
 			// unbind to solvoe duplicate problem
 			$(window).unbind('scroll');
-			$('#VideoList .items').unbind('scroll');
+			// rebind after update
 	        $.ias({
 	            'history': false,
 	            'triggerPageTreshold': 30,
