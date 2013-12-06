@@ -80,7 +80,11 @@ class SearchController extends Controller
 		
 		if(isset($_POST['set']) || isset($_POST['sub'])){
 			$model->attributes=$_POST['ImageSet'];
-			$_GET['forward']='search';
+			// set a session to avoid error message in create image set
+			if (!isset(Yii::app()->session['forwardfromsearch']))
+				Yii::app()->session['forwardfromsearch'] = true;
+			else 
+				Yii::app()->session['forwardfromsearch'] = false;
 			$this->forward('imageSet/create');
 		}
 		
