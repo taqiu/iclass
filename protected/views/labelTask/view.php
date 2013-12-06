@@ -12,8 +12,13 @@ array('label'=>'Manage Label Task','url'=>array('admin'), 'itemOptions'=>array('
 );
 ?>
 
-<h3>Label Task #<?php echo $model->id; ?></h3>
-
+<h3>View/Edit Label Task #<?php echo $model->id; ?></h3>
+<?php if(Yii::app()->user->hasFlash('success-create')):?>
+    <div class="alert alert-success">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<?php echo Yii::app()->user->getFlash('success-create');?>
+	</div>
+<?php endif; ?>
 <?php $this->widget('bootstrap.widgets.TbDetailView',array(
 	'data'=>$model,
 	'type' => 'striped bordered',
@@ -32,13 +37,14 @@ array('label'=>'Manage Label Task','url'=>array('admin'), 'itemOptions'=>array('
 	'id'=>'label-task-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-<?php if(Yii::app()->user->hasFlash('success')):?>
+<?php echo $form->errorSummary($model); ?>
+	<legend>Edit this task</legend>
+	<?php if(Yii::app()->user->hasFlash('success')):?>
     <div class="alert alert-success">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<?php echo Yii::app()->user->getFlash('success');?>
 	</div>
-<?php endif; ?>
-<?php echo $form->errorSummary($model); ?>
+	<?php endif; ?>
 	<?php echo $form->labelEx($model,'Name'); ?>
 	<?php echo $form->textField($model, 'name', array('class'=>'span4','maxlength'=>64)); ?>
 
@@ -51,7 +57,7 @@ array('label'=>'Manage Label Task','url'=>array('admin'), 'itemOptions'=>array('
 			<?php $this->widget('bootstrap.widgets.TbButton', array(
 					'buttonType'=>'submit',
 					'type'=>'primary',
-					'label'=>'Save',
+					'label'=>'Update',
 				)); ?>
 			<input style='margin:0px 15px 0px 15px' Type="button" VALUE="Back" class="btn btn-success" onClick="location.href='<?php echo Yii::app()->createURL('labelTask/admin');?>'"/>
 			<?php echo CHtml::button('Delete', array('style'=>'margin:0px 0px 0px 0px', 'class'=>"btn btn-danger pull-right", 'submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')); ?>

@@ -58,8 +58,7 @@ class LabelTaskController extends Controller
 			{
 				$model->attributes=$_POST['LabelTask'];
 				if($model->save())
-					Yii::app()->user->setFlash('success', "Label Task saved!");
-					$this->redirect(array('view','id'=>$model->id));
+					Yii::app()->user->setFlash('success', "Label Task updated!");
 			}
 			else
 			{
@@ -86,8 +85,10 @@ class LabelTaskController extends Controller
 		if(isset($_POST['LabelTask']))
 		{
 			$model->attributes=$_POST['LabelTask'];
-			if($model->save())
+			if($model->save()) {
+				Yii::app()->user->setFlash('success-create', "Label Task created!");
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		// Get all imagee set names
