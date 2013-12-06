@@ -196,3 +196,10 @@ ul.sidebar li a:focus {
 display: none;
 }
 
+#content_right_head{
+    display:inline-block;
+    width:55px;
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+}
