@@ -17,6 +17,7 @@ $('.search-form form').submit(function(){
 	data: $(this).serialize()
 	});
 	$('#image-set-form').show();
+	$(window).unbind('scroll');
 	$.fn.yiiListView.update('VideoList', {
 	data: $(this).serialize()
 	});
