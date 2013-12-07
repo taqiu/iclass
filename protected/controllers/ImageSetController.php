@@ -92,6 +92,8 @@ class ImageSetController extends Controller
 						if($temp->save())
 							$i++;
 					}
+					$model->size = $i;
+					$model->save();
 					unset(Yii::app()->session['forwardfromsearch']);
 					$this->redirect(array('view','id'=>$model->id));
 				}
