@@ -66,10 +66,10 @@ class RbacCommand extends CConsoleCommand
 					"updateLabel",
 					"update label information");
 			$bizRule='return Yii::app()->user->id===$params["label"]->owner;';
-			$task=$this->_authManager->createTask('updateOwnLabel','update own task',$bizRule);
+			$task=$this->_authManager->createTask('updateOwnLabel','update own label',$bizRule);
 			$task->addChild('updateLabel');
 			$bizRule='return Yii::app()->user->id===$params["label"]->owner;';
-			$task=$this->_authManager->createTask('deleteOwnLabel','update own task',$bizRule);
+			$task=$this->_authManager->createTask('deleteOwnLabel','delete own label',$bizRule);
 			$task->addChild('deleteLabel');
 			
 			
