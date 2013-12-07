@@ -203,3 +203,11 @@ display: none;
     overflow:hidden !important;
     text-overflow: ellipsis;
 }
+
+#content_right_head2{
+    display:inline-block;
+    width:125px;
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+}
