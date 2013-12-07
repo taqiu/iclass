@@ -16,6 +16,7 @@ $('.search-form form').submit(function(){
 	$.fn.yiiGridView.update('image-data-grid', {
 	data: $(this).serialize()
 	});
+	$('.preview-list').hide();
 	$('#search-result').hide();
 	$('#search-img').show();
 	$(window).unbind('scroll');
