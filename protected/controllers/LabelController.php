@@ -144,7 +144,7 @@ class LabelController extends Controller
 	public function actionDelete($id)
 	{
 		$model = $this->loadModel($id);
-		$params=array('image' => $model);
+		$params=array('label' => $model);
 		if (Yii::app()->user->checkAccess('deleteLabel', $params))
 		{
 			$model->delete();
