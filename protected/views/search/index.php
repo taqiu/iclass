@@ -59,6 +59,8 @@ $this->widget('zii.widgets.CListView', array(
 						'trigger'=>'Load more'),
                     ),
 	   'afterAjaxUpdate' => "function(id, data) {
+			$('#search-img').hide();
+			$('#search-result').show();
 			// unbind to solvoe duplicate problem
 			$(window).unbind('scroll');
 			// rebind after update
