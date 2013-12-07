@@ -156,9 +156,11 @@ class ImageData extends CActiveRecord
 		// Add criteria only when tagSearch is set,
 		// so that empty tag image can be displayed
 		if (isset($this->tagSearch) && $this->tagSearch !== '') {
+		
 			$criteria->with = array('tags');
-			$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE tag_text LIKE :tagSearch)');
-			$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
+			$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE FIND_IN_SET(tag_text,:tagSearch))');
+			#$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
+			$criteria->params[':tagSearch']=$this->tagSearch;
 		}
 		
 		if (isset($this->label_name) && $this->label_name !== '') {
