@@ -41,7 +41,7 @@ $this->menu=array(
 	  <label class="control-label">Username</label>
 	  <div class="controls">
 	    <?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>64, 'class'=>'input-xlarge', 'placeholder'=>'Username', 'required'=>'required')); ?>
-	    <p class="help-block">Username you can sign in with</p>
+	    <p class="help-block">Username change will be reflected on nav bar next loging </p>
 	  </div>
 	</div>
 
