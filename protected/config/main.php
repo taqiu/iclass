@@ -13,7 +13,6 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'ICLASS',
 	'timeZone' => 'America/Indianapolis',
-//	'theme'=> 'booster',
 
 	'preload'=>array(
 		'bootstrap',    //preload yiibooster
@@ -68,7 +67,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		'db'=>array(
 		//	'connectionString' => 'mysql:host=silo.cs.indiana.edu;dbname=b561f13_taqiu',
-			'connectionString' => 'mysql:host=localhost:3306;dbname=b561f13_taqiu',
+			'connectionString' => 'mysql:host=localhost;dbname=b561f13_taqiu',
 			'emulatePrepare' => true,
 			'username' => 'b561f13_taqiu',
 			'password' => 'fountainpark',

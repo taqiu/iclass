@@ -4,7 +4,7 @@
 	<div class="span3" >
 		<?php
 			foreach ($this->menu as &$item) {
-				$item['label'] = $item['label'].'<i class="icon-chevron-right pull-right"></i>';
+				$item['label'] = CHtml::encode($item['label']).'<i class="icon-chevron-right pull-right"></i>';
 			}
 			$this->beginWidget('zii.widgets.CPortlet', array(
 				'title'=>'Menu',

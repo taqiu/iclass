@@ -27,7 +27,9 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// display register page for guest
+		// display register page for unauthenticated user
+		// YII guest user is unauthenticated user, but guest user in our system is user whose
+		//  indentity is not verified by admin
 		if (Yii::app()->user->isGuest) 
 		{
 			$model = new User('register');
