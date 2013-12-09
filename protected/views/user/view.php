@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'View Profile', 'url'=>array('view', 'id'=>$model->uid), 'itemOptions'=>array('class'=>'active')),
 	array('label'=>'Update Profile', 'url'=>array('profile', 'id'=>$model->uid)),
-	array('label'=>'Change Passwrod', 'url'=>array('password', 'id'=>$model->uid)),
+	array('label'=>'Change Password', 'url'=>array('password', 'id'=>$model->uid)),
 );
 ?>
 
