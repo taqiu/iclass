@@ -15,3 +15,7 @@ array('label'=>'Manage Labels','url'=>array('admin')),
 <p> Labels define some semantic concept for which we want some human input. They are defined by a description and set of possible answers for the user to choose from.
 One example might be the presence or absence of children in a photograph. In this module labels can be defined, modified, and viewed. These labels are used when
 defining a label task for other users to participate in. </p>
+</p>
+<div style="margin-top:60px; text-align:center;">
+<img alt="" width="350" src="<?php echo Yii::app()->request->baseUrl;?>/img/label-example.png"/>
+</div>

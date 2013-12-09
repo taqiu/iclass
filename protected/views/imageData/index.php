@@ -18,3 +18,6 @@ The image data module allows users to upload and manage image meta-data collecti
 The data is collected by a crawler designed at the lab which regularly outputs the records as <b>.dump</b> files. These files can be uploaded here and non-redundant
 records will be stored. The images and associated meta-data can also be viewed and updated.
 </p>
+<div style="margin-top:60px; text-align:center;">
+<img alt="" width="400" src="<?php echo Yii::app()->request->baseUrl;?>/img/image-data-flow.png"/>
+</div>

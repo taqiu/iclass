@@ -14,4 +14,6 @@ array('label'=>'Manage Image Sets','url'=>array('admin')),
 <hr/>
 <p>Image sets define collections of images that have been defined by the user. These sets are useful as they may be used to run labelling tasks
 or to define subsets of the image database that are relevant to an experiment. They can be created, managed, and downloaded in this module.</p>
-
+<div style="margin-top:60px; text-align:center;">
+<img alt="" width="400" src="<?php echo Yii::app()->request->baseUrl;?>/img/image-set.png"/>
+</div>
