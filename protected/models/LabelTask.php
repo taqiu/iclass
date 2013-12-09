@@ -146,9 +146,10 @@ class LabelTask extends CActiveRecord
 			WHERE  t.status='active' AND t.set_id = s.id 
 				AND t.id NOT IN
 				(SELECT task_id FROM {{participate}} 
-				 WHERE user_id=$uid AND is_done=1)
+				 WHERE user_id=:uid AND is_done=1)
 			ORDER BY t.id ASC";
 		$command=Yii::app()->db->createCommand($sql);
+		$command->bindParam(":uid", $uid, PDO::PARAM_INT);
 		$rows = $command->queryAll();
 		foreach ($rows as &$row) {
 			//die(print_r($row));
