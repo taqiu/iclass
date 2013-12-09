@@ -52,6 +52,13 @@ class ParticipateController extends Controller
 	
 	public function actionStart($task_id)
 	{
+		// find task first
+		$task = LabelTask::model()->findByPk((int) $task_id);
+		if ($task === null) {
+			throw new CHttpException(404,'The requested page does not exist.');
+		}
+		
+		// check partipate record
 		$user_id = Yii::app()->user->id;
 		$partipate = Participate::model()->findByPk(array('user_id' => $user_id, 'task_id' => $task_id));
 		if ($partipate === null) {
@@ -61,41 +68,32 @@ class ParticipateController extends Controller
 			$partipate->last_image_labeled = -1;
 			$partipate->is_done = 0;
 			$partipate->save();
-		}
-		
-		// read task
-		$task = LabelTask::model()->findByPk((int) $task_id);
-		if ($task === null) {
-			throw new CHttpException(404,'The requested page does not exist.');
-		}
+		}	
 		
 		// process user selection
 		if (isset($_POST['answer'])) {
 			$image_id = (int) $_POST['imageId'];
 			$index_in_set =  (int)$_POST['indexInSet'];
 			$answer =  (int) $_POST['answer'];
-			// die($answer.'|'.$image_id.'|'.$index_in_set);
+			
 			// check Duplicate entry in databse
 			$labelResponse = LabelResponse::model()->findByPk(array('image_id'=>$image_id, 'label_id'=>$task->label_id, 'user_id'=>$user_id));
-			if ($labelResponse == null) {
+			if ($labelResponse == null)
 				$labelResponse = new LabelResponse();
-				$labelResponse->image_id = $image_id;
-				$labelResponse->label_id = $task->label_id;
-				$labelResponse->user_id = $user_id;
-				$labelResponse->answer_id = $answer;
-				if ($labelResponse->save()) {
-					$partipate->last_image_labeled = $index_in_set;
-					$partipate->save();
-				} else {
-					die(print_r($labelResponse->errors));
-				}
-			} else {
+			
+			// new response will overide old response
+			$labelResponse->image_id = $image_id;
+			$labelResponse->label_id = $task->label_id;
+			$labelResponse->user_id = $user_id;
+			$labelResponse->answer_id = $answer;
+			if ($labelResponse->save()) {
+				// update partipate record if label response is saved
 				$partipate->last_image_labeled = $index_in_set;
 				$partipate->save();
-			}
-			
-			// Upate Majority table
-			LabelMajority::updateByImage($task->label_id, $image_id);
+				
+				// Upate Majority table
+				LabelMajority::updateByImage($task->label_id, $image_id);
+			} 
 		}
 		
 		// Get all images in set and get next image
