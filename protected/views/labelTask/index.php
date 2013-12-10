@@ -16,5 +16,5 @@ array('label'=>'Manage Label Task','url'=>array('admin')),
 They are defined by specifying an image set and a label to set what question you would like answered by the community for some collection of images.</p>
 
 <div style="margin-top:60px; text-align:center;">
-<img alt="" width="350" src="<?php echo Yii::app()->request->baseUrl;?>/img/task-example.png"/>
+<img alt="" style="width:350px" src="<?php echo Yii::app()->request->baseUrl;?>/img/task-example.png"/>
 </div>

@@ -17,5 +17,5 @@ One example might be the presence or absence of children in a photograph. In thi
 defining a label task for other users to participate in. </p>
 </p>
 <div style="margin-top:60px; text-align:center;">
-<img alt="" width="350" src="<?php echo Yii::app()->request->baseUrl;?>/img/label-example.png"/>
+<img alt="" style="width:350px" src="<?php echo Yii::app()->request->baseUrl;?>/img/label-example.png"/>
 </div>

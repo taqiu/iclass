@@ -55,7 +55,7 @@ $this->widget('zii.widgets.CListView', array(
                     'rowSelector'=>'.item', 
                     'listViewId' => 'VideoList', 
                     'header' => '',
-                    'loaderText'=>'<img width="40px" src="img/loading.gif"/>',
+                    'loaderText'=>'<img style="width:40px" src="img/loading.gif"/>',
                     'options' => array('history' => false, 'triggerPageTreshold' => 30, 
 						'trigger'=>'Load more'),
                     ),
@@ -71,7 +71,7 @@ $this->widget('zii.widgets.CListView', array(
 	            'item': '.item',
 	            'pagination': '#VideoList .pager',
 	            'next': '#VideoList .next:not(.disabled):not(.hidden) a',
-	            'loader': '<img width=\"40px\" src=\"img/loading.gif\"/>'
+	            'loader': '<img style=\"width:40px\" src=\"img/loading.gif\"/>'
 	        });
        }",
 ));?>

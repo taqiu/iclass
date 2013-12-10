@@ -26,7 +26,7 @@ $this->widget('zii.widgets.CListView', array(
                     'rowSelector'=>'.item', 
                     'listViewId' => 'VideoList', 
                     'header' => '',
-                    'loaderText'=>'<img width="40px" src="img/loading.gif"/>',
+                    'loaderText'=>'<img style="width:40px" src="img/loading.gif"/>',
                     'options' => array('history' => false, 'triggerPageTreshold' => 100, 'trigger'=>'Load more'),
                   )
             )

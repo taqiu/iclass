@@ -19,5 +19,5 @@ The data is collected by a crawler designed at the lab which regularly outputs t
 records will be stored. The images and associated meta-data can also be viewed and updated.
 </p>
 <div style="margin-top:60px; text-align:center;">
-<img alt="" width="400" src="<?php echo Yii::app()->request->baseUrl;?>/img/image-data-flow.png"/>
+<img alt="" style="width:400px" src="<?php echo Yii::app()->request->baseUrl;?>/img/image-data-flow.png"/>
 </div>
