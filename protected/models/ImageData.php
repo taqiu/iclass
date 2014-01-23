@@ -158,9 +158,24 @@ class ImageData extends CActiveRecord
 		if (isset($this->tagSearch) && $this->tagSearch !== '') {
 		
 			$criteria->with = array('tags');
-			$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE FIND_IN_SET(tag_text,:tagSearch))');
-			#$criteria->params[':tagSearch']='%' . $this->tagSearch . '%';
+			$criteria->together = true;
+			#$criteria->addCondition('t.id IN (SELECT image_id FROM dev_tag WHERE FIND_IN_SET(tag_text,:tagSearch))');
+			
+			
+
+			$query = "tag_text IN (";
+			$temp = explode(',',$this->tagSearch);
+			foreach ($temp as $t)
+				$query .= "'".(string)$t."'".",";
+			$query = rtrim($query, ",");
+			$query.=")";
+
+			$criteria->addCondition($query);			
+
 			$criteria->params[':tagSearch']=$this->tagSearch;
+
+			
+			
 		}
 		
 		if (isset($this->label_name) && $this->label_name !== '') {

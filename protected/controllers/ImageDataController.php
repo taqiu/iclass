@@ -186,9 +186,9 @@ class ImageDataController extends Controller
 						$record->flickr_user = implode(array($temp[0],$temp[1]));
 						$record->flickr_photo_id = $row_data[1];
 						$record->date_uploaded_flickr = $row_data[7];
-						$record->latitude = $row_data[9];
-						$record->longitude = $row_data[10];
-						$record->precision = $row_data[11];
+						$record->latitude = float($row_data[9]);
+						$record->longitude = float($row_data[10]);
+						$record->precision = float($row_data[11]);
 						
 						$record->secret = $row_data[12];
 						$record->server = $row_data[13];
