@@ -27,13 +27,7 @@ array('label'=>'Manage Label Task','url'=>array('admin')),
 	<?php echo $form->textField($model, 'name', array('class'=>'span4','maxlength'=>64)); ?>
 	
 	<?php echo $form->labelEx($model,'image_set_name'); ?>
-	<?php /*$this->widget('CAutoComplete', array(
-			'model'=>$model,
-			'attribute'=>'image_set_name',
-			'data'=>$imageSetNames,
-			'multiple'=>false,
-			'htmlOptions'=>array('class'=>'span4'),
-	)); */?>
+
 	<?php $this->widget('bootstrap.widgets.TbTypeahead', array(
 			'name'=>'LabelTask[image_set_name]',
 			'options'=>array(
@@ -47,13 +41,6 @@ array('label'=>'Manage Label Task','url'=>array('admin')),
 	)); ?>
 	
     <?php echo $form->labelEx($model,'label_name'); ?>
-	<?php /* $this->widget('CAutoComplete', array(
-    		'model'=>$model,
-			'attribute'=>'label_name',
-			'data'=>$labelNames,
-			'multiple'=>false,
-			'htmlOptions'=>array('class'=>'span4'),
-	)); */?>
 	<?php $this->widget('bootstrap.widgets.TbTypeahead', array(
 			'name'=>'LabelTask[label_name]',
 			'options'=>array(
@@ -68,6 +55,10 @@ array('label'=>'Manage Label Task','url'=>array('admin')),
 	
 	<?php echo $form->labelEx($model,'status'); ?>
 	<?php echo $form->dropDownList($model,'status', $model->getStatusOptions()); ?>
+
+	<?php echo $form->labelEx($model,'label_set_size'); ?>
+	<?php echo $form->textField($model, 'label_set_size', array('class'=>'span4','maxlength'=>1000, 'value'=>0)); ?>
+<p> <span class="label label-info">Hint</span>  If 0, the whole set is given to each labeller; else randomly selected sequential subset of given size.
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

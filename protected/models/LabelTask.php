@@ -11,6 +11,7 @@
  * @property integer $label_id
  * @property string $create_time
  * @property string $status
+ * @property integer $label_set_size
  *
  * The followings are the available model relations:
  * @property Label $label
@@ -61,9 +62,10 @@ class LabelTask extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('status','in','range'=>$this->getAllowedStatusRange(),'allowEmpty'=>false),
-			array('name, image_set_name, label_name, status', 'required'),
+			array('name, image_set_name, label_name, status, label_set_size', 'required'),
 			array('name', 'unique'),
 			array('owner, set_id, label_id', 'numerical', 'integerOnly'=>true),
+			array('label_set_size', 'numerical', 'integerOnly'=>true, 'min'=>0),
 			array('name', 'length', 'max'=>64),
 			array('status', 'length', 'max'=>16),
 			array('image_set_name', 'exist', 'className'=>'ImageSet', 'attributeName'=>'name'),
@@ -105,6 +107,7 @@ class LabelTask extends CActiveRecord
 			'label_id' => 'Label',
 			'create_time' => 'Create Time',
 			'status' => 'Status',
+			'label_set_size'=>'Label Set Size',
 		);
 	}
 
@@ -155,11 +158,19 @@ class LabelTask extends CActiveRecord
 			//die(print_r($row));
 			$task_id = $row['id'];
 			$participate = Participate::model()->findByPk(array('user_id' => $uid, 'task_id' => $task_id));
-			if ($participate === null) {
+			if ($participate == null) {
 				$row['progress'] = -1;
+				$task = LabelTask::model()->findByPk($row['id']);
+				if($task->label_set_size > 0)
+					$row['size'] = $task->label_set_size;	
 			} else {
 				$task = LabelTask::model()->findByPk($participate->task_id);
-				$progross = ImageSetDetail::model()->count("set_id=$task->set_id AND index_in_set<=$participate->last_image_labeled");
+				if($task->label_set_size == 0)				
+					$progross = ImageSetDetail::model()->count("set_id=$task->set_id AND index_in_set<=$participate->last_image_labeled");
+				else{
+					$progross = $participate->count_labeled;
+					$row['size'] = $task->label_set_size;				
+				}
 				$row['progress'] = $progross;
 			}
 		}

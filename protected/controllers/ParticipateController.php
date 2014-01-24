@@ -3,7 +3,6 @@
 class ParticipateController extends Controller
 {
 	
-
 	public $layout='//layouts/column2';
 
 	/**
@@ -65,11 +64,22 @@ class ParticipateController extends Controller
 			$partipate = new Participate();
 			$partipate->user_id = $user_id;
 			$partipate->task_id = $task_id;
-			$partipate->last_image_labeled = -1;
 			$partipate->is_done = 0;
+			$partipate->count_labeled = 0;
+
+			if ($task->label_set_size > 0){
+				$max = $task->set->size - $task->label_set_size;
+				$partipate->last_image_labeled = rand(-1, $max);
+			}
+			else
+				$partipate->last_image_labeled = -1;
 			$partipate->save();
 		}	
 		
+
+		
+
+
 		// process user selection
 		if (isset($_POST['answer'])) {
 			$image_id = (int) $_POST['imageId'];
@@ -89,6 +99,7 @@ class ParticipateController extends Controller
 			if ($labelResponse->save()) {
 				// update partipate record if label response is saved
 				$partipate->last_image_labeled = $index_in_set;
+				$partipate->count_labeled = $partipate->count_labeled + 1;
 				$partipate->save();
 				
 				// Upate Majority table
@@ -104,7 +115,7 @@ class ParticipateController extends Controller
 		$criteria->limit = 1;
 		$imageSetDetail = ImageSetDetail::model()->find($criteria);
 		
-		if ($imageSetDetail === null) {
+		if ($imageSetDetail === null or ($task->label_set_size > 0 && $partipate->count_labeled > $task->label_set_size)) {
 			$partipate->is_done = 1;
 			if(!$partipate->save()) {die(print_r($partipate->errors));}
 			$this->render('done');

@@ -53,9 +53,10 @@ class SearchController extends Controller
 		// Ajax select all button
 		if (isset($_GET['all'])) {
 			// selecting too images cause memory exhausted
-			if ($data_model->search(true, 'count') > 15000)
-				throw new CHttpException('500', 'Too many image selected. Can\'t select more than 15000');
-			$model->imageList = $data_model->search($pagination=false)->getKeys();
+			if ($data_model->search(true, 'count') > 10000)
+				throw new CHttpException('500', 'Too many image selected. Can\'t select more than 10000');
+			else
+				$model->imageList = $data_model->search($pagination=false)->getKeys();
 			echo json_encode($model->imageList);
 			Yii::app()->end();
 		}

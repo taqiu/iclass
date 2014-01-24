@@ -163,7 +163,7 @@ class ImageData extends CActiveRecord
 			
 			
 
-			$query = "tag_text IN (";
+			$query = "tags.tag_text IN (";
 			$temp = explode(',',$this->tagSearch);
 			foreach ($temp as $t)
 				$query .= "'".(string)$t."'".",";
@@ -172,7 +172,7 @@ class ImageData extends CActiveRecord
 
 			$criteria->addCondition($query);			
 
-			$criteria->params[':tagSearch']=$this->tagSearch;
+			#$criteria->params[':tagSearch']=$this->tagSearch;
 
 			
 			
@@ -199,15 +199,13 @@ class ImageData extends CActiveRecord
 		}
 		
 		// return only id list 
-		/*
-		 writing a code with select 
-		 Don't know how to make it work
-		 Try DAO in the future
-		if ($result === 'index') {
-			$criteria->select('id');
-			return $this->findAll($criteria);
-		}
-		*/
+		
+		 
+		#if ($result === 'index') {
+		#	$criteria->select ='t.id';
+			#return $this->findAll($criteria);
+		#}
+		
 		
 		if ($pagination)
 			return new CActiveDataProvider($this, array(

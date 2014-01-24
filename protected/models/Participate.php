@@ -8,6 +8,7 @@
  * @property integer $task_id
  * @property integer $last_image_labeled
  * @property integer $is_done
+ * @property integer $count_labeled
  */
 class Participate extends CActiveRecord
 {
@@ -33,7 +34,7 @@ class Participate extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('user_id, task_id, last_image_labeled', 'required'),
-			array('user_id, task_id, last_image_labeled, is_done', 'numerical', 'integerOnly'=>true),
+			array('user_id, task_id, last_image_labeled, is_done, count_labeled', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('user_id, task_id, last_image_labeled, is_done', 'safe', 'on'=>'search'),
@@ -61,6 +62,7 @@ class Participate extends CActiveRecord
 			'task_id' => 'Task',
 			'last_image_labeled' => 'Last Image Labeled',
 			'is_done' => 'Is Done',
+			'count_labeled' => 'Images Labelled'
 		);
 	}
 
