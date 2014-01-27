@@ -53,10 +53,10 @@ class SearchController extends Controller
 		// Ajax select all button
 		if (isset($_GET['all'])) {
 			// selecting too images cause memory exhausted
-			if ($data_model->search(true, 'count') > 10000)
-				throw new CHttpException('500', 'Too many image selected. Can\'t select more than 10000');
-			else
-				$model->imageList = $data_model->search($pagination=false)->getKeys();
+			#if ($data_model->search(true, 'count') > 10000)
+			#	throw new CHttpException('500', 'Too many image selected. Can\'t select more than 10000');
+			#else
+				$model->imageList = $data_model->search($pagination=false, 'index')->getKeys();
 			echo json_encode($model->imageList);
 			Yii::app()->end();
 		}
@@ -70,7 +70,7 @@ class SearchController extends Controller
 			$show_result = true;
 			$model->attributes=$_POST['ImageSet'];
 			$model->imageList=explode(',',$model->imageList);
-			$temp = "Internal ID, Flickr Photo ID, URL \n";
+			$temp = "Flickr Photo ID, Flickr User, Date Uploaded, Latitude, Longitude, Precision, Title, URL, Tags  \n";
 			foreach($model->imageList as $i){
 				$m = $data_model->findByPK($i);
 				if($m!=Null)

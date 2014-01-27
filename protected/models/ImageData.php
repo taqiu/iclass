@@ -40,13 +40,23 @@ class ImageData extends CActiveRecord
 	public function imageURL(){
 		return 'http://farm'.$this->farm.'.staticflickr.com/'.$this->server.'/'.$this->flickr_photo_id.'_'.$this->secret.'.jpg';
 	}
-	
-	
+		
 	public function asCSVString(){
-		return $this->id.', '.$this->flickr_photo_id.', '.$this->imageURL()."\n";
-	
+		$s = $this->flickr_photo_id.', ';		
+		$s .= $this->flickr_user.', ';
+		$s .= $this->date_uploaded_flickr.', ';
+		$s .= $this->latitude.', ';
+		$s .= $this->longitude.', ';
+		$s .= $this->precision.', ';
+		$s .= $this->title.', ';
+		$s .= $this->imageURL().', ';
+
+		foreach($this->tags as $t)
+			$s.= $t->tag_text.';';
+		
+		return $s."\n";
 	}
-	
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -201,10 +211,11 @@ class ImageData extends CActiveRecord
 		// return only id list 
 		
 		 
-		#if ($result === 'index') {
-		#	$criteria->select ='t.id';
-			#return $this->findAll($criteria);
-		#}
+		if ($result === 'index') {
+			$criteria->select ='t.id';
+			$criteria->order = 'RAND()';
+			$criteria->limit = 10000;
+		}
 		
 		
 		if ($pagination)

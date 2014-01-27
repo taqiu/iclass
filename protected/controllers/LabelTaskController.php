@@ -65,6 +65,30 @@ class LabelTaskController extends Controller
 				throw new CHttpException(403,'You are not authorized to update this label task. (Only owner and admin can do this)');
 			}
 		}
+
+		if(isset($_GET['pick'])){
+			$task_id = $_GET['id'];
+			
+			$criteria=new CDbCriteria;
+			$criteria->compare('task_id',$task_id);
+			$sum = Yii::app()->getDB()->createCommand("SELECT sum(count_labeled) as tot FROM dev_participate WHERE task_id = ".$task_id)->queryAll();
+			$sum = $sum[0]['tot'];
+		
+
+			$limit = $sum*mt_rand() / mt_getrandmax();
+			$criteria=new CDbCriteria;
+			$criteria->compare('task_id',$task_id);
+			$canidates = Participate::model()->findAll($criteria);
+
+			foreach($canidates as $c){
+				if($c->count_labeled > $limit){
+					$winner = User::model()->findByPK($c->user_id)->username;
+					echo "Congratulations ".$winner."!";
+					Yii::app()->end();
+				}
+				$limit = $limit - $c->count_labeled;
+			}
+		}
 		
 		$this->render('view',array(
 			'model'=>$model,

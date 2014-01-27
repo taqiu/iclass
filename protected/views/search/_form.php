@@ -63,7 +63,7 @@ tr.filters {
 			'id'=>'down',
 			'buttonType'=>'submit',
 			'type'=>'primary',
-			'label'=>'Download URLs',
+			'label'=>'Download Records',
 			'htmlOptions'=>array('id'=>'down', 'name'=>'down'),
 		)); ?>
 		
