@@ -77,7 +77,6 @@ class m131104_015029_create_image_data_and_set_tables extends CDbMigration
 		$this->createTable('{{image_set_detail}}', array(
 			'set_id' => 'integer NOT NULL',	
 			'image_id' => 'integer NOT NULL',
-			'index_in_set' => 'integer NOT NULL',
 			'PRIMARY KEY (`set_id`,`image_id`)',
 		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->addForeignKey(

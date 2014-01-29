@@ -74,7 +74,6 @@ class m131104_043747_create_label_and_task_tables extends CDbMigration
 			'label_id' => 'integer NOT NULL',
 			'create_time' => 'datetime',
 			'status' => 'varchar(16)',
-			'label_set_size' => 'integer NOT NULL',
 		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 		$this->createIndex('label_task_name', '{{label_task}}', 'name', true);
 		$this->addForeignKey(
@@ -116,7 +115,6 @@ class m131104_043747_create_label_and_task_tables extends CDbMigration
 		$this->createTable('{{participate}}', array(
 			'user_id' => 'integer NOT NULL',
 			'task_id' => 'integer NOT NULL',
-			'last_image_labeled' => 'integer NOT NULL',
 			'count_labeled' => 'integer NOT NULL',
 			'is_done' => 'boolean',
 			'PRIMARY KEY (`user_id`,`task_id`)',

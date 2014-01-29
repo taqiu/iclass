@@ -81,7 +81,7 @@ class LabelTaskController extends Controller
 			$canidates = Participate::model()->findAll($criteria);
 
 			foreach($canidates as $c){
-				if($c->count_labeled > $limit){
+				if($c->count_labeled >= $limit){
 					$winner = User::model()->findByPK($c->user_id)->username;
 					echo "Congratulations ".$winner."!";
 					Yii::app()->end();

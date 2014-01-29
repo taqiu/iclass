@@ -58,7 +58,7 @@ array('label'=>'Manage Label Task','url'=>array('admin')),
 
 	<?php echo $form->labelEx($model,'label_set_size'); ?>
 	<?php echo $form->textField($model, 'label_set_size', array('class'=>'span4','maxlength'=>1000, 'value'=>0)); ?>
-<p> <span class="label label-info">Hint</span>  If 0, the whole set is given to each labeller; else randomly selected sequential subset of given size.
+<p> <span class="label label-info">Hint</span>  If 0, the whole set is given to each labeller.
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

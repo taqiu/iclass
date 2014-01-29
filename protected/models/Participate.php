@@ -6,7 +6,6 @@
  * The followings are the available columns in table '{{participate}}':
  * @property integer $user_id
  * @property integer $task_id
- * @property integer $last_image_labeled
  * @property integer $is_done
  * @property integer $count_labeled
  */
@@ -33,8 +32,8 @@ class Participate extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, task_id, last_image_labeled', 'required'),
-			array('user_id, task_id, last_image_labeled, is_done, count_labeled', 'numerical', 'integerOnly'=>true),
+			array('user_id, task_id', 'required'),
+			array('user_id, task_id, is_done, count_labeled', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('user_id, task_id, last_image_labeled, is_done', 'safe', 'on'=>'search'),
@@ -60,7 +59,6 @@ class Participate extends CActiveRecord
 		return array(
 			'user_id' => 'User',
 			'task_id' => 'Task',
-			'last_image_labeled' => 'Last Image Labeled',
 			'is_done' => 'Is Done',
 			'count_labeled' => 'Images Labelled'
 		);
@@ -86,7 +84,6 @@ class Participate extends CActiveRecord
 
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('task_id',$this->task_id);
-		$criteria->compare('last_image_labeled',$this->last_image_labeled);
 		$criteria->compare('is_done',$this->is_done);
 
 		return new CActiveDataProvider($this, array(

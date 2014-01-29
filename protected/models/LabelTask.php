@@ -11,7 +11,7 @@
  * @property integer $label_id
  * @property string $create_time
  * @property string $status
- * @property integer $label_set_size
+ * 
  *
  * The followings are the available model relations:
  * @property Label $label
@@ -65,7 +65,6 @@ class LabelTask extends CActiveRecord
 			array('name, image_set_name, label_name, status, label_set_size', 'required'),
 			array('name', 'unique'),
 			array('owner, set_id, label_id', 'numerical', 'integerOnly'=>true),
-			array('label_set_size', 'numerical', 'integerOnly'=>true, 'min'=>0),
 			array('name', 'length', 'max'=>64),
 			array('status', 'length', 'max'=>16),
 			array('image_set_name', 'exist', 'className'=>'ImageSet', 'attributeName'=>'name'),
@@ -107,7 +106,6 @@ class LabelTask extends CActiveRecord
 			'label_id' => 'Label',
 			'create_time' => 'Create Time',
 			'status' => 'Status',
-			'label_set_size'=>'Label Set Size',
 		);
 	}
 

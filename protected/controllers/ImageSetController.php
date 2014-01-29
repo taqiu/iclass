@@ -87,7 +87,6 @@ class ImageSetController extends Controller
 						$temp = new ImageSetDetail;
 						$temp->set_id = $model->id;
 						$temp->image_id = $img_id;
-						$temp->index_in_set = $i;
 						
 						if($temp->save())
 							$i++;

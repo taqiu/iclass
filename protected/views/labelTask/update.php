@@ -26,6 +26,10 @@ array('label'=>'Manage Label Task','url'=>array('admin'), 'itemOptions'=>array('
 	<?php echo $form->labelEx($model,'status'); ?>
 	<?php echo $form->dropDownList($model,'status', $model->getStatusOptions()); ?>
 
+	<?php echo $form->labelEx($model,'label_set_size'); ?>
+	<?php echo $form->textField($model, 'label_set_size', array('class'=>'span4','maxlength'=>1000)); ?>
+	<p> <span class="label label-info">Hint</span>  If 0, the whole set is given to each labeller.
+
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 				'buttonType'=>'submit',

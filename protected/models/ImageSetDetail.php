@@ -6,7 +6,6 @@
  * The followings are the available columns in table '{{image_set_detail}}':
  * @property integer $set_id
  * @property integer $image_id
- * @property integer $index_in_set
  */
 class ImageSetDetail extends CActiveRecord
 {
@@ -26,11 +25,11 @@ class ImageSetDetail extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('set_id, image_id, index_in_set', 'required'),
-			array('set_id, image_id, index_in_set', 'numerical', 'integerOnly'=>true),
+			array('set_id, image_id', 'required'),
+			array('set_id, image_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('set_id, image_id, index_in_set', 'safe', 'on'=>'search'),
+			array('set_id, image_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,7 +52,6 @@ class ImageSetDetail extends CActiveRecord
 		return array(
 			'set_id' => 'Set',
 			'image_id' => 'Image',
-			'index_in_set' => 'Index In Set',
 		);
 	}
 
@@ -77,7 +75,6 @@ class ImageSetDetail extends CActiveRecord
 
 		$criteria->compare('set_id',$this->set_id);
 		$criteria->compare('image_id',$this->image_id);
-		$criteria->compare('index_in_set',$this->index_in_set);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

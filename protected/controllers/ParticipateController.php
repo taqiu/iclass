@@ -66,13 +66,6 @@ class ParticipateController extends Controller
 			$partipate->task_id = $task_id;
 			$partipate->is_done = 0;
 			$partipate->count_labeled = 0;
-
-			if ($task->label_set_size > 0){
-				$max = $task->set->size - $task->label_set_size;
-				$partipate->last_image_labeled = rand(-1, $max);
-			}
-			else
-				$partipate->last_image_labeled = -1;
 			$partipate->save();
 		}	
 		
@@ -98,7 +91,6 @@ class ParticipateController extends Controller
 			$labelResponse->answer_id = $answer;
 			if ($labelResponse->save()) {
 				// update partipate record if label response is saved
-				$partipate->last_image_labeled = $index_in_set;
 				$partipate->count_labeled = $partipate->count_labeled + 1;
 				$partipate->save();
 				
@@ -109,10 +101,11 @@ class ParticipateController extends Controller
 		
 		// Get all images in set and get next image
 		$criteria = new CDbCriteria;
-		$criteria->condition = 'set_id=:setID AND index_in_set>:indexInSet';
-		$criteria->params = array(':setID'=>$task->set_id, ':indexInSet'=>$partipate->last_image_labeled);
-		$criteria->order = 'index_in_set';
+		$criteria->condition = 'set_id=:setID AND image_id NOT IN (SELECT image_id FROM dev_label_response WHERE user_id=:userID AND label_id=:labID)';
+		$criteria->order = 'rand()';
+		$criteria->params = array(':setID'=>$task->set_id, ':userID'=>$user_id, ':labID'=>$task->label_id);
 		$criteria->limit = 1;
+
 		$imageSetDetail = ImageSetDetail::model()->find($criteria);
 		
 		if ($imageSetDetail === null or ($task->label_set_size > 0 && $partipate->count_labeled > $task->label_set_size)) {
@@ -129,7 +122,7 @@ class ParticipateController extends Controller
 				'task' => $task,
 				'image' => $image,
 				'label' => $label,
-				'index_in_set' => $imageSetDetail->index_in_set,
+				'index_in_set' => $partipate->count_labeled,
 				'answers' => $answers,
 			));
 		}

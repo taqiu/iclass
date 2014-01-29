@@ -42,7 +42,7 @@ $this->menu=array(
 
 </style>
 
-<span class="pull-right"> Set ID: <?php echo $task->set_id; ?> | Index of Set: <?php echo  $index_in_set; ?></span>
+<span class="pull-right"> Images Labeled: <?php echo  $index_in_set; ?></span>
 <h4>Current Task: <?php echo $task->name;?></h4>
 <hr/>
 <div class="left">
